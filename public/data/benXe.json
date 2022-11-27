@@ -1,0 +1,31 @@
+[{
+    "id":0,
+    "tenBenXe":"Bến Xe Miền Tây",
+    "diaChi":"TP. HCM",
+    "image":"https://nld.mediacdn.vn/k:2016/ben-xe-mt-1466755631165/thong-qua-dia-diem-xay-dung-ben-xe-mien-tay-moi.jpg"
+},{
+    "id":1,
+    "tenBenXe":"Bến Xe Miền Đông",
+    "diaChi":"TP. HCM",
+    "image":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Nh%C3%A0_ga_b%E1%BA%BFn_xe_mi%E1%BB%81n_%C4%90%C3%B4ng.JPG/450px-Nh%C3%A0_ga_b%E1%BA%BFn_xe_mi%E1%BB%81n_%C4%90%C3%B4ng.JPG"
+},{
+    "id":2,
+    "tenBenXe":"Bến Xe Miền Đông Mới",
+    "diaChi":"TP. HCM",
+    "image":"https://nld.mediacdn.vn/thumb_w/684/291774122806476800/2022/10/11/c426c9f1-bf35-441e-9483-0e7ba493a398-16654519842102074988347.jpeg"
+},{
+    "id":3,
+    "tenBenXe":"Bến Xe Bến Tre",
+    "diaChi":"Bến Tre",
+    "image":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Nh%C3%A0_ga_b%E1%BA%BFn_xe_mi%E1%BB%81n_%C4%90%C3%B4ng.JPG/450px-Nh%C3%A0_ga_b%E1%BA%BFn_xe_mi%E1%BB%81n_%C4%90%C3%B4ng.JPG"
+},{
+    "id":4,
+    "tenBenXe":"Bến Xe Cà Mau",
+    "diaChi":"Cà Mau",
+    "image":"https://nld.mediacdn.vn/thumb_w/684/291774122806476800/2022/10/11/c426c9f1-bf35-441e-9483-0e7ba493a398-16654519842102074988347.jpeg"
+},{
+    "id":5,
+    "tenBenXe":"Bến Xe Trà Vinh",
+    "diaChi":"Trà Vinh",
+    "image":"https://nld.mediacdn.vn/k:2016/ben-xe-mt-1466755631165/thong-qua-dia-diem-xay-dung-ben-xe-mien-tay-moi.jpg"
+}]
