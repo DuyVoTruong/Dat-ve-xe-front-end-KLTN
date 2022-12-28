@@ -1,6 +1,19 @@
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { memo, useContext } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import useToken from "../components/hooks/useToken";
+import {MyContext} from "../App"
+import { useNavigate } from "react-router-dom";
 
 function Header(){
+
+    const token = useContext(MyContext).token;
+    const account = useContext(MyContext).account;
+    const nav = useNavigate();
+    const logout =()=>{
+        localStorage.clear();
+        nav("/home")
+    }
+
     return(
         <>
             {/* Topbar Start */}
@@ -45,24 +58,67 @@ function Header(){
                 <Nav className="me-auto">
                     <Nav.Link href="/">TRANG CHỦ</Nav.Link>
                     <Nav.Link href="/lich-trinh">LỊCH TRÌNH</Nav.Link>
-                    <Nav.Link href="/">LIÊN HỆ</Nav.Link>
+                    <Nav.Link href="/tuyen-xe">TUYẾN XE</Nav.Link>
+                    {
+                        (()=>{
+                            if(account){
+                               return(
+                                <>
+                                    <Nav.Link href="/lich-su-dat-ve">XEM LỊCH SỬ ĐẶT VÉ</Nav.Link>
+                                    <Nav.Link href="/lich-su-gui-hang">XEM LỊCH SỬ GỬI HÀNG</Nav.Link>
+                                </>
+                               ) 
+                            }
+                        })()
+                    }
                 </Nav>
                 </Navbar.Collapse>
-                <Navbar.Collapse className="justify-content-end">
-                    <div style={{marginRight:"10px"}}>
-                        <a class="text-white pl-2" href="">
-                            <i class="fa fa-user"></i>
-                        </a>
-                    </div>
-                        <a href="/login">Login</a>
+                {
+                    (()=>{
+                        if(token&&account){
+                            return(
+                                <>
+                                    <Navbar.Collapse className="justify-content-end">
+                                        <div style={{marginRight:"10px"}}>
+                                            <a class="text-white pl-2" href="">
+                                                <i class="fa fa-user"></i>
+                                            </a>
+                                        </div>
+                                            <a href="/thong-tin-tai-khoan">{account.username}</a>
 
-                    <div style={{marginRight:"10px", marginLeft:"10px"}}>
-                        <a class="text-white pl-2" href="">
-                            <i class="fa fa-user-plus"></i>
-                        </a>
-                    </div>
-                        <a href="/sign-up">Sign up</a>
-                </Navbar.Collapse>
+                                        <div style={{marginRight:"10px", marginLeft:"10px"}}>
+                                            <a class="text-white pl-2">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </a>
+                                            <a onClick={logout} class="text-blue pl-2" href="">Log out</a>
+                                        </div>
+                                    </Navbar.Collapse>
+                                </>
+                            )
+                        }else {
+                            return (
+                                <>
+                                    <Navbar.Collapse className="justify-content-end">
+                                        <div style={{marginRight:"10px"}}>
+                                            <a class="text-white pl-2" href="">
+                                                <i class="fa fa-user"></i>
+                                            </a>
+                                        </div>
+                                            <a href="/login">Login</a>
+
+                                        <div style={{marginRight:"10px", marginLeft:"10px"}}>
+                                            <a class="text-white pl-2" href="">
+                                                <i class="fa fa-user-plus"></i>
+                                            </a>
+                                        </div>
+                                            <a href="/sign-up">Sign up</a>
+
+                                    </Navbar.Collapse>
+                                </>
+                            )
+                        }
+                    })()
+                }
             </Container>
             </Navbar>
             {/* Navbar End*/}
@@ -70,4 +126,4 @@ function Header(){
     )
 }
 
-export default Header;
+export default memo(Header);

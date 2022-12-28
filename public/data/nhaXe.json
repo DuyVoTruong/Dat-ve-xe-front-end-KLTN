@@ -1,18 +1,18 @@
 [{
     "id":1,
-    "tenNhaXe":"Hoàng Dũng",
+    "ten":"Hoàng Dũng",
     "sdt":"1234",
     "gioiThieu":"abc",
     "trangThaiHoatDong":1
 },{
     "id":2,
-    "tenNhaXe":"Hoàng Oanh",
+    "ten":"Hoàng Oanh",
     "sdt":"1234567",
     "gioiThieu":"abcd",
     "trangThaiHoatDong":1
 },{
     "id":3,
-    "tenNhaXe":"Anh Anh",
+    "ten":"Anh Anh",
     "sdt":"12345",
     "gioiThieu":"abcef",
     "trangThaiHoatDong":1

@@ -1,34 +1,62 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { MyContext } from "../../App";
+import { httpLogin } from "../hooks/Request";
 
 function Login() {
 
-  const [role, setRole]=useState([]);
+  const setToken = useContext(MyContext).setToken;
+  const [role, setRole] = useState("USER");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  useEffect(()=>{
-    fetch("/data/role.json").then(res=>res.json()).then(data=>{
-      setRole(data)
+  const nav = useNavigate();
+  const login = async(e)=>{
+    e.preventDefault();
+    let account ={
+      username,password,role
+    }
+    httpLogin(account).then(res=>res.json()).then(data=>{
+      if(data.jwtToken){
+        const userToken = {
+          jwtToken: data.jwtToken,
+          account: account
+        }
+        setToken(userToken);//lưu token
+        window.alert("Đăng nhập thành công!!!")
+        if(account.role==="USER"){
+          nav("/home")
+        }else if(account.role==="ADMIN"){
+          nav("/admin/home")
+        }else if(account.role==="NHAXE"){
+          nav("/nha-xe/home")
+        }
+      }
+      else{
+        window.alert(data.message)
+      }
     })
-  },[])
+  }
 
   return (
     <div>
       <Container>
         <Row className="d-flex justify-content-center align-items-center" style={{marginTop:"100px",marginBottom:"100px"}}>
           <Col md={8} lg={6} xs={12}>
-            <div className="border border-3 border-primary"></div>
+          <div style={{border: "solid 10px blue", background:"blue"}}></div>
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
                   <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
                   <p className=" mb-5">Please enter your username and password!</p>
                   <div className="mb-3">
-                    <Form>
+                    <Form onSubmit={login}>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-center">
                           Username
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Enter username"/>
+                        <Form.Control onChange={(e)=>setUsername(e.target.value)} type="text" placeholder="Enter username"/>
                       </Form.Group>
 
                       <Form.Group
@@ -36,19 +64,17 @@ function Login() {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Password" />
                       </Form.Group>
 
                       <Form.Group
                         className="mb-3"
                       >
                         <Form.Label>Vai trò</Form.Label>
-                        <Form.Select style={{display:"block"}}>
-                          {role.map(r=>{
-                            return(
-                              <option value={r.id}>{r.ten}</option>
-                            )
-                          })}
+                        <Form.Select style={{display:"block"}} onChange={(e)=>setRole(e.target.value)}>
+                              <option defaultChecked value={"USER"}>Người dùng</option>
+                              <option value={"NHAXE"}>Nhà xe</option>
+                              <option value={"ADMIN"}>Admin</option>
                         </Form.Select>
                       </Form.Group>
 
@@ -72,8 +98,14 @@ function Login() {
                       <p className="mb-0  text-center">
                         Don't have an account?{" "}
                         <a href="/sign-up" className="text-primary fw-bold">
-                          Sign Up
+                          <Link to="/sign-up">Sign Up</Link>
                         </a>
+                      </p>
+                      <p className="mb-0  text-center">
+                        or
+                      </p>
+                      <p className="mb-0  text-center">
+                        <Button style={{backgroundColor: "red", borderColor: "red"}}><img src="/img/btn_google_signin.png" alt=""></img></Button>
                       </p>
                     </div>
                   </div>

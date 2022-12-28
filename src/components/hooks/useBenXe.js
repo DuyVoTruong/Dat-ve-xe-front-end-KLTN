@@ -1,42 +1,100 @@
-import { useCallback, useEffect, useState } from "react";
-import { httpDeleteBenXe, httpGetBenXe, httpGetBenXeById, httpPostBenXe, httpPutBenXe } from "./Request";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { MyContext } from "../../App";
+import { httpDeleteBenXe, httpGetBenXe, httpGetBenXeAdmin, httpGetBenXeById, httpGetBenXeUser, httpPostBenXe, httpPutBenXe } from "./Request";
 
 function useBenXe(){
     const [benXe, setBenXe] = useState([]);
+    const nav = useNavigate();
+    const token = useContext(MyContext).token;
 
-    const getBenXe = useCallback(async () => {
-        await httpGetBenXe().then(data=>{
-            if(data.status == 200){
-                setBenXe(data.object);
+    /*const getBenXe = useCallback(async() => {
+        const fetchedBenXe = await httpGetBenXe();
+        if (fetchedBenXe.status == 200){
+            setBenXe(fetchedBenXe.object)
+            console.log(fetchedBenXe.object)
+        }
+        else {
+            setBenXe([]);
+        }
+    }, [])*/
+
+    const getAllBenXeAdmin = useCallback(async() => {
+        const fetchedBenXe = await httpGetBenXeAdmin(token);
+        if (fetchedBenXe.status == 200){
+            setBenXe(fetchedBenXe.object)
+            console.log(fetchedBenXe.object)
+        }
+        else {
+            setBenXe([]);
+        }
+    }, []);
+
+    useEffect(() => {
+        getAllBenXeAdmin();
+    }, [getAllBenXeAdmin]);
+
+    const addBenXe = useCallback(async(data) => {
+        if (!data.tenBenXe||!data.diaChiChiTiet||!data.tinhThanh){
+            alert("Missing data");
+        }
+        else{
+            try {
+                await httpPostBenXe(data, token).then(res => res.json()).then(data => {
+                    if (data.status == 200){
+                        alert("Success");
+                    }
+                    else{
+                        alert(data.message);
+                    }
+                })
+            } catch(err) {
+                alert("Fail");
             }
-        })
-    }, [])
+        }
+        getAllBenXeAdmin();
+    }, [getAllBenXeAdmin]);
 
-    useEffect(()=>{
-        getBenXe()
-    }, [getBenXe]);
+    const updateBenXe = useCallback(async(idBenXe, data) => {
+        if (!data.tenBenXe||!data.diaChiChiTiet||!data.tinhThanh){
+            alert("Missing data");
+        }
+        else {
+            try {
+                await httpPutBenXe(idBenXe, data, token).then(res => res.json()).then(data =>{
+                    if (data.status == 200){
+                        alert("Success");
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                })
+            }catch(err) {
+                alert("Fail");
+            }
+        }
+        getAllBenXeAdmin();
+    },[getAllBenXeAdmin])
 
-    const addBenXe = (data) => {
-       console.log(httpPostBenXe(data))
-    }
-
-    const updateBenXe = (data, idBenXe) => {
-        console.log(httpPutBenXe(data, idBenXe))
-    }
-
-    const deleteBenXe = (idBenXe) => {
-        console.log(httpDeleteBenXe(idBenXe))
-    }
-
-    const getBenXeById = (idBenXe) =>{
-        return httpGetBenXeById(idBenXe).then(data=>{
-           return data.object
-        });
-    }
+    const deleteBenXe = useCallback(async(idBenXe) => {
+        try {
+            await httpDeleteBenXe(idBenXe, token).then(res => res.json()).then(data => {
+                if(data.status == 200){
+                    alert("Success");
+                }
+                else{
+                    alert(data.message);
+                }
+            })
+        }catch(err) {
+            alert("Fail");
+        }
+        getAllBenXeAdmin();
+    },[getAllBenXeAdmin])
 
     return {
         benXe,
-        getBenXeById,
+        getAllBenXeAdmin,
         addBenXe,
         updateBenXe,
         deleteBenXe,
