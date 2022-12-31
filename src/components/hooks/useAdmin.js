@@ -102,10 +102,7 @@ function useAdmin(){
     },[getAdmin])
 
     const updateTaiKhoan = useCallback(async(id, data) => {
-        if (!data.username||!data.password||data.trangThaiHoatDong===null){
-            alert("Missing data");
-        }
-        else {
+        
             try {
                 await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
@@ -118,7 +115,7 @@ function useAdmin(){
             }catch(err) {
                 alert("Fail");
             }
-        }
+        
         getAdmin();
     },[getAdmin])
 

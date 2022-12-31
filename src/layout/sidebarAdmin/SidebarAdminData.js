@@ -38,11 +38,6 @@ export const SidebarAdminData =[
                 path:'/admin/nha-xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
-            {
-                title:'Thêm',
-                path:'/admin/nha-xe/add',
-                icon:<RiIcons.RiAddBoxLine/>,
-            }
         ]
     },
     {

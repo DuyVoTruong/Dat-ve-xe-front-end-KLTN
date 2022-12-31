@@ -14,22 +14,26 @@ function Login() {
   const nav = useNavigate();
   const login = async(e)=>{
     e.preventDefault();
-    let account ={
-      username,password,role
+    let accountLogin ={
+      username,password
     }
-    httpLogin(account).then(res=>res.json()).then(data=>{
-      if(data.jwtToken){
+    httpLogin(accountLogin).then(res=>res.json()).then(data=>{
+      if(data.jwtToken&&data.object){
         const userToken = {
           jwtToken: data.jwtToken,
-          account: account
+          account: {
+            id: data.object.id,
+            username: data.object.username,
+            role: data.object.role
+          }
         }
         setToken(userToken);//lưu token
         window.alert("Đăng nhập thành công!!!")
-        if(account.role==="USER"){
+        if(data.object.role==="USER"){
           nav("/home")
-        }else if(account.role==="ADMIN"){
+        }else if(data.object.role==="ADMIN"){
           nav("/admin/home")
-        }else if(account.role==="NHAXE"){
+        }else if(data.object.role==="NHAXE"){
           nav("/nha-xe/home")
         }
       }
@@ -67,7 +71,7 @@ function Login() {
                         <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Password" />
                       </Form.Group>
 
-                      <Form.Group
+                      {/*<Form.Group
                         className="mb-3"
                       >
                         <Form.Label>Vai trò</Form.Label>
@@ -76,7 +80,7 @@ function Login() {
                               <option value={"NHAXE"}>Nhà xe</option>
                               <option value={"ADMIN"}>Admin</option>
                         </Form.Select>
-                      </Form.Group>
+                      </Form.Group>*/}
 
                       <Form.Group
                         className="mb-3"

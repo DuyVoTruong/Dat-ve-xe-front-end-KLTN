@@ -5,7 +5,6 @@ import { httpDeleteLoaiXe, httpGetLoaiXe, httpPostLoaiXe, httpPutLoaiXe } from "
 
 function useLoaiXe(){
     const [loaiXe, setLoaiXe] = useState([]);
-    const nav = useNavigate();
     const token = useContext(MyContext).token;
 
     const getLoaiXe = useCallback(async() => {

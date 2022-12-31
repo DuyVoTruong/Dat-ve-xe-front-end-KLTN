@@ -14,7 +14,7 @@ export const SidebarNhaXeData = [
   },
   {
     title:'Tuyến xe',
-    path:'/nha-xe/home',
+    //path:'/nha-xe/home',
     icon:<FaIcons.FaRoute/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
@@ -24,13 +24,21 @@ export const SidebarNhaXeData = [
             path:'/nha-xe/tuyen-xe',
             icon:<IoIcons.IoIosPaper/>,
         },
+    ]
+  },{
+    title:'Xe',
+    //path:'/admin/home',
+    icon:<RiIcons.RiTrainLine/>,
+    iconClosed:<RiIcons.RiArrowDownSFill/>,
+    iconOpened:<RiIcons.RiArrowUpSFill/>,
+    subNav:[
         {
-            title:'Thêm',
-            path:'/nha-xe/tuyen-xe/add',
-            icon:<RiIcons.RiAddBoxLine/>,
+            title: 'Xe',
+            path:'/nha-xe/xe',
+            icon:<IoIcons.IoIosPaper/>,
         },
     ]
-},
+  },
 ];
 
 {/*

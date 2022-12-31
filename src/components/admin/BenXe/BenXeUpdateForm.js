@@ -7,8 +7,6 @@ import {getBenXeById, getTinhThanhPho} from "../../hooks/useFunction"
 
 function BenXeUpdateForm({showForm, setShowForm, update, id}){
 
-    console.log(id)
-
     const [benXe, setBenXe] = useState([]);
     useEffect(()=>{
         if(showForm===true){
@@ -34,7 +32,8 @@ function BenXeUpdateForm({showForm, setShowForm, update, id}){
             let data = {
                 tenBenXe:tenBenXe,
                 diaChiChiTiet:soNha+", "+xa+", "+huyen+", "+tinh,
-                tinhThanh: tinh
+                tinhThanh: tinh,
+                trangThai: benXe.trangThai
             }
             update(id, data);
         }

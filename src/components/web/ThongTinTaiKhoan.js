@@ -201,6 +201,7 @@ const ThongTinTaiKhoan =()=> {
                                     if(thongTinTaiKhoan.trangThai === "ACTIVE"){
                                         return(
                                             <>
+                                            <Form>
                                                 <Form.Check
                                                     disabled
                                                     inline
@@ -218,11 +219,13 @@ const ThongTinTaiKhoan =()=> {
                                                     type={"radio"}
                                                     id={"activeOff"}
                                                 />
+                                            </Form>
                                             </>
                                         )
                                     } else {
                                         return(
                                             <>
+                                            <Form>
                                                 <Form.Check
                                                     disabled
                                                     inline
@@ -240,6 +243,7 @@ const ThongTinTaiKhoan =()=> {
                                                     id={"activeOff"}
                                                     defaultChecked
                                                 />
+                                            </Form>
                                             </>
                                         )
                                     }

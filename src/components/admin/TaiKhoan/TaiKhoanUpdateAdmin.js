@@ -8,17 +8,6 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
 
     const handleClose = () => {setShowForm(false)};
 
-    const nav = useNavigate();
-    const redirectTaiKhoanUserHome =()=>{
-        nav("/admin/tai-khoan/user");
-    }
-    const redirectTaiKhoanNhaXeHome =()=>{
-        nav("/admin/tai-khoan/nha-xe");
-    }
-    const redirectTaiKhoanAdminHome =()=>{
-        nav("/admin/tai-khoan/admin");
-    }
-
     const UpdateHandler = (e) =>{
         e.preventDefault();
         if(role==="USER"){
@@ -101,7 +90,7 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
         if(role==="NHAXE"){
             getTinhThanhPho();
         }
-    },[role])
+    })
 
     if(role==="USER"){
 
@@ -113,58 +102,41 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={UpdateHandler}>
-                    <Form.Group className="mb-3" controlId="formUsername">
-                        <Form.Label className="text-center">
-                        Username
-                        </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập username" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Nhập password" />
-                    </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formHoTen">
                         <Form.Label className="text-center">
                         Họ tên
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập họ tên" />
+                        <Form.Control type="text" placeholder="Nhập họ tên" defaultValue={tk.hoTen}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formCMND">
                         <Form.Label className="text-center">
                         CMND
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập CMND" />
+                        <Form.Control type="text" placeholder="Nhập CMND" defaultValue={tk.cmnd}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
                         Số điện thoại
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập số điện thoại" />
+                        <Form.Control type="text" placeholder="Nhập số điện thoại" defaultValue={tk.sdt}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label className="text-center">
                         Email
                         </Form.Label>
-                        <Form.Control type="email" placeholder="Nhập Email" />
+                        <Form.Control type="email" placeholder="Nhập Email" defaultValue={tk.email}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
                         <Form.Label className="text-center">
                         Địa chỉ
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập địa chỉ" />
+                        <Form.Control type="text" placeholder="Nhập địa chỉ" defaultValue={tk.diaChi}/>
                     </Form.Group>
 
-                    <div className="d-grid">
-                        <Button variant="primary" type="submit">
-                        Add
-                        </Button>
-                    </div>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -172,7 +144,7 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                     Close
                   </Button>
                   <Button variant="primary" type="button" onClick={UpdateHandler}>
-                    Add
+                    Update
                   </Button>
                 </Modal.Footer>
               </Modal>
@@ -190,37 +162,25 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={UpdateHandler}>
-                    <Form.Group className="mb-3" controlId="formUsername">
-                        <Form.Label className="text-center">
-                        Username
-                        </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập username" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Nhập password" />
-                    </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formTenNhaXe">
                         <Form.Label className="text-center">
                         Tên nhà xe
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập tên nhà xe" />
+                        <Form.Control type="text" placeholder="Nhập tên nhà xe" defaultValue={tk.tenNhaXe}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
                         Số điện thoại
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập số điện thoại" />
+                        <Form.Control type="text" placeholder="Nhập số điện thoại" defaultValue={tk.sdt}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formMoTaNgan">
                         <Form.Label className="text-center">
                         Giới thiệu
                         </Form.Label>
-                        <Form.Control  as="textarea" rows={3} placeholder="Nhập nội dung giới thiệu" />
+                        <Form.Control  as="textarea" rows={3} placeholder="Nhập nội dung giới thiệu" defaultValue={tk.moTaNgan}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
@@ -236,15 +196,17 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                         <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
                             <option>Chọn phường xã</option>
                         </Form.Select>
-
-                        <Form.Control type="text" placeholder="Nhập số nhà" />
+                        {
+                            (()=>{
+                                if(tk.diaChi){
+                                    return(
+                                        <Form.Control type="text" placeholder="Nhập số nhà" defaultValue={tk.diaChi.split(", ")[0]}/>
+                                    )
+                                }
+                            })()
+                        }
                     </Form.Group>
 
-                    <div className="d-grid">
-                        <Button variant="primary" type="submit">
-                        Add
-                        </Button>
-                    </div>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -252,7 +214,7 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                     Close
                   </Button>
                   <Button variant="primary" type="button" onClick={UpdateHandler}>
-                    Add
+                    Update
                   </Button>
                 </Modal.Footer>
               </Modal>

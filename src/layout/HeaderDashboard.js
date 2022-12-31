@@ -31,7 +31,7 @@ function HeaderDashboard(){
                                             <i class="fa fa-user"></i>
                                         </a>
                                     </div>
-                                        <a href="">{account.username}</a>
+                                        <a href="thong-tin-tai-khoan">{account.username}</a>
 
                                     <div style={{marginRight:"10px", marginLeft:"10px"}}>
                                         <a class="text-white pl-2" href="">

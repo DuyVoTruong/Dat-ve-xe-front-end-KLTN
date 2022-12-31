@@ -1,20 +1,32 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { MyContext } from "../../../App";
 import useLoaiXe from "../../hooks/useLoaiXe";
 import useNhaXe from "../../hooks/useNhaXe";
 
 function XeAdminAdd({showForm, setShowForm, add}){
 
-    const {nhaXe} = useNhaXe();
+    const account = useContext(MyContext).account;
+    const {nhaXe} = useNhaXe(account.role);
     const {loaiXe} = useLoaiXe();
 
     const handleClose = () => {setShowForm(false)};
 
     const AddXe = (event) => {
         event.preventDefault();
+        let tenNhaXe;
+        if(account.role==="NHAXE"){
+            nhaXe.map(nx=>{
+                if(nx.taiKhoanId==account.id){
+                    tenNhaXe=nx.tenNhaXe;
+                }
+            })
+        }
+        else{
+            tenNhaXe = document.getElementById("formSelectTenNhaXe").value;
+        }
         let bienSoXe = document.getElementById("formBienSoXe").value;
         let tenLoaiXe = document.getElementById("formSelectTenLoaiXe").value;
-        let tenNhaXe = document.getElementById("formSelectTenNhaXe").value;
         if(!bienSoXe||!tenLoaiXe||!tenNhaXe){
             window.alert("Bạn phải điền đầy đủ thông tin!!!")
         }else{
@@ -40,22 +52,30 @@ function XeAdminAdd({showForm, setShowForm, add}){
                     <Form.Control type="text" placeholder="Nhập biển số xe" />
                 </Form.Group>
                 
-                <Form.Group className="mb-3" controlId="formTenNhaXe">
-                    <Form.Label className="text-center">
-                    Tên nhà xe
-                    </Form.Label>
-                    <Form.Select id="formSelectTenNhaXe">
-                        {
-                            nhaXe.map((nx, index)=>{
-                                return(
-                                    <>
-                                    <option key={index}>{nx.tenNhaXe}</option>
-                                    </>
-                                );
-                            })
+                {
+                    (()=>{
+                        if(account.role!=="NHAXE"){
+                            return(
+                                <Form.Group className="mb-3" controlId="formTenNhaXe">
+                                    <Form.Label className="text-center">
+                                    Tên nhà xe
+                                    </Form.Label>
+                                    <Form.Select id="formSelectTenNhaXe">
+                                        {
+                                            nhaXe.map((nx, index)=>{
+                                                return(
+                                                    <>
+                                                    <option key={index}>{nx.tenNhaXe}</option>
+                                                    </>
+                                                );
+                                            })
+                                        }
+                                    </Form.Select>
+                                </Form.Group>
+                            )
                         }
-                    </Form.Select>
-                </Form.Group>
+                    })()
+                }
 
                 <Form.Group className="mb-3" controlId="formTenLoaiXe">
                     <Form.Label className="text-center">

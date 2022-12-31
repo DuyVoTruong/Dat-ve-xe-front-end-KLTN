@@ -28,12 +28,7 @@ function TaiKhoanAdmin(){
         }
     }*/
 
-    const HandleUpdate =(taiKhoan)=>{
-        setTk(taiKhoan);
-        setShowFormUpdate(true);
-    }
-
-    const UpdateTaiKhoan =(id, tk)=>{
+    const UpdateTrangThai =(id, tk)=>{
         if(window.confirm("Thay đổi trạng thái")===true){
             let role = "ADMIN";
             let username = tk.taiKhoan.username;
@@ -67,6 +62,16 @@ function TaiKhoanAdmin(){
         }
     }
 
+    const HandleShowUpdateForm =(taiKhoan)=>{
+        setTk(taiKhoan)
+        setShowFormUpdate(true)
+    }
+
+    const HandleShowUpdatePasswordForm =(taiKhoan)=>{
+        setTk(taiKhoan)
+        setShowFormUpdatePassword(true)
+    }
+
     return(
         <>
         <TaiKhoanAddAdmin showForm={showFormAdd} setShowForm={setShowFormAdd} add={signUp} role={"ADMIN"}></TaiKhoanAddAdmin>
@@ -85,13 +90,12 @@ function TaiKhoanAdmin(){
             <input onChange={(evt)=>setSearch(evt.target.value)} className="form-control" style={{marginRight: "10px", width: "30%"}} type={"text"} placeholder="Tìm kiếm theo tên..."></input>
             <BsPlusSquareFill onClick={()=>setShowFormAdd(true)} className="add-btn"></BsPlusSquareFill>
         </div>
-        <div style={{marginTop:"30px", height:"500px", overflowY:"scroll"}}>
+        <div style={{marginTop:"30px"}}>
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
             <th>Id</th>
             <th>Username</th>
-            <th>Password</th>
             <th>Role</th>
             <th>Họ tên</th>
             <th>CMND</th>
@@ -109,7 +113,6 @@ function TaiKhoanAdmin(){
                         <tr>
                         <td>{tk.id}</td>
                         <td>{tk.taiKhoan.username}</td>
-                        <td>{tk.taiKhoan.password}</td>
                         <td>{tk.taiKhoan.role}</td>
                         <td>{tk.name}</td>
                         <td>{tk.cmnd}</td>
@@ -122,7 +125,7 @@ function TaiKhoanAdmin(){
                                         <>
                                         <td>
                                             <Form.Check
-                                                onChange={()=>UpdateTaiKhoan(tk.id, tk)}
+                                                onChange={()=>UpdateTrangThai(tk.id, tk)}
                                                 key={"ACTIVE"+index} 
                                                 type="switch"
                                                 defaultChecked
@@ -136,7 +139,7 @@ function TaiKhoanAdmin(){
                                         <>
                                         <td>
                                             <Form.Check
-                                                onChange={()=>UpdateTaiKhoan(tk.id, tk)}
+                                                onChange={()=>UpdateTrangThai(tk.id, tk)}
                                                 key={"INACTIVE"+index}
                                                 type="switch"
                                                 id={`switch${tk.id}`}
@@ -149,9 +152,9 @@ function TaiKhoanAdmin(){
                         }
                         <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={tk.image}/></td>
                         <td>
-                            <BiEdit className="edit-btn" onClick={()=>HandleUpdate(tk)}></BiEdit>
+                            <BiEdit className="edit-btn" onClick={()=>HandleShowUpdateForm(tk)}></BiEdit>
                             <ImBin className="delete-btn" onClick={(0)}></ImBin>
-                            <BiEditAlt onClick={()=>{setTk(tk);setShowFormUpdatePassword(true)}} className="edit-password-btn">Thay đổi mật khẩu</BiEditAlt>
+                            <BiEditAlt onClick={()=>HandleShowUpdatePasswordForm(tk)} className="edit-password-btn">Thay đổi mật khẩu</BiEditAlt>
                         </td>
                         </tr>
                         </>

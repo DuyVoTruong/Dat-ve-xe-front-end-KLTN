@@ -45,24 +45,19 @@ function useTaiKhoan(){
     }, [getBenXe]);*/
 
     const updateTaiKhoan = useCallback(async(id, data) => {
-        if (!data.username||!data.password||data.trangThaiHoatDong===null){
-            alert("Missing data");
+        try {
+            await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
+                if (data.status == 200){
+                    alert("Success");
+                }
+                else {
+                    alert(data.message);
+                }
+            })
+        }catch(err) {
+            alert("Fail");
         }
-        else {
-            try {
-                await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
-                    if (data.status == 200){
-                        alert("Success");
-                    }
-                    else {
-                        alert(data.message);
-                    }
-                })
-            }catch(err) {
-                alert("Fail");
-            }
-            getTaiKhoan();
-        }
+        getTaiKhoan();
     },[getTaiKhoan])
 
     /*const deleteBenXe = useCallback(async(idBenXe) => {

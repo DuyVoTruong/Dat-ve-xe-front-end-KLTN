@@ -8,9 +8,11 @@ function Header(){
 
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
+    const setAccount = useContext(MyContext).setAccount;
     const nav = useNavigate();
     const logout =()=>{
         localStorage.clear();
+        setAccount();
         nav("/home")
     }
 

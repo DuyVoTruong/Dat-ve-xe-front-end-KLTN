@@ -173,11 +173,20 @@ async function httpGetTuyenXeById(id, token){
     return await res.json();
 }
 
-async function httpGetTuyenXeFindByAddress(diemDi, diemDen, token){
-    let data = {
-        diemDi,diemDen
-    }
+async function httpGetTuyenXeFindByAddress(data, token){
     const res = await fetch(`${API_URL}/tuyenxe/find-by-address`,{
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    return await res.json();
+}
+
+async function httpGetTuyenXeFindByAddressDate(data,token){
+    const res = await fetch(`${API_URL}/tuyenxe/find-by-address-date`,{
         method: "POST",
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -213,6 +222,10 @@ function httpPutTuyenXe(id, data, token){
 function httpDeleteTuyenXe(id, token){
     return fetch(`${API_URL}/tuyenxe/${id}`, {
         method: "Delete",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
     })
 }
 
@@ -706,6 +719,7 @@ export {
     httpGetTuyenXe,
     httpGetTuyenXeById,
     httpGetTuyenXeFindByAddress,
+    httpGetTuyenXeFindByAddressDate,
     httpPostTuyenXe,
     httpPutTuyenXe,
     httpDeleteTuyenXe,

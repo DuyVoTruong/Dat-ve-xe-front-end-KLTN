@@ -1,24 +1,12 @@
 import { useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import useSignUp from "../../hooks/useSignUp";
 import {getTinhThanhPho} from "../../hooks/useFunction"
 
 function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
 
 
     const handleClose = () => {setShowForm(false)};
-
-    const nav = useNavigate();
-    const redirectTaiKhoanUserHome =()=>{
-        nav("/admin/tai-khoan/user");
-    }
-    const redirectTaiKhoanNhaXeHome =()=>{
-        nav("/admin/tai-khoan/nha-xe");
-    }
-    const redirectTaiKhoanAdminHome =()=>{
-        nav("/admin/tai-khoan/admin");
-    }
 
     const signUpHandler = (e) =>{
         e.preventDefault();
@@ -158,11 +146,6 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
                         <Form.Control type="text" placeholder="Nhập địa chỉ" />
                     </Form.Group>
 
-                    <div className="d-grid">
-                        <Button variant="primary" type="submit">
-                        Add
-                        </Button>
-                    </div>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -341,11 +324,6 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
                         <Form.Control type="text" placeholder="Nhập số nhà" />
                     </Form.Group>
 
-                    <div className="d-grid">
-                        <Button variant="primary" type="submit">
-                        Add
-                        </Button>
-                    </div>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

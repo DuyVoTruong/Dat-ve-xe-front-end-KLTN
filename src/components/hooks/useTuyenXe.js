@@ -5,7 +5,6 @@ import { httpDeleteTuyenXe, httpGetTuyenXe, httpPostTuyenXe, httpPutTuyenXe } fr
 
 function useTuyenXe(){
     const [tuyenXe, setTuyenXe] = useState([]);
-    const nav = useNavigate();
     const token = useContext(MyContext).token;
 
     const getTuyenXe = useCallback(async() => {
@@ -49,7 +48,7 @@ function useTuyenXe(){
         //}
         //else {
             try {
-                await httpPutTuyenXe(idTuyenXe, data,token).then(res => res.json()).then(data =>{
+                await httpPutTuyenXe(idTuyenXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
                         alert("Success");
                     }
@@ -68,7 +67,7 @@ function useTuyenXe(){
         try {
             await httpDeleteTuyenXe(idTuyenXe,token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    alert(data.message);
                 }
                 else{
                     alert(data.message);

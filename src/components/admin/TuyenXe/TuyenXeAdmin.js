@@ -6,6 +6,7 @@ import { ImBin } from "react-icons/im";
 import { Link } from "react-router-dom";
 import useTuyenXe from "../../hooks/useTuyenXe";
 import TuyenXeAdminAdd from "./TuyenXeAdminAdd";
+import TuyenXeAdminUpdate from "./TuyenXeAdminUpdate";
 
 function TuyenXeAdmin(){
 
@@ -13,14 +14,13 @@ function TuyenXeAdmin(){
     const [search, setSearch] = useState("");
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
-    const [id, setId] = useState();
-
-/*
-    const DeleteBenXe = (id) => {
+    const [tx, setTx] = useState([]);
+    
+    const DeleteTuyenXe = (id) => {
         if(window.confirm("Delete") === true){
-            deleteBenXe(id)
+            deleteTuyenXe(id)
         }
-    }*/
+    }
 
 
     const handleShowFormAdd = () => setShowFormAdd(true);
@@ -58,28 +58,33 @@ function TuyenXeAdmin(){
         }
     }
 
+    const HandleShowUpdateForm =(tuyenXe)=>{
+        setTx(tuyenXe)
+        setShowFormUpdate(true)
+    }
+
     return(
         <>
         <div className="container-dashboard">
 
         <TuyenXeAdminAdd showFormAdd={showFormAdd} setShowFormAdd={setShowFormAdd} add={addTuyenXe}></TuyenXeAdminAdd>
-
+        <TuyenXeAdminUpdate key={tx.id}showForm={showFormUpdate} setShowForm={setShowFormUpdate} update={updateTuyenXe} tx={tx}></TuyenXeAdminUpdate>
         <div style={{width: "100%", height: "30px", display: "flex"}}>
             <input onChange={(evt)=>setSearch(evt.target.value)} className="form-control" style={{marginRight: "10px", width: "30%"}} type={"text"} placeholder="Tìm kiếm theo tên bến xe đi..."></input>
             <BsPlusSquareFill onClick={handleShowFormAdd} className="add-btn"></BsPlusSquareFill>
         </div>
-        <div style={{marginTop:"30px", height:"500px", overflowY:"scroll"}}>
+        <div style={{marginTop:"30px"}}>
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
             <th>Id</th>
-            <th>Tên nhà xe đi</th>
-            <th>Tên nhà xe đến</th>
+            <th>Tên bến xe đi</th>
+            <th>Tên bến xe đến</th>
             <th>Biển số xe</th>
             <th>Ngày đi</th>
             <th>Giờ đi</th>
             <th>Thời gian hành trình</th>
-            <th>Giá vé</th>
+            <th style={{maxWidth:"100px"}}>Giá vé (đơn vị: nghìn đồng)</th>
             <th>Trạng thái</th>
             <th></th>
             </tr>
@@ -130,7 +135,7 @@ function TuyenXeAdmin(){
                             })()
                         }
                         <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={item.image}/></td>
-                        <td><BiEdit className="edit-btn" onClick={0}></BiEdit><ImBin className="delete-btn" onClick={(0)}></ImBin></td>
+                        <td><BiEdit className="edit-btn" onClick={()=>HandleShowUpdateForm(item)}></BiEdit><ImBin className="delete-btn" onClick={()=>DeleteTuyenXe(item.id)}></ImBin></td>
                         </tr>
                         </>
                     )

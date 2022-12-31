@@ -48,7 +48,7 @@ function LoaiXeAdmin(){
         <input onChange={(evt)=>setSearch(evt.target.value)} className="form-control" style={{marginRight: "10px", width: "30%"}} type={"text"} placeholder="Tìm kiếm theo tên..."></input>
         <BsPlusSquareFill onClick={handleShowFormAdd} className="add-btn"></BsPlusSquareFill>
         </div>
-        <div style={{marginTop:"30px", height:"500px", overflowY:"scroll"}}>
+        <div style={{marginTop:"30px"}}>
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
@@ -66,7 +66,6 @@ function LoaiXeAdmin(){
                     <td>{lx.id}</td>
                     <td>{lx.tenLoaiXe}</td>
                     <td>{lx.sucChua}</td>
-                    <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={lx.image}/></td>
                     <td><BiEdit className="edit-btn" onClick={()=>handleShowFormUpdate(lx)}></BiEdit><ImBin className="delete-btn" onClick={()=>DeleteLoaiXe(lx.id)}></ImBin></td>
                     </tr>
                     </>

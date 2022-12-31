@@ -6,13 +6,16 @@ import { ImBin } from "react-icons/im";
 import { Link, useNavigate } from "react-router-dom";
 import useNhaXe from "../../hooks/useNhaXe";
 import useTaiKhoan from "../../hooks/useTaiKhoan";
+import TaiKhoanAddAdmin from "../TaiKhoan/TaiKhoanAddAdmin";
+import TaiKhoanUpdateAdmin from "../TaiKhoan/TaiKhoanUpdateAdmin";
 
 function NhaXeAdmin(){
 
-    const {nhaXe,updateNhaXe} = useNhaXe();
-    const {updateTaiKhoan} = useTaiKhoan();
-
+    const {nhaXe,updateNhaXe,addNhaXe,deleteNhaXe,signUp,updateTaiKhoan} = useNhaXe();
+    const [tk,setTk] = useState("");
     const [search, setSearch] = useState("");
+    const [showFormAdd, setShowFormAdd] = useState(false);
+    const [showFormUpdate, setShowFormUpdate] = useState(false);
 /*
     const DeleteBenXe = (id) => {
         if(window.confirm("Delete") === true){
@@ -37,11 +40,10 @@ function NhaXeAdmin(){
                 trangThaiHoatDong = "INACTIVE";
                 document.getElementById(`switch${tk.id}`).checked=true
             }
-            let id = tk.taiKhoan.id;
             let data = {
                 id,role,username,password,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong
             }
-            updateTaiKhoan(tk.taiKhoan.id, data)           
+            updateNhaXe(id, data)
         }
         else{
             let switchSelect = document.getElementById(`switch${tk.id}`).checked;
@@ -53,20 +55,25 @@ function NhaXeAdmin(){
         }
     }
 
+    const HandleShowUpdateForm =(taiKhoan)=>{
+        setTk(taiKhoan)
+        setShowFormUpdate(true)
+    }
+
     return(
         <>
         <div className="container-dashboard">
+        <TaiKhoanAddAdmin showForm={showFormAdd} setShowForm={setShowFormAdd} add={signUp} role={"NHAXE"}></TaiKhoanAddAdmin>
+        <TaiKhoanUpdateAdmin key={tk.id} showForm={showFormUpdate} setShowForm={setShowFormUpdate} update={updateNhaXe} role={"NHAXE"} tk={tk}></TaiKhoanUpdateAdmin>
         <div style={{width: "100%", height: "30px", display: "flex"}}>
             <input onChange={(evt)=>setSearch(evt.target.value)} className="form-control" style={{marginRight: "10px", width: "30%"}} type={"text"} placeholder="Tìm kiếm theo tên..."></input>
-            <BsPlusSquareFill onClick={0} className="add-btn"></BsPlusSquareFill>
+            <BsPlusSquareFill onClick={()=>setShowFormAdd(true)} className="add-btn"></BsPlusSquareFill>
         </div>
-        <div style={{marginTop:"30px", height:"500px", overflowY:"scroll"}}>
+        <div style={{marginTop:"30px"}}>
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
             <th>Id</th>
-            <th>Username</th>
-            <th>Password</th>
             <th>Role</th>
             <th>Tên nhà xe</th>
             <th>Số điện thoại</th>
@@ -83,8 +90,6 @@ function NhaXeAdmin(){
                         <>
                         <tr>
                         <td>{tk.id}</td>
-                        <td>{tk.taiKhoan.username}</td>
-                        <td>{tk.taiKhoan.password}</td>
                         <td>{tk.taiKhoan.role}</td>
                         <td>{tk.tenNhaXe}</td>
                         <td>{tk.sdt}</td>
@@ -123,7 +128,7 @@ function NhaXeAdmin(){
                             })()
                         }
                         <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={tk.image}/></td>
-                        <td><BiEdit className="edit-btn" onClick={0}></BiEdit><ImBin className="delete-btn" onClick={(0)}></ImBin></td>
+                        <td><BiEdit className="edit-btn" onClick={()=>HandleShowUpdateForm(tk)}></BiEdit><ImBin className="delete-btn" onClick={(0)}></ImBin></td>
                         </tr>
                         </>
                     )

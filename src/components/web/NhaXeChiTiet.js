@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getAllDanhGiaByIdNhaXe, getNhaXeUserById } from "../hooks/useFunction"
 import "../../css/comment.css"
 import { MyContext } from "../../App";
+import {getTuyenXeById} from "../hooks/useFunction"
+import useTuyenXe from "../hooks/useTuyenXe";
 
 const NhaXeChiTiet =()=>{
 
@@ -13,6 +15,7 @@ const NhaXeChiTiet =()=>{
     const [danhGia, setDanhGia] = useState([]);
     const nhaXeId = useParams("id").id;
     const [nhaXe,setNhaXe]=useState([]);
+    const {tuyenXe}=useTuyenXe();
 
     const nav = useNavigate();
     const themDanhGia=(id)=>{
@@ -38,6 +41,10 @@ const NhaXeChiTiet =()=>{
         else{
             return <span class="fa fa-star"></span>
         }
+    }
+
+    const redirect =(diemDi, diemDen)=>{
+        nav(`/tuyen-xe/?diemDi=${diemDi}&diemDen=${diemDen}`);
     }
 
     useEffect(()=>{
@@ -79,26 +86,21 @@ const NhaXeChiTiet =()=>{
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>Tp HCM</td>
-                    <td>Cà Mau</td>
-                    <td style={{textAlign: "center"}}><button style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
-                    </tr>
-                    <tr>
-                    <td>Tp HCM</td>
-                    <td>Cà Mau</td>
-                    <td style={{textAlign: "center"}}><button style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
-                    </tr>
-                    <tr>
-                    <td>Tp HCM</td>
-                    <td>Cà Mau</td>
-                    <td style={{textAlign: "center"}}><button style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
-                    </tr>
-                    <tr>
-                    <td>Tp HCM</td>
-                    <td>Cà Mau</td>
-                    <td style={{textAlign: "center"}}><button style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
-                    </tr>
+                    {
+                        tuyenXe.map(tx=>{
+                            if(tx.xe){
+                                if(tx.xe.nhaXe.id===nhaXe.id){
+                                    return(
+                                        <tr>
+                                            <td>{tx.benXeDi.tinhThanh}</td>
+                                            <td>{tx.benXeDen.tinhThanh}</td>
+                                            <td style={{textAlign: "center"}}><button type="button" onClick={()=>redirect(tx.benXeDi.tinhThanh,tx.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
+                                        </tr>
+                                    );
+                                }
+                            }
+                        })
+                    }
                 </tbody>
                 </Table>
                 </div>

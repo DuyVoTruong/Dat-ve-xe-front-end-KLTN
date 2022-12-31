@@ -5,11 +5,11 @@ import { httpDeleteBenXe, httpGetBenXe, httpGetBenXeAdmin, httpGetBenXeById, htt
 
 function useBenXe(){
     const [benXe, setBenXe] = useState([]);
-    const nav = useNavigate();
     const token = useContext(MyContext).token;
+    const account = useContext(MyContext).account;
 
-    /*const getBenXe = useCallback(async() => {
-        const fetchedBenXe = await httpGetBenXe();
+    const getBenXe = useCallback(async() => {
+        const fetchedBenXe = await httpGetBenXeUser();
         if (fetchedBenXe.status == 200){
             setBenXe(fetchedBenXe.object)
             console.log(fetchedBenXe.object)
@@ -17,7 +17,7 @@ function useBenXe(){
         else {
             setBenXe([]);
         }
-    }, [])*/
+    }, [])
 
     const getAllBenXeAdmin = useCallback(async() => {
         const fetchedBenXe = await httpGetBenXeAdmin(token);
@@ -31,7 +31,11 @@ function useBenXe(){
     }, []);
 
     useEffect(() => {
-        getAllBenXeAdmin();
+        if(account.role==="NHAXE"||account.role==="USER"){
+            getBenXe();
+        }else{
+            getAllBenXeAdmin();
+        }
     }, [getAllBenXeAdmin]);
 
     const addBenXe = useCallback(async(data) => {

@@ -18,22 +18,41 @@ function DatVe(){
     const account = useContext(MyContext).account;
     const tuyenXeId = useParams("id").id;
     const [tuyenXeById, setTuyenXeById] = useState([]);
-    const {user} = useUser();
     
     const [veXeDaDat, setVeXeDaDat] = useState([]);
     let sucChua = 20;
     const [hinhThucThanhToan, setHinhThucThanhToan]=useState("ONLINE");
     var today = new Date();
-    var tomorrow = new Date();
-    tomorrow.setDate(today.getDate()+1)
+
     let ngayDat = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate()+1);
     let ngayNhan = tomorrow.getFullYear()+"-"+(tomorrow.getMonth()+1)+"-"+tomorrow.getDate();
     let tenBenXeDen = "";
     let tenBenXeDi = "";
-    let gioKhoiHanh = "";
-    let ngayDi = "";
     let tenNhaXe = "";
     let sdt = "";
+
+    const convertNgayNhan=()=>{
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate()+1)
+        let ngayNhan;
+        if(tomorrow.getDate()<10||tomorrow.getMonth<9){
+            let date=tomorrow.getDate();
+            let month=tomorrow.getMonth()+1;
+            if(date<10){
+                date="0"+date;
+            }
+            if(month<10){
+                month="0"+month
+            }
+            ngayNhan = tomorrow.getFullYear()+"-"+month+"-"+date;
+        }else{
+            ngayNhan = tomorrow.getFullYear()+"-"+(tomorrow.getMonth()+1)+"-"+tomorrow.getDate();
+        }
+        return ngayNhan;
+    }
+
 
     const DatVe=()=>{
          // Khai báo tham số
@@ -48,17 +67,9 @@ function DatVe(){
          }
         soGhe = soGhe.substring(0,soGhe.length-1)
 
-        let userId = "";
-        user.map(u=>{
-            if(u.taiKhoan){
-                if(u.taiKhoan.username===account.username){
-                    userId=u.id
-                    console.log(u.id)
-                }
-            }
-        })
+        let userId = account.id;
 
-        ngayDi=tuyenXeById.ngayDi;
+        ngayNhan=convertNgayNhan();
 
         if(soGhe.split(" ").length>1||soGhe.slice(" ")<1){
             window.alert("Bạn chỉ được chọn một ghế")
@@ -66,13 +77,15 @@ function DatVe(){
         else if(!ngayDat||!ngayNhan||!hinhThucThanhToan||!tuyenXeId){
             window.alert("Bạn phải điền đầy đủ thông tin")
         }
-        else if(userId!==null){
+        else if(userId===null){
             window.alert("Bạn phải đăng nhập để đặt vé!!!")
         }
         else {
             let data = {
                 soGhe,ngayDat,ngayNhan,hinhThucThanhToan,tuyenXeId,userId
             }
+
+            console.log(data)
 
             httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
                 if(data.status==200){
@@ -84,12 +97,7 @@ function DatVe(){
             });
 
         }
-
-        
-        
     }
-
-    console.log(tuyenXeById.ngayDi)
 
     useEffect(()=>{
         window.scrollTo(0,0);

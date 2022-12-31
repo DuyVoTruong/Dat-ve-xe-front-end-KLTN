@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {GrDescend, GrAscend} from "react-icons/gr"
-import useTuyenXe from "../hooks/useTuyenXe";
-import { getAllBenXeUser, getAllVeXeByTuyenXeId } from "../hooks/useFunction";
+import { getAllBenXeUser, getAllVeXeByTuyenXeId, getTuyenXeFindByAddressDate } from "../hooks/useFunction";
 import useNhaXe from "../hooks/useNhaXe";
 import { MyContext } from "../../App";
 
@@ -12,13 +11,16 @@ function TuyenXe(){
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
     const [benXe, setBenXe] = useState([]);
-    const {tuyenXe} = useTuyenXe();
+    const [tuyenXe, setTuyenXe] = useState([]);
     const {nhaXe} = useNhaXe();
     const tinhThanh = [];
     let d = new Date();
     const toDay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-    const [diemDi, setDiemDi] = useState("");
-    const [diemDen, setDiemDen] = useState("");
+
+    const [q] = useSearchParams();
+    const [diemDi, setDiemDi] = useState(q.get("diemDi"));
+    const [diemDen, setDiemDen] = useState(q.get("diemDen"));
+    const [date, setDate] = useState(q.get("date")||toDay);
     const [Ascending, SetAscending] = useState(true);
     let soGheDaDat = 0;
 
@@ -28,19 +30,33 @@ function TuyenXe(){
     }
 
     useEffect(()=>{
-        getAllBenXeUser().then(data=>{
+      getAllBenXeUser().then(data=>{
+        if(data){
+          setBenXe(data)
+        }
+      })
+
+      let data = {
+        benXeDi:diemDi,
+        benXeDen:diemDen,
+        date:date
+      }
+      if(!diemDi&&!diemDen&&!date){
+        setTuyenXe([])
+      }else{
+        getTuyenXeFindByAddressDate(data).then(data=>{
           if(data){
-            setBenXe(data)
+            setTuyenXe(data)
+          }
+          else{
+            setTuyenXe([])
           }
         })
-      },[])
+      }
+    },[diemDi,diemDen,date])
 
     useEffect(()=>{
-        
-    },[diemDi,diemDen]);
-
-    useEffect(()=>{
-        
+      window.scrollTo(0,0);
     },[]);
 
     const nav = useNavigate();
@@ -61,7 +77,7 @@ function TuyenXe(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Điểm đi</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi"/>
+                            <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi" defaultValue={diemDi} onChange={e=>setDiemDi(e.target.value)}/>
                             <datalist id="DiemDi">
                             {benXe.map(bx=>{
                                 return(<option value={bx.tinhThanh}></option>);
@@ -72,7 +88,7 @@ function TuyenXe(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Điểm đến</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen"/>
+                            <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen" defaultValue={diemDen} onChange={e=>setDiemDen(e.target.value)}/>
                             <datalist id="DiemDen">
                             {benXe.map(bx=>{
                               if(tinhThanh.indexOf(bx.tinhThanh)<0){
@@ -88,10 +104,10 @@ function TuyenXe(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Ngày đi</span>
-                            <input class="form-control" type="date" required/>
+                            <input class="form-control" type="date" required defaultValue={date||toDay} onChange={e=>setDate(e.target.value)}/>
                           </div>
                         </div>
-                        {
+                        {/*
                             (()=>{
                                 if(Ascending === true){
                                     return(
@@ -121,13 +137,14 @@ function TuyenXe(){
                                         </div>
                                     );
                                 }
-                            })()
+                            })()*/
                         }
+                        {/*
                         <div class="col-md-3">
                           <div class="form-btn">
                           <button class="submit-btn"><i class="text-white px-2 fa fa-search">TÌM KIẾM</i></button>
                           </div>
-                        </div>
+                      </div>*/}
                       </div>
                     </form>
                   </div>
@@ -136,6 +153,7 @@ function TuyenXe(){
             </div>
           </div>
         </Container>
+        <h1 style={{textAlign:"center"}}>Tất cả tuyến xe trong ngày {new Date(date).toLocaleDateString('vi')}</h1>
         <Container>
         <div style={{marginTop:"30px", height:"500px", overflow: "auto"}} className="shadow">
         <Table striped bordered hover style={{backgroundColor:"white"}}>

@@ -10,19 +10,9 @@ const LichSuDatVe=()=>{
 
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
-    const {user} = useUser();
     const [veXe,setVeXe]=useState([]);
     useEffect(()=>{
-        let userId = "";
-        user.map(u=>{
-            if(u.taiKhoan){
-                console.log(u.taiKhoan)
-                if(u.taiKhoan.username===account.username){
-                    userId=u.id
-                }
-            }
-        })
-        getVeXeUserById(userId, token).then(data=>{
+        getVeXeUserById(account.id, token).then(data=>{
             if(data){
                 setVeXe(data);
             }

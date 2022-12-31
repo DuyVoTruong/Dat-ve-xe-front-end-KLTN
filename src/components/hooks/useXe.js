@@ -31,7 +31,6 @@ function useXe(){
                 await httpPostXe(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
                         alert("Success");
-                        nav("/admin/xe");
                     }
                     else{
                         alert(data.message);

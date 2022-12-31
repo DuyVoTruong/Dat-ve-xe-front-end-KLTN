@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import useBenXe from "../../hooks/useBenXe";
 import useNhaXe from "../../hooks/useNhaXe";
 import useXe from "../../hooks/useXe";
+import {getAllBenXeUser} from "../../hooks/useFunction"
+import { MyContext } from "../../../App";
 
-function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add}){
+function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
 
 
     const {xe} = useXe();
-    const {benXe} = useBenXe();
-    const {nhaXe} = useNhaXe();
+    const {benXe} = useBenXe(role);
+    const account = useContext(MyContext).account;
 
     const AddTuyenXe = (event) => {
         //event.preventDefault();
@@ -59,9 +61,11 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add}){
                     </Form.Label>
                     <Form.Select id="benXeDi">
                         {benXe.map(bx=>{
-                            return(
-                                <option key={`benXeDi${bx.id}`} value={bx.id}>{bx.tenBenXe}</option>
-                            )
+                            if(bx.trangThai==="ACTIVE"){
+                                return(
+                                    <option key={`benXeDi${bx.id}`} value={bx.id}>{bx.tenBenXe}</option>
+                                )
+                            }
                         })}
                     </Form.Select>
                     </Form.Group>
@@ -72,9 +76,11 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add}){
                     </Form.Label>
                     <Form.Select id="benXeDen">
                         {benXe.map(bx=>{
-                            return(
-                                <option key={`benXeDen${bx.id}`} value={bx.id}>{bx.tenBenXe}</option>
-                            )
+                            if(bx.trangThai==="ACTIVE"){
+                                return(
+                                    <option key={`benXeDen${bx.id}`} value={bx.id}>{bx.tenBenXe}</option>
+                                )
+                            }
                         })}
                     </Form.Select>
                     </Form.Group>
@@ -85,15 +91,23 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add}){
                     </Form.Label>
                     <Form.Select id="xe">
                         {xe.map(x=>{
-                            let tenNhaXe;
-                            nhaXe.map(nx=>{
-                                if(x.id_nhaXe==nx.id){
-                                    tenNhaXe=nx.tenNhaXe;
+                            if(x.nhaXe){
+                                if(x.nhaXe.taiKhoan){
+                                    if(role==="NHAXE"){
+                                        if(x.nhaXe.taiKhoan.username===account.username)
+                                        {
+                                            return(
+                                                <option key={`xe${x.id}`} value={x.bienSoXe}>Biển số xe: {x.bienSoXe} - Nhà xe {x.nhaXe.tenNhaXe}</option>
+                                            )
+                                        }
+                                    }
+                                    else{
+                                        return(
+                                            <option key={`xe${x.id}`} value={x.bienSoXe}>Biển số xe: {x.bienSoXe} - Nhà xe {x.nhaXe.tenNhaXe}</option>
+                                        )
+                                    }
                                 }
-                            })
-                            return(
-                                <option key={`xe${x.id}`} value={x.bienSoXe}>Biển số xe: {x.bienSoXe} - Nhà xe {tenNhaXe}</option>
-                            )
+                            }
                         })}
                     </Form.Select>
                     </Form.Group>
@@ -121,7 +135,7 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Giá vé
+                        Giá vé (đơn vị: nghìn đồng)
                     </Form.Label>
                     <Form.Control id="giaVe" type="number" min={1} />
                     </Form.Group>

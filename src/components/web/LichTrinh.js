@@ -12,7 +12,11 @@ function LichTrinh(){
     const diemDiDiemDen = [];
 
     useEffect(()=>{
-        getTuyenXeFindByAddress(diemDi, diemDen).then(data=>{
+        let data = {
+            benXeDi:diemDi,
+            benXeDen:diemDen
+        }
+        getTuyenXeFindByAddress(data).then(data=>{
             if(data){
                 setTuyenXe(data);
             }
@@ -28,8 +32,8 @@ function LichTrinh(){
     },[]);
 
     const nav = useNavigate();
-    const redirectDatVe =(id)=>{
-        nav("/dat-ve-xe"+id);
+    const redirect =(diemDi, diemDen)=>{
+        nav(`/tuyen-xe/?diemDi=${diemDi}&diemDen=${diemDen}`);
     }
 
     return(
@@ -64,14 +68,14 @@ function LichTrinh(){
         <tbody>
                 {
                     tuyenXe.map(item=>{
-                        if(diemDiDiemDen.indexOf(item.benXeDi.tenBenXe+item.benXeDen.tenBenXe)<0){
-                            diemDiDiemDen.push(item.benXeDi.tenBenXe+item.benXeDen.tenBenXe);
+                        if(diemDiDiemDen.indexOf(item.benXeDi.tinhThanh+item.benXeDen.tinhThanh)<0){
+                            diemDiDiemDen.push(item.benXeDi.tinhThanh+item.benXeDen.tinhThanh);
                             return(
                                 <>
                                 <tr>
-                                <td>{item.benXeDi.tenBenXe}</td>
-                                <td>{item.benXeDen.tenBenXe}</td>
-                                <td style={{textAlign: "center"}}><button onClick={()=>redirectDatVe(1)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
+                                <td>{item.benXeDi.tinhThanh}</td>
+                                <td>{item.benXeDen.tinhThanh}</td>
+                                <td style={{textAlign: "center"}}><button onClick={()=>redirect(item.benXeDi.tinhThanh,item.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
                                 </tr>
                                 </>
                             )

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
@@ -7,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import useTuyenXe from '../hooks/useTuyenXe';
 import {getAllBenXeUser, getNhaXeUserAll} from '../hooks/useFunction'
 import "../../css/rating.css"
-import useNhaXe from '../hooks/useNhaXe';
 import { MyContext } from '../../App';
 
 function Home(){
@@ -20,6 +18,9 @@ function Home(){
     const [benXe, setBenXe] = useState([]);
     const {tuyenXe} = useTuyenXe();
     const [nhaXe, setNhaXe] = useState([]);
+    const [date, setDate] = useState("");
+    const [diemDi, setDiemDi] = useState("");
+    const [diemDen, setDiemDen] = useState("");
     const tinhThanh = [];
     let d = new Date();
     const toDay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
@@ -39,12 +40,7 @@ function Home(){
     }
 
     const timKiem =()=> {
-      let diemDi = "";
-      let diemDen = "";
-      let ngay = ""
-      let data = {
-        diemDi, diemDen, ngay
-      }
+      nav(`/tuyen-xe/?diemDi=${diemDi}&diemDen=${diemDen}&date=${date}`);
     }
 
     useEffect(()=>{
@@ -94,7 +90,7 @@ function Home(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Điểm đi</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi"/>
+                            <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi" onChange={e=>setDiemDi(e.target.value)}/>
                             <datalist id="DiemDi">
                             {benXe.map(bx=>{
                                 return(<option value={bx.tinhThanh}></option>);
@@ -105,7 +101,7 @@ function Home(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Điểm đến</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen"/>
+                            <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen" onChange={e=>setDiemDen(e.target.value)}/>
                             <datalist id="DiemDen">
                             {benXe.map(bx=>{
                               if(tinhThanh.indexOf(bx.tinhThanh)<0){
@@ -121,12 +117,12 @@ function Home(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Ngày đi</span>
-                            <input class="form-control" type="date" required/>
+                            <input class="form-control" type="date" required onChange={e=>setDate(e.target.value)}/>
                           </div>
                         </div>
                         <div class="col-md-3">
                           <div class="form-btn">
-                          <button class="submit-btn"><i class="text-white px-2 fa fa-search">TÌM KIẾM</i></button>
+                          <button class="submit-btn" type='button' onClick={timKiem}><i class="text-white px-2 fa fa-search">TÌM KIẾM</i></button>
                           </div>
                         </div>
                       </div>
@@ -181,7 +177,7 @@ function Home(){
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {benXe.map(bx =>{
             return(
-                <Card onClick={()=>danhSachTuyenXe(bx.tenBenXe)} style={{ margin: "2rem" }} className="shadow card-transform">
+                <Card onClick={()=>danhSachTuyenXe(bx.tinhThanh)} style={{ margin: "2rem" }} className="shadow card-transform">
                   <Card.Img height={"200px"} variant="top" src={"/img/diemDen.png"} />
                   <Card.Body>
                       <Card.Title>{bx.tenBenXe}</Card.Title>

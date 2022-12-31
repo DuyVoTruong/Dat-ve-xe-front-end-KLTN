@@ -1,14 +1,13 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
-import { httpDeleteNhaXe, httpGetNhaXe, httpPostNhaXe, httpPutNhaXe } from "./Request";
+import { httpDeleteNhaXe, httpGetNhaXe, httpGetNhaXeUserAll, httpPostNhaXe, httpPostSignUp, httpPutNhaXe, httpPutTaiKhoan } from "./Request";
 
 function useNhaXe(){
     const [nhaXe, setNhaXe] = useState([]);
-    const nav = useNavigate();
     const token = useContext(MyContext).token;
+    const account = useContext(MyContext).account;
 
-    const getNhaXe = useCallback(async() => {
+    const getNhaXeAdmin = useCallback(async() => {
         const fetchedNhaXe = await httpGetNhaXe(token);
         if (fetchedNhaXe.status == 200){
             setNhaXe(fetchedNhaXe.object)
@@ -18,9 +17,26 @@ function useNhaXe(){
         }
     }, [])
 
+    const getNhaXeUser = useCallback(async() => {
+        const fetchedNhaXe = await httpGetNhaXeUserAll(token);
+        if (fetchedNhaXe.status == 200){
+            setNhaXe(fetchedNhaXe.object)
+        }
+        else {
+            setNhaXe([]);
+        }
+    }, [])
+
     useEffect(() => {
-        getNhaXe();
-    }, [getNhaXe]);
+        if(!account){
+            getNhaXeUser();
+        }
+        else if(account.role==="USER"){
+            getNhaXeUser();
+        }else{
+            getNhaXeAdmin();
+        }
+    }, [getNhaXeAdmin, getNhaXeUser]);
 
     const addNhaXe = useCallback(async(data) => {
         if (!data.tenNhaXe||!data.diaChi){
@@ -28,10 +44,9 @@ function useNhaXe(){
         }
         else{
             try {
-                await httpPostNhaXe(data).then(res => res.json()).then(data => {
+                await httpPostNhaXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
                         alert("Success");
-                        nav("/admin/ben-xe");
                     }
                     else{
                         alert(data.message);
@@ -41,7 +56,8 @@ function useNhaXe(){
                 alert("Fail");
             }
         }
-    }, [getNhaXe]);
+        getNhaXeAdmin();
+    }, [getNhaXeAdmin]);
 
     const updateNhaXe = useCallback(async(idNhaXe, data) => {
         if (!data.tenNhaXe||!data.diaChi){
@@ -49,24 +65,26 @@ function useNhaXe(){
         }
         else {
             try {
-                await httpPutNhaXe(idNhaXe, data).then(res => res.json()).then(data =>{
+                await httpPutNhaXe(idNhaXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
                         alert("Success");
-                        nav('/admin/ben-xe');
                     }
-                    else {
-                        alert(data.message);
+                    else if(!data.message){
+                        alert("Bạn phải đăng nhập lại!!!");
+                    }else{
+                        alert(data.message)
                     }
                 })
             }catch(err) {
                 alert("Fail");
             }
         }
-    },[getNhaXe])
+        getNhaXeAdmin();
+    },[getNhaXeAdmin])
 
     const deleteNhaXe = useCallback(async(idNhaXe) => {
         try {
-            await httpDeleteNhaXe(idNhaXe).then(res => res.json()).then(data => {
+            await httpDeleteNhaXe(idNhaXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
                     alert("Success");
                 }
@@ -77,14 +95,56 @@ function useNhaXe(){
         }catch(err) {
             alert("Fail");
         }
-        getNhaXe();
-    },[getNhaXe])
+        getNhaXeAdmin();
+    },[getNhaXeAdmin])
+
+    const updateTaiKhoan = useCallback(async(id, data) => {
+        
+            try {
+                await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
+                    if (data.status == 200){
+                        alert("Success");
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                })
+            }catch(err) {
+                alert("Fail");
+            }
+        
+        getNhaXeAdmin();
+    },[getNhaXeAdmin])
+
+    const signUp = useCallback(async(data) => {
+        if (!data.username||!data.password){
+            alert("Missing data");
+        }
+        else {
+            try {
+                await httpPostSignUp(data, token).then(res => res.json()).then(data =>{
+                    if (data.status == 200){
+                        alert("Success");
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                })
+            }catch(err) {
+                alert("Fail");
+            }
+        }
+        getNhaXeAdmin();
+    },[getNhaXeAdmin])
 
     return {
         nhaXe,
         addNhaXe,
         updateNhaXe,
         deleteNhaXe,
+        updateTaiKhoan,
+        signUp
+
     }
 }
 
