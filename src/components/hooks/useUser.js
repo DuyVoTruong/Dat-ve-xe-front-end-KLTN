@@ -43,7 +43,7 @@ function useUser(){
     }, [getUser]);
 
     const updateUser = useCallback(async(id, data) => {
-        if (!data.username||!data.password||data.trangThaiHoatDong===null){
+        if (!data.username||data.trangThaiHoatDong===null){
             alert("Missing data");
         }
         else {

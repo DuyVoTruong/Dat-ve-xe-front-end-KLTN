@@ -14,7 +14,7 @@ function XeAdmin(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [id, setId] = useState();
-    const stt = 0;
+    let stt = 0;
 
     const DeleteBenXe = (id) => {
         if(window.confirm("Delete") === true){

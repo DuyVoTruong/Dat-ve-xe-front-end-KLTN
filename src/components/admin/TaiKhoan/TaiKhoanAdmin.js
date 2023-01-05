@@ -33,7 +33,6 @@ function TaiKhoanAdmin(){
         if(window.confirm("Thay đổi trạng thái")===true){
             let role = "ADMIN";
             let username = tk.taiKhoan.username;
-            let password = tk.taiKhoan.password;
             let name = tk.name;
             let cmnd = tk.cmnd;
             let sdt = tk.sdt;
@@ -49,7 +48,7 @@ function TaiKhoanAdmin(){
             }
             
             let data = {
-                id,role,username,password,name,cmnd,sdt,email,trangThaiHoatDong
+                id,role,username,name,cmnd,sdt,email,trangThaiHoatDong
             }
             updateAdmin(id, data)           
         }

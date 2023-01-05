@@ -62,7 +62,7 @@ const XeNhaXe =()=>{
                                 return(
                                     <>
                                     <tr>
-                                    <td>{x.id}</td>
+                                    <td>{stt}</td>
                                     <td>{x.loaiXe.tenLoaiXe}</td>
                                     <td>{x.nhaXe.tenNhaXe}</td>
                                     <td>{x.bienSoXe}</td>

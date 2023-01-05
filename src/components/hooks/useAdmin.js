@@ -65,7 +65,7 @@ function useAdmin(){
     },[getAdmin])
 
     const updateAdmin = useCallback(async(id, data) => {
-        if (!data.name||!data.cmnd||!data.sdt||!data.email||!data.username||!data.password||!data.role||!data.trangThaiHoatDong){
+        if (!data.name||!data.cmnd||!data.sdt||!data.email||!data.username||!data.role||!data.trangThaiHoatDong){
             alert("Missing data");
         }
         else {

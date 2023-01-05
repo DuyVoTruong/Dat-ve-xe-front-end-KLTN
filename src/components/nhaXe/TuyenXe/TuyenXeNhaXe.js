@@ -79,7 +79,7 @@ function TuyenXeNhaXe(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên bến xe đi</th>
             <th>Tên bến xe đến</th>
             <th>Biển số xe</th>
@@ -101,7 +101,7 @@ function TuyenXeNhaXe(){
                                     return(
                                         <>
                                         <tr>
-                                        <td>{item.id}</td>
+                                        <td>{stt}</td>
                                         <td>{item.benXeDi.tenBenXe}</td>
                                         <td>{item.benXeDen.tenBenXe}</td>
                                         <td>{item.xe.bienSoXe}</td>

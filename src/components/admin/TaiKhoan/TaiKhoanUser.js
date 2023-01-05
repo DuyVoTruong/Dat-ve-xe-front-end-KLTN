@@ -31,7 +31,6 @@ function TaiKhoanUser(){
         if(window.confirm("Thay đổi trạng thái")===true){
             let role = "USER";
             let username = tk.taiKhoan.username;
-            let password = tk.taiKhoan.password;
             let hoTen = tk.hoTen;
             let cmnd = tk.cmnd;
             let sdt = tk.sdt;
@@ -47,7 +46,7 @@ function TaiKhoanUser(){
                 document.getElementById(`switch${tk.id}`).checked=true
             }
             let data = {
-                 id,role,username,password,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong
+                 id,role,username,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong
             }
             updateUser(id, data);
         }

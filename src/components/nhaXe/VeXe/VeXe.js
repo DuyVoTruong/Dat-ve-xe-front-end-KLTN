@@ -49,7 +49,7 @@ const VeXe =()=>{
                                     return(
                                         <>
                                         <tr>
-                                        <td>{item.id}</td>
+                                        <td>{stt}</td>
                                         <td>{item.benXeDi.tenBenXe}</td>
                                         <td>{item.benXeDen.tenBenXe}</td>
                                         <td>{item.xe.bienSoXe}</td>

@@ -16,7 +16,7 @@ function NhaXeAdmin(){
     const [search, setSearch] = useState("");
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
-    const stt = 0;
+    let stt = 0;
 /*
     const DeleteBenXe = (id) => {
         if(window.confirm("Delete") === true){
