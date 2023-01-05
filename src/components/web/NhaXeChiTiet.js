@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Form, ProgressBar, Row, Table } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAllDanhGiaByIdNhaXe, getNhaXeUserById } from "../hooks/useFunction"
 import "../../css/comment.css"
 import { MyContext } from "../../App";
@@ -18,6 +18,7 @@ const NhaXeChiTiet =()=>{
     const {tuyenXe}=useTuyenXe();
     const [thongKeSao,setThongKeSao]=useState([{sao1:0,sao2:0,sao3:0,sao4:0,sao5:0,soNguoiDanhGia:0}]);
     const [saoTB, setSaoTB] = useState(0);
+    const [load, setLoad] = useState(false);
 
     const nav = useNavigate();
     const themDanhGia=(id)=>{
@@ -47,8 +48,30 @@ const NhaXeChiTiet =()=>{
         nav(`/tuyen-xe/?diemDi=${diemDi}&diemDen=${diemDen}`);
     }
 
+    const deleteDanhGia =(id)=>{
+        if(window.confirm("Bạn muốn xóa đánh giá này?")===true){
+            fetch("http://localhost:8080/api/danhgia/"+id,{
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json",
+            },
+            }).then(res=>res.json()).then(data=>{
+                if(data.status==200){
+                    window.alert("Xóa đánh giá thành công!!!");
+                    setLoad(true);
+                }else{
+                    window.alert("Đã xảy ra lỗi!!!");
+                }
+            })
+        }
+    }
+
     useEffect(()=>{
         window.scrollTo(0,0);
+    },[])
+
+    useEffect(()=>{
         getNhaXeUserById(nhaXeId, token).then(data=>{
             if(data){
                 setNhaXe(data);
@@ -89,7 +112,8 @@ const NhaXeChiTiet =()=>{
                 }
             }
         })
-    },[])
+        setLoad(false);
+    },[load])
 
     return(
         <>
@@ -250,8 +274,8 @@ const NhaXeChiTiet =()=>{
                                                     if(account.id==dg.user.id){
                                                         return(
                                                             <div style={{marginTop:"-10px", marginLeft: "10px"}}>
-                                                                <i style={{margin: "3px"}}>xóa</i>
-                                                                <i style={{margin: "3px"}}>sửa</i>
+                                                                <Link onClick={()=>deleteDanhGia(dg.id)} style={{margin: "3px"}}>xóa</Link>
+                                                                <Link to={"/nha-xe-danh-gia/"+nhaXeId} style={{margin: "3px"}}>sửa</Link>
                                                             </div>
                                                         );
                                                     }

@@ -13,17 +13,6 @@ function Footer(){
                             </a>
                             <p class="m-0">Chúng tôi mong muốn mang đến khách hàng ứng dụng đặt vé xe nhanh chóng và tiện lợi</p>
                         </div>
-                        <div class="col-md-6 mb-5">
-                            <h3 class="text-white mb-4">Newsletter</h3>
-                            <div class="w-100">
-                                <div class="input-group">
-                                    <input type="text" class="form-control border-light" style={{padding: "30px",}} placeholder="Your Email Address"/>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary px-4">Sign Up</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-5">
@@ -33,7 +22,7 @@ function Footer(){
                             <p><i class="fa fa-envelope mr-2"></i>voduy89123@gmail.com</p>
                             <div class="d-flex justify-content-start mt-4">
                                 <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-twitter"></i></a>
-                                <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-facebook-f"></i></a>
+                                <a class="text-white mr-4" href="https://www.facebook.com/truongduy.vo.5011/"><i class="fab fa-2x fa-facebook-f"></i></a>
                                 <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
                                 <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
                             </div>

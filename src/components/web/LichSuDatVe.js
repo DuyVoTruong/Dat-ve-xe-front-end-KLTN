@@ -12,6 +12,7 @@ const LichSuDatVe=()=>{
 
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
+    const [load, setLoad] = useState(false);
     const [veXe,setVeXe]=useState([]);
     useEffect(()=>{
         getVeXeUserById(account.id, token).then(data=>{
@@ -19,11 +20,35 @@ const LichSuDatVe=()=>{
                 setVeXe(data);
             }
         })
+        setLoad(false);
+    },[load])
+
+    useEffect(()=>{
+        window.scrollTo(0,0);
     },[])
 
     const nav = useNavigate();
     const redirectVeXeChiTiet =(vx)=>{
         nav("/ve-xe-chi-tiet", {state: vx});
+    }
+
+    const deleteVeXe =(id)=>{
+        if(window.confirm("Bạn muốn hủy vé xe này?")===true){
+            fetch("http://localhost:8080/api/vexe/"+id,{
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json",
+            },
+            }).then(res=>res.json()).then(data=>{
+                if(data.status==200){
+                    window.alert("Hủy vé xe thành công!!!");
+                    setLoad(true);
+                }else{
+                    window.alert("Đã xảy ra lỗi!!!");
+                }
+            })
+        }
     }
 
     return (
@@ -63,7 +88,7 @@ const LichSuDatVe=()=>{
                                 if(vx.trangThai==="INACTIVE"){
                                     return(
                                         <>
-                                            <button onClick={()=>redirectVeXeChiTiet(vx)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>Huỷ đơn</span></button>
+                                            <button onClick={()=>deleteVeXe(vx.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>Huỷ đơn</span></button>
                                         </>
                                     );
                                 }

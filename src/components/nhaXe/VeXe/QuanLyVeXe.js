@@ -91,6 +91,25 @@ const QuanLyVeXe =()=>{
         }
     }
 
+    const deleteVeXe =(id)=>{
+        if(window.confirm("Bạn muốn hủy vé xe này?")===true){
+            fetch("http://localhost:8080/api/vexe/"+id,{
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json",
+            },
+            }).then(res=>res.json()).then(data=>{
+                if(data.status==200){
+                    window.alert("Hủy vé xe thành công!!!");
+                    setLoad(true);
+                }else{
+                    window.alert("Đã xảy ra lỗi!!!");
+                }
+            })
+        }
+    }
+
     return(
         <>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
@@ -146,7 +165,7 @@ const QuanLyVeXe =()=>{
                                     return(
                                         <>
                                         <Button onClick={()=>xacNhan(vx)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>Xác nhận</Button>
-                                        <Button style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>Hủy</Button>
+                                        <Button onClick={()=>deleteVeXe(vx.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>Hủy</Button>
                                         </>
                                     )
                                 }
@@ -154,7 +173,7 @@ const QuanLyVeXe =()=>{
                                     return(
                                         <>
                                         <Button onClick={()=>xacNhanHoanThanh(vx)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>Xác nhận hoàn thành</Button>
-                                        <Button style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>Hủy</Button>
+                                        <Button onClick={()=>deleteVeXe(vx.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>Hủy</Button>
                                         </>
                                     )
                                 }

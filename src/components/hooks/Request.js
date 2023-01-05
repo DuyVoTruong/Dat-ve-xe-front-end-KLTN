@@ -296,6 +296,17 @@ async function httpGetXe(token){
     return await res.json();
 }
 
+async function httpGetXeNhaXe(id,token){
+    const res = await fetch(`${API_URL}/xe/nhaxe/${id}`,{
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+    });
+    return await res.json();
+}
+
 async function httpGetXeById(id, token){
     const res = await fetch(`${API_URL}/xe/${id}`,{
         method: "GET",
@@ -816,6 +827,7 @@ export {
 
     //Xe
     httpGetXe,
+    httpGetXeNhaXe,
     httpGetXeById,
     httpPostXe,
     httpPutXe,

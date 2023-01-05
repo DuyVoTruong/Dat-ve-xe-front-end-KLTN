@@ -20,6 +20,10 @@ const LichSuGuiHang=()=>{
         setLoad(false);
     },[load])
 
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },[])
+
     const huyDon =(id)=>{
         if(window.confirm("Bạn muốn xóa đơn giao hàng này")==true){
             fetch(`http://localhost:8080/api/hanghoa/${id}`,{

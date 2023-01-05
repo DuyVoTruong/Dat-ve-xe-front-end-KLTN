@@ -32,6 +32,7 @@ const ThongKeNhaXe =()=>{
     const [dataPie, setDataPie] = useState([]);
     const [optionsPie, setOptionsPie] = useState([]);
     const [loaiXe, setLoaiXe] = useState([]);
+    const [tuyenXe, setTuyenXe] = useState([]);
     const [show, setShow] = useState(false);
 
     const [month, setMonth] = useState("");
@@ -49,6 +50,19 @@ const ThongKeNhaXe =()=>{
         }).then(res=>res.json()).then(data=>{
           if(data.status==200){
             setLoaiXe(data.object);
+          }
+        })
+
+        fetch("http://localhost:8080/api/thongke/nhaxe/tuyenxe",{
+          method: "POST",
+          headers: {
+              'Authorization': 'Bearer ' + token,
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({month, year, nhaXeId: account.id}),
+        }).then(res=>res.json()).then(data=>{
+          if(data.status==200){
+            setTuyenXe(data.object);
           }
         })
       }
@@ -129,7 +143,7 @@ const ThongKeNhaXe =()=>{
     const thongKeTheoTuyenXe =()=>{
       
         setDataBar({
-          labels: loaiXe.map(lx=>lx.tenLoaiXe),
+          labels: tuyenXe.map(tx=>{return(tx.tinhThanhDi+" đến "+tx.tinhThanhDen)}),
           datasets: [
             {
               label: "Doanh thu (đơn vị: nghìn đồng)",
@@ -140,13 +154,13 @@ const ThongKeNhaXe =()=>{
                 "#e8c3b9",
                 "#c45850"
               ],
-              data: loaiXe.map(lx=>lx.tongDoanhThu)
+              data: tuyenXe.map(tx=>tx.tongDoanhThu)
             }
           ]
         });
   
         setDataPie({
-          labels: loaiXe.map(lx=>lx.tenLoaiXe),
+          labels: tuyenXe.map(tx=>{return(tx.tinhThanhDi+" đến "+tx.tinhThanhDen)}),
           datasets: [
             {
               label: "Tỷ lệ (đơn vị: %)",
@@ -157,7 +171,7 @@ const ThongKeNhaXe =()=>{
                 "#e8c3b9",
                 "#c45850"
               ],
-              data: loaiXe.map(lx=>lx.tyLe)
+              data: tuyenXe.map(tx=>tx.tyLe)
             }
           ]
         });
@@ -209,6 +223,19 @@ const ThongKeNhaXe =()=>{
           {
             (()=>{
               if(show==="LoaiXe"){
+                return(
+                  <>
+                  <div style={{display: "flex"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                      <BarChart data={dataBar} options={optionsBar}></BarChart>
+                    </div>
+                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                      <PieChart data={dataPie} options={optionsPie}></PieChart>
+                    </div>
+                  </div>
+                  </>
+                )
+              }else if(show==="TuyenXe"){
                 return(
                   <>
                   <div style={{display: "flex"}}>
