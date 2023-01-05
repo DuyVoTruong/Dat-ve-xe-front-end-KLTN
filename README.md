@@ -1,3 +1,11 @@
+# Các bước thực hiện
+- Bước 1: tải project về máy
+git clone https://github.com/DuyVoTruong/Dat-ve-xe-front-end
+- Bước 2: vào project mở terminal và thực hiện lệnh sau để cài đặt các gói cần thiết
+npm install
+- Bước 3: chạy project bằng terminal
+npm start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
