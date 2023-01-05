@@ -1,5 +1,3 @@
-import useToken from "./useToken";
-
 const API_URL = 'http://localhost:8080/api'
 
 //BenXe
@@ -70,8 +68,12 @@ function httpPutBenXe(id, data, token){
 }
 
 function httpDeleteBenXe(id, token){
-    return fetch(`${API_URL}/benxe/benxeid/${id}`, {
+    return fetch(`${API_URL}/benxe/${id}`, {
         method: "Delete",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
     })
 }
 
@@ -111,7 +113,7 @@ async function httpGetNhaXeUserById(id, token){
 }
 
 async function httpGetNhaXeById(id, token){
-    const res = await fetch(`${API_URL}/nhaxe/${id}`,{
+    const res = await fetch(`${API_URL}/nhaxe/admin/${id}`,{
         method: "GET",
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -645,6 +647,13 @@ async function httpGetAllDanhGiaByIdNhaXe(id, token){
     return await res.json();
 }
 
+async function httpGetSaoTrungBinhNhaXe(id){
+    const res = await fetch(`${API_URL}/thongke/nhaxe/sao-trung-binh/${id}`,{
+        method: "GET",
+    });
+    return await res.json();
+}
+
 function httpPostDanhGia(data, token){
     return fetch(`${API_URL}/danhgia/add`, {
         method: "POST",
@@ -669,6 +678,80 @@ function httpPutDanhGia(id, data, token){
 
 function httpDeleteDanhGia(id, token){
     return fetch(`${API_URL}/danhgia/${id}`, {
+        method: "Delete",
+    })
+}
+
+
+//Hang hoa
+async function httpGetHangHoa(token){
+    const res = await fetch(`${API_URL}/hanghoa/all`,{
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+    });
+    return await res.json();
+}
+
+async function httpGetHangHoaById(id, token){
+    const res = await fetch(`${API_URL}/hanghoa/${id}`,{
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+    });
+    return await res.json();
+}
+
+async function httpGetHangHoaByUserId(id, token){
+    const res = await fetch(`${API_URL}/hanghoa/user/${id}`,{
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+    });
+    return await res.json();
+}
+
+async function httpGetHangHoaByTuyenXeId(id, token){
+    const res = await fetch(`${API_URL}/hanghoa/tuyenxe/${id}`,{
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+    });
+    return await res.json();
+}
+
+function httpPostHangHoa(data, token){
+    return fetch(`${API_URL}/hanghoa/add`, {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data, token),
+    });
+}
+
+function httpPutHangHoa(id, data, token){
+    return fetch(`${API_URL}/hanghoa/${id}`, {
+        method: "PUT",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+function httpDeleteHangHoa(id, token){
+    return fetch(`${API_URL}/hanghoa/${id}`, {
         method: "Delete",
     })
 }
@@ -782,6 +865,16 @@ export {
     httpPutDanhGia,
     httpDeleteDanhGia,
     httpGetAllDanhGiaByIdNhaXe,
+    httpGetSaoTrungBinhNhaXe,
+
+    //Hang hoa
+    httpGetHangHoa,
+    httpGetHangHoaById,
+    httpGetHangHoaByUserId,
+    httpGetHangHoaByTuyenXeId,
+    httpPostHangHoa,
+    httpPutHangHoa,
+    httpDeleteHangHoa,
 
     //Sign Up
     httpPostSignUp,

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useFetcher, useLocation, useParams } from "react-router-dom";
+import { useFetcher, useLocation, useNavigate, useParams } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpGetTuyenXeById, httpPostVeXe } from "../hooks/Request";
 import useBenXe from "../hooks/useBenXe";
@@ -11,6 +11,8 @@ import useTuyenXe from "../hooks/useTuyenXe";
 import useUser from "../hooks/useUser";
 import useVeXe from "../hooks/useVeXe";
 import useXe from "../hooks/useXe";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function DatVe(){
 
@@ -32,12 +34,13 @@ function DatVe(){
     let tenBenXeDi = "";
     let tenNhaXe = "";
     let sdt = "";
+    const nav = useNavigate();
 
     const convertNgayNhan=()=>{
         var tomorrow = new Date();
         tomorrow.setDate(today.getDate()+1)
         let ngayNhan;
-        if(tomorrow.getDate()<10||tomorrow.getMonth<9){
+        if(tomorrow.getDate()<10||tomorrow.getMonth()<9){
             let date=tomorrow.getDate();
             let month=tomorrow.getMonth()+1;
             if(date<10){
@@ -53,43 +56,57 @@ function DatVe(){
         return ngayNhan;
     }
 
+    const convertNgay =(d)=>{
+        let ngay;
+        if(d.getDate()<10||d.getMonth()<9){
+            let date=d.getDate();
+            let month=d.getMonth()+1;
+            if(date<10){
+                date="0"+date;
+            }
+            if(month<10){
+                month="0"+month
+            }
+            ngay = d.getFullYear()+"-"+month+"-"+date;
+        }else{
+            ngay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+        }
+        return ngay;
+    }
 
     const DatVe=()=>{
          // Khai báo tham số
          let checkbox = document.getElementsByName('Group1');
-         let soGhe = "";
+         let soGhe = [];
          
          // Lặp qua từng checkbox để lấy giá trị
          for (var i = 0; i < checkbox.length; i++){
             if (checkbox[i].checked === true){
-                soGhe = soGhe + checkbox[i].value + ' ';
+                soGhe.push(checkbox[i].value);
             }
          }
-        soGhe = soGhe.substring(0,soGhe.length-1)
 
         let userId = account.id;
 
         ngayNhan=convertNgayNhan();
 
-        if(soGhe.split(" ").length>1||soGhe.slice(" ")<1){
-            window.alert("Bạn chỉ được chọn một ghế")
-        }
-        else if(!ngayDat||!ngayNhan||!hinhThucThanhToan||!tuyenXeId){
-            window.alert("Bạn phải điền đầy đủ thông tin")
+        if(!ngayDat||!ngayNhan||!hinhThucThanhToan||!tuyenXeId||soGhe.length==0){
+            toast.info("Bạn phải điền đầy đủ thông tin")
         }
         else if(userId===null){
-            window.alert("Bạn phải đăng nhập để đặt vé!!!")
+            toast.info("Bạn phải đăng nhập để đặt vé!!!")
         }
         else {
             let data = {
-                soGhe,ngayDat,ngayNhan,hinhThucThanhToan,tuyenXeId,userId
+                soGhe,ngayDat:convertNgay(today),ngayNhan,hinhThucThanhToan,tuyenXeId,userId
             }
 
             console.log(data)
 
             httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    window.alert("Bạn đã đặt vé thành công")
+                    toast.success("Bạn đã đặt vé thành công")
+                    setTimeout(()=>{nav("/lich-su-dat-ve")},3000);
                 }
                 else{
                     window.alert(data.message);
@@ -116,6 +133,7 @@ function DatVe(){
 
     return(
         <>
+        <ToastContainer/>
         <Container>
             <div>
                 <Row className="d-flex justify-content-center align-items-center" style={{marginBottom: "200px", marginTop:"100px"}}>
@@ -212,7 +230,7 @@ function DatVe(){
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label className="text-center">
-                                Chọn số ghế (Bạn chỉ được chọn một ghế)
+                                Chọn số ghế
                             </Form.Label>
                             
                             </Form.Group>

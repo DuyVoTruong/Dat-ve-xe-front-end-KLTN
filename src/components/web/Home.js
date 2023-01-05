@@ -4,7 +4,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useNavigate } from 'react-router-dom';
 import useTuyenXe from '../hooks/useTuyenXe';
-import {getAllBenXeUser, getNhaXeUserAll} from '../hooks/useFunction'
+import {getAllBenXeUser, getNhaXeUserAll, getSaoTrungBinhNhaXe} from '../hooks/useFunction'
 import "../../css/rating.css"
 import { MyContext } from '../../App';
 
@@ -24,6 +24,8 @@ function Home(){
     const tinhThanh = [];
     let d = new Date();
     const toDay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    const [sao, setSao] = useState([]);
+
 
     const nav=useNavigate();
     const danhSachTuyenXe =(diemDen)=>{
@@ -43,6 +45,18 @@ function Home(){
       nav(`/tuyen-xe/?diemDi=${diemDi}&diemDen=${diemDen}&date=${date}`);
     }
 
+    const checkStar =(i, soSao)=>{
+      if(i<=soSao){
+        return(
+          <span class="fa fa-star checkedStar"></span>
+        )
+      }
+      return(
+        <span class="fa fa-star"></span>
+      )
+    }
+
+
     useEffect(()=>{
       getAllBenXeUser().then(data=>{
         if(data){
@@ -52,6 +66,11 @@ function Home(){
       getNhaXeUserAll().then(data=>{
         if(data){
           setNhaXe(data)
+        }
+      })
+      fetch("http://localhost:8080/api/thongke/nguoidung/sao-trung-binh/all").then(res=>res.json()).then(data=>{
+      if(data.object){
+          setSao(data.object);
         }
       })
     },[])
@@ -198,16 +217,22 @@ function Home(){
                   <Card.Img height={"150px"} variant="top" src={"/img/xe.png"} />
                   <Card.Body>
                       <Card.Title>{nx.tenNhaXe}</Card.Title>
-                      <span class="fa fa-star checkedStar"></span>
-                      <span class="fa fa-star checkedStar"></span>
-                      <span class="fa fa-star checkedStar"></span>
-                      <span class="fa fa-star checkedStar"></span>
-                      <span class="fa fa-star"></span>
+                      {
+                        [1,2,3,4,5].map((i, index)=>{
+                          let soSao;
+                          sao.map(s=>{
+                            if(s.id==nx.id){
+                              soSao=s.saoTrungBinh;
+                            }
+                          });
+                          return checkStar(i, soSao);
+                        })
+                      }
                       <Card.Text>
                       Sđt: {nx.sdt}
                       </Card.Text>
                         <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">Xem chi tiết</Button>
-                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>danhGiaNhaXe(nx.id)} variant="primary">Đánh giá</Button>
+                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đánh giá!!!")}else{danhGiaNhaXe(nx.id)}}} variant="primary">Đánh giá</Button>
                   </Card.Body>
                 </Card>
             );

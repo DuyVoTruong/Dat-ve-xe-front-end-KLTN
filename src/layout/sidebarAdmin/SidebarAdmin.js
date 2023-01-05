@@ -13,7 +13,7 @@ const SidebarAdmin = ({children}) => {
         <div style={{display: "flex"}}>
             <div className="sidebar" style={{width: isOpen ? "250px" : "60px"}}>
                 <div className="top_section">
-                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Logo</h1>
+                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo">WEBTOUR</h1>
                     <div style={{marginLeft: isOpen ? "50px" : "0px", marginTop: isOpen ? "0px" : "10px"}} className="bars">
                         <FaBars onClick={toggle}></FaBars>
                     </div>

@@ -14,12 +14,11 @@ const NhaXeDanhGia =()=>{
     const token = useContext(MyContext).token;
 
 
-    const nhaXeId = useParams("id").id;
+    const nhaXeId = useParams().id;
     const [nhaXe, setNhaXe]=useState([]);
     const {addDanhGia} = useDanhGia();
 
     const {user} = useUser();
-    let userId = "";
     const nav = useNavigate();
 
     useEffect(()=>{
@@ -31,32 +30,58 @@ const NhaXeDanhGia =()=>{
        });
     },[])
 
-    const handleAddDanhGia =()=>{
-        user.map(u=>{
-            if(u.taiKhoan){
-                if(u.taiKhoan.username===account.username){
-                    userId=u.id
-                }
+    const convertNgayDang=(d)=>{
+        let ngayDang;
+        if(d.getDate()<10||d.getMonth()<9){
+            let date=d.getDate();
+            let month=d.getMonth()+1;
+            if(date<10){
+                date="0"+date;
             }
-        })
+            if(month<9){
+                month="0"+month
+            }
+            ngayDang = d.getFullYear()+"-"+month+"-"+date;
+        }else{
+            ngayDang = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+        }
+        return ngayDang;
+    }
+
+    const convertGioDang=(h,m)=>{
+        let gioDang;
+        let hour=h;
+        let minutes=m;
+        if(h<10){
+            hour="0"+hour;
+        }
+        if(m<10){
+            minutes="0"+minutes;
+        }
+        gioDang = `${hour}:${minutes}:00`;
+        console.log(gioDang)
+        return gioDang;
+    }
+
+    const handleAddDanhGia =()=>{
         let soSao = Number(starChecked());
         const d = new Date();
         let h = d.getHours();
         let m = d.getMinutes();
-        let gioDang = `${h}:${m}:00`;
-        let ngayDang = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        let gioDang = convertGioDang(h,m);
+        let ngayDang = convertNgayDang(d);
         let noiDung = document.getElementById("comment").value;
         
         if(soSao===0){
             window.alert("Bạn phải chọn số sao")
         } else if(!gioDang||!ngayDang||!noiDung||!soSao){
             window.alert("Bạn phải điền đầy đủ thông tin!!!")
-        }else if(userId===""){
+        }else if(!account.id){
             window.alert("Bạn phải đăng nhập để đánh giá nhà xe!!!")
         }
         else {
             let data = { 
-                soSao,noiDung,gioDang,ngayDang,userId,nhaXeId 
+                soSao,noiDung,gioDang,ngayDang,userId:account.id,nhaXeId 
             }
             console.log(data)
             addDanhGia(data)

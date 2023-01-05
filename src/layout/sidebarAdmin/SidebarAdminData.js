@@ -106,4 +106,18 @@ export const SidebarAdminData =[
             },
         ]
     },
+    {
+        title:'Thống kê',
+        //path:'/admin/home',
+        icon:<FaIcons.FaChartBar/>,
+        iconClosed:<RiIcons.RiArrowDownSFill/>,
+        iconOpened:<RiIcons.RiArrowUpSFill/>,
+        subNav:[
+            {
+                title: 'Thống kê',
+                path:'/admin/thong-ke',
+                icon:<IoIcons.IoIosPaper/>,
+            },
+        ]
+    },
 ]

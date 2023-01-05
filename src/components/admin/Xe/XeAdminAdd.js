@@ -17,7 +17,7 @@ function XeAdminAdd({showForm, setShowForm, add}){
         let tenNhaXe;
         if(account.role==="NHAXE"){
             nhaXe.map(nx=>{
-                if(nx.taiKhoanId==account.id){
+                if(nx.id==account.id){
                     tenNhaXe=nx.tenNhaXe;
                 }
             })

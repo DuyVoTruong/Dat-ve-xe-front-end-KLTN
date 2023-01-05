@@ -35,17 +35,25 @@ import useToken from './components/hooks/useToken';
 import { createContext } from 'react';
 import LichSuGuiHang from './components/web/LichSuGuiHang';
 import XeNhaXe from './components/nhaXe/Xe/XeNhaXe';
+import VeXeChiTiet from './components/web/VeXeChiTiet';
+import VeXe from './components/nhaXe/VeXe/VeXe';
+import HangHoa from './components/nhaXe/HangHoa/HangHoa';
+import QuanLyVeXe from './components/nhaXe/VeXe/QuanLyVeXe';
+import GiaoHang from './components/web/GiaoHang';
+import QuanLyHangHoa from './components/nhaXe/HangHoa/QuanLyHangHoa';
+import ThongKeNhaXe from './components/nhaXe/ThongKe/ThongKeNhaXe';
+import ThongKeAdmin from './components/admin/ThongKe/ThongKeAdmin';
 
 export const MyContext = createContext();
 
 function App() {
 
 
-  const {token, account, setToken} = useToken();
+  const {token, account, setToken, setAccount} = useToken();
 
   if(!account){
       return(
-        <MyContext.Provider value={{token, setToken, account}}>
+        <MyContext.Provider value={{token, setToken, account, setAccount}}>
         <BrowserRouter>
         <Routes>
         <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
@@ -67,7 +75,7 @@ function App() {
   } else {
     if(account.role==="ADMIN"){
       return(
-        <MyContext.Provider value={{token, setToken, account}}>
+        <MyContext.Provider value={{token, setToken, account, setAccount}}>
         <BrowserRouter>
           <Routes>
             <Route path='/*' element={<Navigate to="/admin/home" replace />}></Route>
@@ -88,6 +96,7 @@ function App() {
               <Route path='loai-xe' element={<LoaiXeAdmin></LoaiXeAdmin>}></Route>
               <Route path='xe' element={<XeAdmin></XeAdmin>}></Route>
               <Route path='xe/add' element={<XeAdminAdd></XeAdminAdd>}></Route>
+              <Route path='thong-ke' element={<ThongKeAdmin></ThongKeAdmin>}></Route>
               {/*<Route path="*" element={<Navigate to="home" replace />}></Route>*/}
             </Route>
           </Routes>
@@ -95,7 +104,7 @@ function App() {
         </MyContext.Provider>)
       }else if(account.role==="NHAXE"){
         return(
-          <MyContext.Provider value={{token, setToken, account}}>
+          <MyContext.Provider value={{token, setToken, account, setAccount}}>
           <BrowserRouter>
           <Routes>
             <Route path='/*' element={<Navigate to="/nha-xe/home" replace />}></Route>
@@ -104,6 +113,11 @@ function App() {
                 <Route path='thong-tin-tai-khoan' element={<ThongTinTaiKhoan></ThongTinTaiKhoan>}></Route>
                 <Route path="tuyen-xe" element={<TuyenXeNhaXe></TuyenXeNhaXe>} />
                 <Route path="xe" element={<XeNhaXe></XeNhaXe>} />
+                <Route path="ve-xe" element={<VeXe></VeXe>} />
+                <Route path="ve-xe/quan-ly/:id" element={<QuanLyVeXe></QuanLyVeXe>} />
+                <Route path="hang-hoa" element={<HangHoa></HangHoa>} />
+                <Route path="hang-hoa/quan-ly/:id" element={<QuanLyHangHoa></QuanLyHangHoa>} />
+                <Route path="thong-ke" element={<ThongKeNhaXe></ThongKeNhaXe>} />
                 <Route path="*" element={<Navigate to="home" replace />}></Route>
             </Route>
           </Routes>
@@ -112,7 +126,7 @@ function App() {
         )
       }else {
         return(
-          <MyContext.Provider value={{token, setToken, account}}>
+          <MyContext.Provider value={{token, setToken, account, setAccount}}>
           <BrowserRouter>
           <Routes>
             <Route path='/*' element={<LayoutWeb account={account}></LayoutWeb>}>
@@ -127,6 +141,8 @@ function App() {
                 <Route path='nha-xe-danh-gia/:id' element={<NhaXeDanhGia></NhaXeDanhGia>}></Route>
                 <Route path='lich-su-dat-ve' element={<LichSuDatVe></LichSuDatVe>}></Route>
                 <Route path='lich-su-gui-hang' element={<LichSuGuiHang></LichSuGuiHang>}></Route>
+                <Route path='ve-xe-chi-tiet' element={<VeXeChiTiet></VeXeChiTiet>}></Route>
+                <Route path='giao-hang/:id' element={<GiaoHang></GiaoHang>}></Route>
                 <Route path="*" element={<Navigate to="/" replace />}></Route>
               </Route>
           </Routes>

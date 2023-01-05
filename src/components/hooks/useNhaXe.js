@@ -31,7 +31,7 @@ function useNhaXe(){
         if(!account){
             getNhaXeUser();
         }
-        else if(account.role==="USER"){
+        else if(account.role==="USER"||account.role==="NHAXE"){
             getNhaXeUser();
         }else{
             getNhaXeAdmin();

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Container, Table } from "react-bootstrap";
+import { Container, Table, ToastBody } from "react-bootstrap";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {GrDescend, GrAscend} from "react-icons/gr"
 import { getAllBenXeUser, getAllVeXeByTuyenXeId, getTuyenXeFindByAddressDate } from "../hooks/useFunction";
@@ -23,6 +23,24 @@ function TuyenXe(){
     const [date, setDate] = useState(q.get("date")||toDay);
     const [Ascending, SetAscending] = useState(true);
     let soGheDaDat = 0;
+
+    const convertNgay=(d)=>{
+      let ngay;
+      if(d.getDate()<10||d.getMonth()<9){
+          let date=d.getDate();
+          let month=d.getMonth()+1;
+          if(date<10){
+              date="0"+date;
+          }
+          if(month<9){
+              month="0"+month
+          }
+          ngay = d.getFullYear()+"-"+month+"-"+date;
+      }else{
+          ngay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+      }
+      return ngay;
+  }
 
 
     const onClickAscending = () =>{
@@ -61,7 +79,11 @@ function TuyenXe(){
 
     const nav = useNavigate();
     const datVe =(tx)=>{
-        nav("/dat-ve-xe/"+tx.id)
+        nav("/dat-ve-xe/"+tx.id);
+    }
+
+    const giaoHang =(tx)=>{
+      nav("/giao-hang/"+tx.id);
     }
 
     return(
@@ -104,7 +126,7 @@ function TuyenXe(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Ngày đi</span>
-                            <input class="form-control" type="date" required defaultValue={date||toDay} onChange={e=>setDate(e.target.value)}/>
+                            <input class="form-control" type="date" required defaultValue={convertNgay(d)} onChange={e=>setDate(e.target.value)}/>
                           </div>
                         </div>
                         {/*
@@ -155,7 +177,8 @@ function TuyenXe(){
         </Container>
         <h1 style={{textAlign:"center"}}>Tất cả tuyến xe trong ngày {new Date(date).toLocaleDateString('vi')}</h1>
         <Container>
-        <div style={{marginTop:"30px", height:"500px", overflow: "auto"}} className="shadow">
+        <div style={{marginTop:"30px", height:"500px", backgroundColor:"white", borderRadius: "3px", overflow: "auto"}} className="shadow">
+        <div style={{padding: "20px"}}>
         <Table striped bordered hover style={{backgroundColor:"white"}}>
         <thead>
             <tr>
@@ -175,7 +198,7 @@ function TuyenXe(){
                 return(
                     <>
                     <tr>
-                    <td>{tx.benXeDi.tenBenXe}{" => "}{tx.benXeDen.tenBenXe}</td>
+                    <td>{tx.benXeDi.tenBenXe} ({tx.benXeDi.tinhThanh}){" => "}{tx.benXeDen.tenBenXe} ({tx.benXeDen.tinhThanh})</td>
                     <td>{tx.xe.nhaXe.tenNhaXe}</td>
                     <td>{tx.xe.loaiXe.tenLoaiXe}</td>
                     <td>{tx.xe.loaiXe.sucChua}</td>
@@ -183,7 +206,10 @@ function TuyenXe(){
                     <td>{tx.gioDi}</td>
                     <td>{tx.thoiGianHanhTrinh}</td>
                     <td>{tx.giaVe}</td>
-                    <td style={{textAlign: "center"}}><button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/ticket-icon.png"></img><span style={{marginRight: "10px"}}>Đặt vé xe</span></button></td>
+                    <td style={{textAlign: "center"}}>
+                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/ticket-icon.png"></img><span style={{marginRight: "10px"}}>Đặt vé xe</span></button>
+                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/img/chuyen-hang.png"></img><span style={{marginRight: "10px"}}>Giao hàng</span></button>
+                    </td>
                     </tr>
                     </>
                 )
@@ -195,6 +221,7 @@ function TuyenXe(){
             }
         </tbody>
         </Table>
+        </div>
         </div>
         </Container>
         </>

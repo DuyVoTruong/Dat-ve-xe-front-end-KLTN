@@ -18,24 +18,27 @@ function Login() {
       username,password
     }
     httpLogin(accountLogin).then(res=>res.json()).then(data=>{
-      if(data.jwtToken&&data.object){
+      if(data.jwtToken){
         const userToken = {
           jwtToken: data.jwtToken,
           account: {
-            id: data.object.id,
-            username: data.object.username,
-            role: data.object.role
+            id: data.id,
+            username: data.username,
+            role: data.role
           }
         }
         setToken(userToken);//lưu token
         window.alert("Đăng nhập thành công!!!")
-        if(data.object.role==="USER"){
+        if(data.role==="USER"){
           nav("/home")
-        }else if(data.object.role==="ADMIN"){
+        }else if(data.role==="ADMIN"){
           nav("/admin/home")
-        }else if(data.object.role==="NHAXE"){
+        }else if(data.role==="NHAXE"){
           nav("/nha-xe/home")
         }
+      }
+      else if(data.status==401){
+        window.alert("Username hoặc password không chính xác!!!")
       }
       else{
         window.alert(data.message)

@@ -31,7 +31,6 @@ function useVeXe(){
                 await httpPostVeXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
                         alert("Success");
-                        nav("/admin/ben-xe");
                     }
                     else{
                         alert(data.message);
@@ -44,15 +43,10 @@ function useVeXe(){
     }, [getVeXe]);
 
     const updateVeXe = useCallback(async(idVeXe, data) => {
-        if (!data.tenVeXe||!data.diaChi){
-            alert("Missing data");
-        }
-        else {
             try {
                 await httpPutVeXe(idVeXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
                         alert("Success");
-                        nav('/admin/ben-xe');
                     }
                     else {
                         alert(data.message);
@@ -61,7 +55,6 @@ function useVeXe(){
             }catch(err) {
                 alert("Fail");
             }
-        }
     },[getVeXe])
 
     const deleteVeXe = useCallback(async(idVeXe) => {

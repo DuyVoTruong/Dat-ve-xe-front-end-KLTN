@@ -56,7 +56,8 @@ function LichTrinh(){
             </div>
         </Container>
         <Container>
-        <div style={{marginTop:"30px", height:"500px", overflowY:"scroll"}}>
+        <div style={{marginTop:"30px", height:"500px", backgroundColor: "white", overflow:"auto"}}>
+        <div style={{padding: "20px"}}>
         <Table striped bordered hover style={{backgroundColor: "white"}}>
         <thead>
             <tr>
@@ -84,6 +85,7 @@ function LichTrinh(){
                 }
         </tbody>
         </Table>
+        </div>
         </div>
         </Container>
         </>

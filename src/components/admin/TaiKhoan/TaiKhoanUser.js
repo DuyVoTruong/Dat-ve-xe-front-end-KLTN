@@ -72,7 +72,6 @@ function TaiKhoanUser(){
 
     return(
         <>
-        <div className="container-dashboard">
         <TaiKhoanAddAdmin showForm={showFormAdd} setShowForm={setShowFormAdd} add={signUp} role={"USER"}></TaiKhoanAddAdmin>
         <TaiKhoanUpdateAdmin key={tk.id} showForm={showFormUpdate} setShowForm={setShowFormUpdate} update={updateUser} role={"USER"} tk={tk}></TaiKhoanUpdateAdmin>
         {
@@ -84,11 +83,13 @@ function TaiKhoanUser(){
                 }
             })()
         }
-        <div style={{width: "100%", height: "30px", display: "flex"}}>
-            <input onChange={(evt)=>setSearch(evt.target.value)} className="form-control" style={{marginRight: "10px", width: "30%"}} type={"text"} placeholder="Tìm kiếm theo tên..."></input>
-            <BsPlusSquareFill onClick={()=>setShowFormAdd(true)} className="add-btn"></BsPlusSquareFill>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>Quản lý tài khoản user</h2></div>
+        <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
+        <div style={{display: "flex"}}>
+            <input onChange={(evt)=>setSearch(evt.target.value)} className="form-control" style={{margin: "20px", width: "30%"}} type={"text"} placeholder="Tìm kiếm theo tên..."></input>
+            <BsPlusSquareFill style={{marginTop: "25px"}} onClick={()=>setShowFormAdd(true)} className="add-btn"></BsPlusSquareFill>
         </div>
-        <div style={{marginTop:"30px"}}>
+        <div style={{padding:"20px", overflow: "auto"}}>
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>

@@ -13,7 +13,6 @@ function Header(){
     const logout =()=>{
         localStorage.clear();
         setAccount();
-        nav("/home")
     }
 
     return(
@@ -82,7 +81,7 @@ function Header(){
                                 <>
                                     <Navbar.Collapse className="justify-content-end">
                                         <div style={{marginRight:"10px"}}>
-                                            <a class="text-white pl-2" href="">
+                                            <a class="text-white pl-2">
                                                 <i class="fa fa-user"></i>
                                             </a>
                                         </div>
@@ -92,7 +91,7 @@ function Header(){
                                             <a class="text-white pl-2">
                                                 <i class="fas fa-sign-out-alt"></i>
                                             </a>
-                                            <a onClick={logout} class="text-blue pl-2" href="">Log out</a>
+                                            <a onClick={logout} class="text-blue pl-2" href="/">Log out</a>
                                         </div>
                                     </Navbar.Collapse>
                                 </>

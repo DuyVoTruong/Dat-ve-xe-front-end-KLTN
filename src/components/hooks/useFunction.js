@@ -1,4 +1,4 @@
-const { httpGetBenXeById, httpGetLoaiXeById, httpGetBenXeUser, httpGetNhaXeById, httpGetAllDanhGiaByIdNhaXe, httpGetTuyenXeFindByAddress, httpGetAllVeXeByTuyenXeId, httpGetTuyenXeById, httpGetNhaXeUserById, httpGetNhaXeUserAll, httpGetVeXeUserById, httpGetTuyenXeFindByAddressDate } = require("./Request");
+const { httpGetBenXeById, httpGetLoaiXeById, httpGetBenXeUser, httpGetNhaXeById, httpGetAllDanhGiaByIdNhaXe, httpGetTuyenXeFindByAddress, httpGetAllVeXeByTuyenXeId, httpGetTuyenXeById, httpGetNhaXeUserById, httpGetNhaXeUserAll, httpGetVeXeUserById, httpGetTuyenXeFindByAddressDate, httpGetSaoTrungBinhNhaXe, httpGetHangHoaByUserId, httpGetHangHoaByTuyenXeId } = require("./Request");
 
 const getTinhThanhPho=()=>{
     var citis = document.getElementById("city");
@@ -142,6 +142,32 @@ const getTuyenXeFindByAddressDate = async(data, token) => {
     }
 };
 
+const getSaoTrungBinhNhaXe = async(id) => {
+    const res = await httpGetSaoTrungBinhNhaXe(id);
+    if (res.status == 200){
+        console.log(res.object)
+        return res.object
+    }
+};
+
+const getHangHoaByUserId = async(id, token) => {
+    const res = await httpGetHangHoaByUserId(id, token);
+    console.log(res)
+    if (res.status == 200){
+        console.log(res.object)
+        return res.object
+    }
+};
+
+const getHangHoaByTuyenXeId = async(id, token) => {
+    const res = await httpGetHangHoaByTuyenXeId(id, token);
+    console.log(res)
+    if (res.status == 200){
+        console.log(res.object)
+        return res.object
+    }
+};
+
 module.exports = {
     getTinhThanhPho,
     getBenXeById,
@@ -156,4 +182,7 @@ module.exports = {
     getNhaXeUserAll,
     getVeXeUserById,
     getTuyenXeFindByAddressDate,
+    getSaoTrungBinhNhaXe,
+    getHangHoaByUserId,
+    getHangHoaByTuyenXeId,
 }

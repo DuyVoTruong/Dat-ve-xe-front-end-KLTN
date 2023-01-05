@@ -38,6 +38,45 @@ export const SidebarNhaXeData = [
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
+  },{
+    title:'Vé xe',
+    //path:'/admin/home',
+    icon:<FaIcons.FaTicketAlt/>,
+    iconClosed:<RiIcons.RiArrowDownSFill/>,
+    iconOpened:<RiIcons.RiArrowUpSFill/>,
+    subNav:[
+        {
+            title: 'Vé xe',
+            path:'/nha-xe/ve-xe',
+            icon:<IoIcons.IoIosPaper/>,
+        },
+    ]
+  },{
+    title:'Hàng hóa',
+    //path:'/admin/home',
+    icon:<FaIcons.FaTruck/>,
+    iconClosed:<RiIcons.RiArrowDownSFill/>,
+    iconOpened:<RiIcons.RiArrowUpSFill/>,
+    subNav:[
+        {
+            title: 'Hàng hóa',
+            path:'/nha-xe/hang-hoa',
+            icon:<IoIcons.IoIosPaper/>,
+        },
+    ]
+  },{
+    title:'Thống kê',
+    //path:'/admin/home',
+    icon:<FaIcons.FaChartBar/>,
+    iconClosed:<RiIcons.RiArrowDownSFill/>,
+    iconOpened:<RiIcons.RiArrowUpSFill/>,
+    subNav:[
+        {
+            title: 'Thống kê',
+            path:'/nha-xe/thong-ke',
+            icon:<IoIcons.IoIosPaper/>,
+        },
+    ]
   },
 ];
 

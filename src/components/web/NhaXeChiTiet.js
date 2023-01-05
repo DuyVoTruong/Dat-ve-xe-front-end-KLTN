@@ -13,9 +13,11 @@ const NhaXeChiTiet =()=>{
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
     const [danhGia, setDanhGia] = useState([]);
-    const nhaXeId = useParams("id").id;
+    const nhaXeId = useParams().id;
     const [nhaXe,setNhaXe]=useState([]);
     const {tuyenXe}=useTuyenXe();
+    const [thongKeSao,setThongKeSao]=useState([{sao1:0,sao2:0,sao3:0,sao4:0,sao5:0,soNguoiDanhGia:0}]);
+    const [saoTB, setSaoTB] = useState(0);
 
     const nav = useNavigate();
     const themDanhGia=(id)=>{
@@ -30,8 +32,6 @@ const NhaXeChiTiet =()=>{
                 nStar = arrayStar[i].value;
             }
         }
-        
-        console.log(nStar)
     }
 
     const Rating=(nStar, i)=>{
@@ -61,6 +61,34 @@ const NhaXeChiTiet =()=>{
                 setDanhGia(data);
             }
         });
+        fetch(`http://localhost:8080/api/thongke/nguoidung/so-sao/${nhaXeId}`,{
+            headers:{
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json",
+            }
+        }).then(res=>res.json()).then(data=>{
+            if(data){
+                {
+                    if(data.object){
+                        setThongKeSao(data.object);
+                    }
+                }
+            }
+        })
+        fetch(`http://localhost:8080/api/thongke/nguoidung/sao-trung-binh/${nhaXeId}`,{
+            headers:{
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json",
+            }
+        }).then(res=>res.json()).then(data=>{
+            if(data){
+                {
+                    if(data.object){
+                        setSaoTB(data.object);
+                    }
+                }
+            }
+        })
     },[])
 
     return(
@@ -112,10 +140,23 @@ const NhaXeChiTiet =()=>{
                 <Card.Title>Đánh giá của người dùng</Card.Title>
                 {
                     [1,2,3,4,5].map(t=>{
-                        return Rating(4,t)
+                        return Rating(saoTB,t)
                     })
                 }
-                <Card.Title style={{marginTop: "10px"}}>4 sao dựa trên đánh giá của 200 người dùng</Card.Title>
+                {
+                    (()=>{
+                       if(Number(saoTB)){
+                        return(
+                            <Card.Title style={{marginTop: "10px"}}>{saoTB} sao dựa trên đánh giá của {thongKeSao.soNguoiDanhGia} người dùng</Card.Title>
+                        );
+                       } 
+                       else{
+                        return(
+                            <Card.Title style={{marginTop: "10px"}}>Chưa có người dùng nào đánh giá</Card.Title>
+                        );
+                       }
+                    })()
+                }
                 <hr style={{border:"3px solid #2F4F4F"}}></hr>
                 <div style={{textAlign: "center"}}>
                     <Row>
@@ -123,50 +164,55 @@ const NhaXeChiTiet =()=>{
                         <Card.Text className="mb-3">5 sao</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
-                        <ProgressBar className="mb-3" variant="success" now={60} />
+                        <ProgressBar className="mb-3" variant="success" now={thongKeSao.sao5/(thongKeSao.sao1+
+                        thongKeSao.sao2+thongKeSao.sao3+thongKeSao.sao4+thongKeSao.sao5)*100} />
                     </Col>
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">100</Card.Text>
+                        <Card.Text className="mb-3">{thongKeSao.sao5}</Card.Text>
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
                         <Card.Text className="mb-3">4 sao</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
-                        <ProgressBar className="mb-3" variant="secondary" now={60} />
+                        <ProgressBar className="mb-3" variant="secondary" now={thongKeSao.sao4/(thongKeSao.sao1+
+                        thongKeSao.sao2+thongKeSao.sao3+thongKeSao.sao4+thongKeSao.sao5)*100} />
                     </Col>
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">50</Card.Text>
+                        <Card.Text className="mb-3">{thongKeSao.sao4}</Card.Text>
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
                         <Card.Text className="mb-3">3 sao</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
-                        <ProgressBar className="mb-3" variant="info" now={60} />
+                        <ProgressBar className="mb-3" variant="info" now={thongKeSao.sao3/(thongKeSao.sao1+
+                        thongKeSao.sao2+thongKeSao.sao3+thongKeSao.sao4+thongKeSao.sao5)*100} />
                     </Col>
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">20</Card.Text>
+                        <Card.Text className="mb-3">{thongKeSao.sao3}</Card.Text>
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
                         <Card.Text className="mb-3">2 sao</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
-                        <ProgressBar className="mb-3" variant="warning" now={60} />
+                        <ProgressBar className="mb-3" variant="warning" now={thongKeSao.sao2/(thongKeSao.sao1+
+                        thongKeSao.sao2+thongKeSao.sao3+thongKeSao.sao4+thongKeSao.sao5)*100} />
                     </Col>
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">10</Card.Text>
+                        <Card.Text className="mb-3">{thongKeSao.sao2}</Card.Text>
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
                         <Card.Text className="mb-3">1 sao</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
-                        <ProgressBar className="mb-3" variant="danger" now={60} />
+                        <ProgressBar className="mb-3" variant="danger" now={thongKeSao.sao1/(thongKeSao.sao1+
+                        thongKeSao.sao2+thongKeSao.sao3+thongKeSao.sao4+thongKeSao.sao5)*100} />
                     </Col>
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">20</Card.Text>
+                        <Card.Text className="mb-3">{thongKeSao.sao1}</Card.Text>
                     </Col>
                     </Row>
                 </div>
@@ -198,10 +244,20 @@ const NhaXeChiTiet =()=>{
                                         </label>
                                         </div>
                                         <p className="comment-content-border">{dg.noiDung}</p>
-                                        <div style={{marginTop:"-10px", marginLeft: "10px"}}>
-                                            <i style={{margin: "3px"}}>xóa</i>
-                                            <i style={{margin: "3px"}}>sửa</i>
-                                        </div>
+                                        {
+                                            (()=>{
+                                                if(account){
+                                                    if(account.id==dg.user.id){
+                                                        return(
+                                                            <div style={{marginTop:"-10px", marginLeft: "10px"}}>
+                                                                <i style={{margin: "3px"}}>xóa</i>
+                                                                <i style={{margin: "3px"}}>sửa</i>
+                                                            </div>
+                                                        );
+                                                    }
+                                                }
+                                            })()
+                                        }
                                     </div>
                                     <hr style={{border:"1px solid #2F4F4F", width:"95%", margin:"0 auto"}}></hr>
                                     </>
@@ -210,7 +266,7 @@ const NhaXeChiTiet =()=>{
                         }
                     </div>
                 </div>
-                <Button onClick={()=>themDanhGia(1)}>Thêm đánh giá</Button>
+                <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đánh giá!!!")}else{themDanhGia(nhaXeId)}}}>Thêm đánh giá</Button>
                 </Card.Body>
                 </Card>
                 </Col>
