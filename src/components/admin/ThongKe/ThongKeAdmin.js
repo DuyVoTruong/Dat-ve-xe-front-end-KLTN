@@ -196,7 +196,10 @@ const ThongKeAdmin =()=>{
     const thongKeTheoDoanhThu =()=>{
       if(!Number(month)||!Number(year)){
         window.alert("Tháng và năm phải là số!!!");
-      }else{
+      }else if(Number(month)>12||Number(month)<0){
+        window.alert("Tháng phải nằm trong khoảng từ 1 đến 12")
+      }
+      else{
         setDataBar({
           labels: doanhThu.map(dt=>dt.tenNhaXe),
           datasets: [

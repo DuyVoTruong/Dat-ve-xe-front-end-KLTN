@@ -141,7 +141,12 @@ const ThongKeNhaXe =()=>{
     }
 
     const thongKeTheoTuyenXe =()=>{
-      
+      if(!Number(month)||!Number(year)){
+        window.alert("Tháng và năm phải là số!!!");
+      }else if(Number(month)>12||Number(month)<0){
+        window.alert("Tháng phải nằm trong khoảng từ 1 đến 12")
+      }
+      else{
         setDataBar({
           labels: tuyenXe.map(tx=>{return(tx.tinhThanhDi+" đến "+tx.tinhThanhDen)}),
           datasets: [
@@ -204,6 +209,7 @@ const ThongKeNhaXe =()=>{
           }
         });
         setShow("TuyenXe");
+      }
     }
 
     return(

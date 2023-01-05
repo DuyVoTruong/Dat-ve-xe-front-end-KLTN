@@ -23,10 +23,27 @@ function Home(){
     const [diemDen, setDiemDen] = useState("");
     const tinhThanh = [];
     let d = new Date();
-    const toDay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
     const [sao, setSao] = useState([]);
 
+    const convertNgay=(d)=>{
+      let ngay;
+      if(d.getDate()<10||d.getMonth()<9){
+          let date=d.getDate();
+          let month=d.getMonth()+1;
+          if(date<10){
+              date="0"+date;
+          }
+          if(month<9){
+              month="0"+month
+          }
+          ngay = d.getFullYear()+"-"+month+"-"+date;
+      }else{
+          ngay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+      }
+      return ngay;
+    }
 
+    const toDay = convertNgay(d);
     const nav=useNavigate();
     const danhSachTuyenXe =(diemDen)=>{
       nav("/lich-trinh?diemDen="+diemDen)

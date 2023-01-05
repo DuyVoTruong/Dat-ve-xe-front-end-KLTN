@@ -20,7 +20,6 @@ function TuyenXe(){
     const [q] = useSearchParams();
     const [diemDi, setDiemDi] = useState(q.get("diemDi"));
     const [diemDen, setDiemDen] = useState(q.get("diemDen"));
-    const [date, setDate] = useState(q.get("date")||toDay);
     const [Ascending, SetAscending] = useState(true);
     let soGheDaDat = 0;
 
@@ -41,6 +40,8 @@ function TuyenXe(){
       }
       return ngay;
   }
+
+  const [date, setDate] = useState(q.get("date")||convertNgay(d));
 
 
     const onClickAscending = () =>{
@@ -126,7 +127,7 @@ function TuyenXe(){
                         <div class="col-md-6">
                           <div class="form-group">
                             <span class="form-label">Ngày đi</span>
-                            <input class="form-control" type="date" required defaultValue={convertNgay(d)} onChange={e=>setDate(e.target.value)}/>
+                            <input class="form-control" type="date" required defaultValue={date||convertNgay(d)} onChange={e=>setDate(e.target.value)}/>
                           </div>
                         </div>
                         {/*
