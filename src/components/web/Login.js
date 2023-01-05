@@ -55,7 +55,7 @@ function Login() {
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
-                  <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
+                  <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
                   <p className=" mb-5">Please enter your username and password!</p>
                   <div className="mb-3">
                     <Form onSubmit={login}>
@@ -71,7 +71,7 @@ function Login() {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Password" />
+                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Enter Password" />
                       </Form.Group>
 
                       {/*<Form.Group
@@ -85,6 +85,7 @@ function Login() {
                         </Form.Select>
                       </Form.Group>*/}
 
+                      {/*
                       <Form.Group
                         className="mb-3"
                         controlId="formBasicCheckbox"
@@ -94,7 +95,7 @@ function Login() {
                             Forgot password?
                           </a>
                         </p>
-                      </Form.Group>
+                    </Form.Group>*/}
                       <div className="d-grid">
                         <Button variant="primary" type="submit">
                           Login
@@ -108,12 +109,14 @@ function Login() {
                           <Link to="/sign-up">Sign Up</Link>
                         </a>
                       </p>
+                      {/*
                       <p className="mb-0  text-center">
                         or
                       </p>
                       <p className="mb-0  text-center">
                         <Button style={{backgroundColor: "red", borderColor: "red"}}><img src="/img/btn_google_signin.png" alt=""></img></Button>
                       </p>
+                      */}
                     </div>
                   </div>
                 </div>

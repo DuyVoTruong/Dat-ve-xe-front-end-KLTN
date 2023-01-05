@@ -84,7 +84,7 @@ function Signup(){
                     <Card className="shadow">
                     <Card.Body>
                         <div className="mb-3 mt-md-4">
-                        <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
+                        <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
                         <p>Đăng ký với vai trò</p>
                         <div style={{marginBottom: "30px", marginTop:"20px"}}>
                         <Form.Check
@@ -187,7 +187,7 @@ function Signup(){
                     <Card className="shadow">
                     <Card.Body>
                         <div className="mb-3 mt-md-4">
-                        <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
+                        <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
                         <p>Đăng ký với vai trò</p>
                         <div style={{marginBottom: "30px", marginTop:"20px"}}>
                         <Form.Check
