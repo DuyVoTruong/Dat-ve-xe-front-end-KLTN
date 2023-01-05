@@ -16,6 +16,7 @@ function TuyenXeNhaXe(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [tx, setTx] = useState([]);
+    let stt = 0;
     
     const DeleteTuyenXe = (id) => {
         if(window.confirm("Delete") === true){
@@ -96,6 +97,7 @@ function TuyenXeNhaXe(){
                         if(item.xe.nhaXe){
                             if(item.xe.nhaXe.taiKhoan){
                                 if(item.xe.nhaXe.taiKhoan.username===account.username){
+                                    stt=stt+1;
                                     return(
                                         <>
                                         <tr>

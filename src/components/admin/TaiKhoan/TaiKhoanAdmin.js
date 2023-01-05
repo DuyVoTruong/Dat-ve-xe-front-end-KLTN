@@ -20,6 +20,7 @@ function TaiKhoanAdmin(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [showFormUpdatePassword, setShowFormUpdatePassword] = useState(false);
+    let stt = 0;
 
 /*
     const DeleteBenXe = (id) => {
@@ -95,7 +96,7 @@ function TaiKhoanAdmin(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Username</th>
             <th>Role</th>
             <th>Họ tên</th>
@@ -109,10 +110,11 @@ function TaiKhoanAdmin(){
         </thead>
         <tbody>
             {admin.map((tk,index)=>{
+                stt=stt+1;
                     return(
                         <>
                         <tr>
-                        <td>{tk.id}</td>
+                        <td>{stt}</td>
                         <td>{tk.taiKhoan.username}</td>
                         <td>{tk.taiKhoan.role}</td>
                         <td>{tk.name}</td>
@@ -151,7 +153,6 @@ function TaiKhoanAdmin(){
                                 }
                             })()
                         }
-                        <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={tk.image}/></td>
                         <td>
                             <BiEdit className="edit-btn" onClick={()=>HandleShowUpdateForm(tk)}></BiEdit>
                             <ImBin className="delete-btn" onClick={(0)}></ImBin>

@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import useSignUp from "../hooks/useSignUp";
 import {getTinhThanhPho} from "../hooks/useFunction"
+import { httpPostSignUp } from "../hooks/Request";
+import { MyContext } from "../../App";
 
 function Signup(){
 
     const [role, setRole] = useState("USER");
     const {signUp} = useSignUp();
+    const token = useContext(MyContext).token;
 
     const nav = useNavigate();
     const redirectLogin =()=> {
@@ -59,7 +62,14 @@ function Signup(){
                     role,username,password,tenNhaXe,sdt,moTaNgan,diaChi
                 }
                 try {
-                    signUp(data);
+                    httpPostSignUp(data, token).then(res => res.json()).then(data =>{
+                        if (data.status == 200){
+                            alert("Success!!! Vui lòng liên hệ quản trị viên để được kích hoạt tài khoản qua số điện thoại: 0366441943!!!");
+                        }
+                        else {
+                            alert(data.message);
+                        }
+                    });
                     redirectLogin();
                 } catch {
 

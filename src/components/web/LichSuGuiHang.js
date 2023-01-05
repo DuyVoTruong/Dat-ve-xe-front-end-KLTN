@@ -10,6 +10,7 @@ const LichSuGuiHang=()=>{
 
     const [hangHoa, setHangHoa]=useState([]);
     const [load,setLoad] = useState(false);
+    let stt = 0;
 
     useEffect(()=>{
         getHangHoaByUserId(1,token).then(data=>{
@@ -49,6 +50,7 @@ const LichSuGuiHang=()=>{
         <Table striped bordered hover style={{backgroundColor:"white"}}>
         <thead>
             <tr>
+            <th>STT</th>
             <th>Cân nặng</th>
             <th>Giá</th>
             <th>Tên người nhận</th>
@@ -61,9 +63,11 @@ const LichSuGuiHang=()=>{
         </thead>
         <tbody>
             {hangHoa.map(h=>{
+                stt=stt+1;
                 return(
                     <>
                     <tr>
+                    <td>{stt}</td>
                     <td>{h.canNang}</td>
                     <td>{h.gia}</td>
                     <td>{h.tenNguoNhan}</td>

@@ -15,6 +15,7 @@ function TuyenXeAdmin(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [tx, setTx] = useState([]);
+    let stt = 0;
     
     const DeleteTuyenXe = (id) => {
         if(window.confirm("Delete") === true){
@@ -77,7 +78,7 @@ function TuyenXeAdmin(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên bến xe đi</th>
             <th>Tên bến xe đến</th>
             <th>Biển số xe</th>
@@ -91,10 +92,11 @@ function TuyenXeAdmin(){
         </thead>
         <tbody>
             {tuyenXe.filter(item=>item.benXeDi.tenBenXe.toLowerCase().indexOf(search.toLowerCase())>=0).map((item,index)=>{
+                stt=stt+1;
                     return(
                         <>
                         <tr>
-                        <td>{item.id}</td>
+                        <td>{stt}</td>
                         <td>{item.benXeDi.tenBenXe}</td>
                         <td>{item.benXeDen.tenBenXe}</td>
                         <td>{item.xe.bienSoXe}</td>

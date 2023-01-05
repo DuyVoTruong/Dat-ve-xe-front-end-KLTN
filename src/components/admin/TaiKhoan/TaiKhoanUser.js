@@ -18,6 +18,7 @@ function TaiKhoanUser(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [showFormUpdatePassword, setShowFormUpdatePassword] = useState(false);
+    let stt = 0;
 
 /*
     const DeleteBenXe = (id) => {
@@ -93,7 +94,7 @@ function TaiKhoanUser(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Username</th>
             <th>Role</th>
             <th>Họ tên</th>
@@ -108,10 +109,11 @@ function TaiKhoanUser(){
         </thead>
         <tbody>
             {user.map((item,index)=>{
+                stt=stt+1;
                     return(
                         <>
                         <tr>
-                        <td>{item.id}</td>
+                        <td>{stt}</td>
                         <td>{item.taiKhoan.username}</td>
                         <td>{item.taiKhoan.role}</td>
                         <td>{item.hoTen}</td>
@@ -151,7 +153,6 @@ function TaiKhoanUser(){
                                 }
                             })()
                         }
-                        <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={item.image}/></td>
                         <td>
                             <BiEdit className="edit-btn" onClick={()=>HandleShowUpdateForm(item)}></BiEdit>
                             <ImBin className="delete-btn" onClick={(0)}></ImBin>

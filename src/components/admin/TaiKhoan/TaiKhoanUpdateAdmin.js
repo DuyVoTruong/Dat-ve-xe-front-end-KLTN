@@ -12,19 +12,18 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
         e.preventDefault();
         if(role==="USER"){
             let username = tk.taiKhoan.username;
-            let password = tk.taiKhoan.password;
             let hoTen = document.getElementById("formHoTen").value;
             let cmnd = document.getElementById("formCMND").value;
             let sdt = document.getElementById("formSDT").value;
             let email = document.getElementById("formEmail").value;
             let diaChi = document.getElementById("formDiaChi").value;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
-            if(!role||!username||!password||!hoTen||!cmnd||!sdt||!email||!diaChi){
+            if(!role||!username||!hoTen||!cmnd||!sdt||!email||!diaChi){
                 window.alert("Vui lòng điền đầy đủ thông tin!!!")
             }
             else{
                 let data = {
-                    role,username,password,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong
+                    role,username,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong
                 }
                 try{
                     update(tk.id, data);
@@ -41,18 +40,17 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             let xa = document.getElementById("ward")[document.getElementById('ward').selectedIndex].innerHTML;
 
             let username = tk.taiKhoan.username;
-            let password = tk.taiKhoan.password;
             let tenNhaXe = document.getElementById("formTenNhaXe").value;
             let sdt = document.getElementById("formSDT").value;
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
-            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
+            if(!role||!username||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
                 window.alert("Vui lòng điền đầy đủ thông tin!!!")
             }
             else{
                 let data = {
-                    role,username,password,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong
+                    role,username,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong
                 }
                 try{
                     update(tk.id, data);
@@ -63,18 +61,17 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             }
         } else if(role==="ADMIN"){
             let username = tk.taiKhoan.username;
-            let password = tk.taiKhoan.password;
             let name = document.getElementById("formTenAdmin").value;
             let cmnd = document.getElementById("formCMND").value;
             let sdt = document.getElementById("formSDT").value;
             let email = document.getElementById("formEmail").value;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
-            if(!role||!username||!password||!name||!cmnd||!sdt||!email){
+            if(!role||!username||!name||!cmnd||!sdt||!email){
                 window.alert("Vui lòng điền đầy đủ thông tin!!!")
             }
             else{
                 let data = {
-                    role,username,password,name,cmnd,sdt,email,trangThaiHoatDong
+                    role,username,name,cmnd,sdt,email,trangThaiHoatDong
                 }
                 try{
                     update(tk.id, data);

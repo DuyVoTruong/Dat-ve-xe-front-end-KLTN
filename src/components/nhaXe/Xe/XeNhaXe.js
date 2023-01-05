@@ -14,6 +14,7 @@ const XeNhaXe =()=>{
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [id, setId] = useState();
+    let stt = 0;
 
     const DeleteBenXe = (id) => {
         if(window.confirm("Delete") === true){
@@ -44,7 +45,7 @@ const XeNhaXe =()=>{
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên loại xe</th>
             <th>Tên nhà xe</th>
             <th>Biển số xe</th>
@@ -57,6 +58,7 @@ const XeNhaXe =()=>{
                     if(x.nhaXe){
                         if(x.nhaXe.taiKhoan){
                             if(x.nhaXe.taiKhoan.username===account.username){
+                                stt=stt+1;
                                 return(
                                     <>
                                     <tr>

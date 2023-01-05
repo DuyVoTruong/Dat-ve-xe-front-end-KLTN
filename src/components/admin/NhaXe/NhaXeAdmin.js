@@ -16,6 +16,7 @@ function NhaXeAdmin(){
     const [search, setSearch] = useState("");
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
+    const stt = 0;
 /*
     const DeleteBenXe = (id) => {
         if(window.confirm("Delete") === true){
@@ -74,7 +75,7 @@ function NhaXeAdmin(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Role</th>
             <th>Tên nhà xe</th>
             <th>Số điện thoại</th>
@@ -87,10 +88,11 @@ function NhaXeAdmin(){
         </thead>
         <tbody>
             {nhaXe.filter(item => item.tenNhaXe.toLowerCase().indexOf(search.toLowerCase())>=0).map((tk,index)=>{
+                stt=stt+1;
                     return(
                         <>
                         <tr>
-                        <td>{tk.id}</td>
+                        <td>{stt}</td>
                         <td>{tk.taiKhoan.role}</td>
                         <td>{tk.tenNhaXe}</td>
                         <td>{tk.sdt}</td>
@@ -128,7 +130,6 @@ function NhaXeAdmin(){
                                 }
                             })()
                         }
-                        <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={tk.image}/></td>
                         <td><BiEdit className="edit-btn" onClick={()=>HandleShowUpdateForm(tk)}></BiEdit><ImBin className="delete-btn" onClick={(0)}></ImBin></td>
                         </tr>
                         </>

@@ -21,12 +21,13 @@ function Footer(){
                             <p><i class="fa fa-phone-alt mr-2"></i>0366441943</p>
                             <p><i class="fa fa-envelope mr-2"></i>voduy89123@gmail.com</p>
                             <div class="d-flex justify-content-start mt-4">
-                                <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-twitter"></i></a>
+                                {/*<a class="text-white mr-4" href="#"><i class="fab fa-2x fa-twitter"></i></a>*/}
                                 <a class="text-white mr-4" href="https://www.facebook.com/truongduy.vo.5011/"><i class="fab fa-2x fa-facebook-f"></i></a>
-                                <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
-                                <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
+                                {/*<a class="text-white mr-4" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
+                                <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>*/}
                             </div>
                         </div>
+                        {/*
                         <div class="col-md-4 mb-5">
                             <h3 class="text-white mb-4">Our Courses</h3>
                             <div class="d-flex flex-column justify-content-start">
@@ -46,7 +47,7 @@ function Footer(){
                                 <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Help & Support</a>
                                 <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact</a>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
             </div>

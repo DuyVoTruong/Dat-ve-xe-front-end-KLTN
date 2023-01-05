@@ -11,6 +11,7 @@ const VeXe =()=>{
     const account = useContext(MyContext).account;
     const {tuyenXe} = useTuyenXe();
     const [search, setSearch] = useState("");
+    let stt =0;
 
     const nav = useNavigate();
     const redirect =(tx)=>{
@@ -29,7 +30,7 @@ const VeXe =()=>{
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Bến xe đi</th>
             <th>Bến xe đến</th>
             <th>Biển số xe</th>
@@ -44,6 +45,7 @@ const VeXe =()=>{
                         if(item.xe.nhaXe){
                             if(item.xe.nhaXe.taiKhoan){
                                 if(item.xe.nhaXe.taiKhoan.username===account.username){
+                                    stt=stt+1;
                                     return(
                                         <>
                                         <tr>

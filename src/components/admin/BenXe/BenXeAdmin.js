@@ -13,6 +13,7 @@ function BenXeAdmin(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [id, setId] = useState();
+    let stt=0;
 
     const {benXe, deleteBenXe, updateBenXe, addBenXe} = useBenXe();
 
@@ -80,7 +81,7 @@ function BenXeAdmin(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên bến xe</th>
             <th>Địa chỉ</th>
             <th>Trạng thái</th>
@@ -90,10 +91,11 @@ function BenXeAdmin(){
         </thead>
         <tbody>
             {benXe.filter(item=>item.tenBenXe.toLowerCase().indexOf(search.toLowerCase())>=0).map((bx,index)=>{
+                stt=stt+1;
                 return(
                     <>
                     <tr>
-                    <td>{bx.id}</td>
+                    <td>{stt}</td>
                     <td>{bx.tenBenXe}</td>
                     <td>{bx.diaChiChiTiet}</td>
                     {
@@ -128,7 +130,6 @@ function BenXeAdmin(){
                                 }
                             })()
                         }
-                    <td width={"175px"}><img style={{height: "100px", width: "150px"}} src={bx.image}/></td>
                     <td><BiEdit className="edit-btn" onClick={()=>update(bx.id)}></BiEdit><ImBin className="delete-btn" onClick={()=>DeleteBenXe(bx.id)}></ImBin></td>
                     </tr>
                     </>

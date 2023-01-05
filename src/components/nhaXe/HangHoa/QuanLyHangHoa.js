@@ -71,6 +71,7 @@ const QuanLyHangHoa =()=>{
     const [load, setLoad] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
     const [h,setH]=useState([]);
+    let stt = 0;
 
 
     const updateHangHoa =(id, data)=>{
@@ -170,7 +171,7 @@ const QuanLyHangHoa =()=>{
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Cân nặng</th>
             <th>Giá</th>
             <th>Tên người nhận</th>
@@ -183,6 +184,7 @@ const QuanLyHangHoa =()=>{
         <tbody>
         {
             hangHoa.map(h=>{
+                stt=stt+1;
                 return(
                     <tr>
                         <td>{h.id}</td>

@@ -17,6 +17,7 @@ const QuanLyVeXe =()=>{
     const [veXe, setVeXe] = useState([]);
     const [tuyenXe, setTuyenXe] = useState([]);
     const [load,setLoad] = useState(false);
+    let stt = 0;
 
 
     const updateVeXe =(id,data)=>{
@@ -135,7 +136,7 @@ const QuanLyVeXe =()=>{
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên người đặt</th>
             <th>Số điện thoại</th>
             <th>Ngày đặt</th>
@@ -149,9 +150,10 @@ const QuanLyVeXe =()=>{
         <tbody>
         {
             veXe.map(vx=>{
+                stt=stt+1;
                 return(
                     <tr>
-                        <td>{vx.id}</td>
+                        <td>{stt}</td>
                         <td>{vx.user.hoTen}</td>
                         <td>{vx.user.sdt}</td>
                         <td>{vx.ngayDat}</td>

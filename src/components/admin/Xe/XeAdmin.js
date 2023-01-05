@@ -14,6 +14,7 @@ function XeAdmin(){
     const [showFormAdd, setShowFormAdd] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [id, setId] = useState();
+    const stt = 0;
 
     const DeleteBenXe = (id) => {
         if(window.confirm("Delete") === true){
@@ -42,7 +43,7 @@ function XeAdmin(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên loại xe</th>
             <th>Tên nhà xe</th>
             <th>Biển số xe</th>
@@ -51,10 +52,11 @@ function XeAdmin(){
         </thead>
         <tbody>
             {xe.filter(item=>item.bienSoXe.toLowerCase().indexOf(search.toLowerCase())>=0).map((x,index)=>{
+                stt=stt+1;
                 return(
                     <>
                     <tr>
-                    <td>{x.id}</td>
+                    <td>{stt}</td>
                     <td>{x.loaiXe.tenLoaiXe}</td>
                     <td>{x.nhaXe.tenNhaXe}</td>
                     <td>{x.bienSoXe}</td>

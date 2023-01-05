@@ -15,6 +15,7 @@ function LoaiXeAdmin(){
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [lx, setLx] = useState("");
     const {loaiXe,addLoaiXe, updateLoaiXe, deleteLoaiXe} = useLoaiXe();
+    let stt=0;
 
 
     const handleShowFormAdd = () => setShowFormAdd(true);
@@ -53,7 +54,7 @@ function LoaiXeAdmin(){
         <Table style={{textAlign: "center"}} striped bordered hover>
         <thead>
             <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên loại xe</th>
             <th>Sức chứa</th>
             <th></th>
@@ -61,10 +62,11 @@ function LoaiXeAdmin(){
         </thead>
         <tbody>
             {loaiXe.filter(item=>item.tenLoaiXe.toLowerCase().indexOf(search.toLowerCase())>=0).map((lx,index)=>{
+                stt=stt+1;
                 return(
                     <>
                     <tr>
-                    <td>{lx.id}</td>
+                    <td>{stt}</td>
                     <td>{lx.tenLoaiXe}</td>
                     <td>{lx.sucChua}</td>
                     <td><BiEdit className="edit-btn" onClick={()=>handleShowFormUpdate(lx)}></BiEdit><ImBin className="delete-btn" onClick={()=>DeleteLoaiXe(lx.id)}></ImBin></td>

@@ -14,6 +14,8 @@ const LichSuDatVe=()=>{
     const account = useContext(MyContext).account;
     const [load, setLoad] = useState(false);
     const [veXe,setVeXe]=useState([]);
+    let stt = 0;
+
     useEffect(()=>{
         getVeXeUserById(account.id, token).then(data=>{
             if(data){
@@ -59,6 +61,7 @@ const LichSuDatVe=()=>{
         <Table striped bordered hover>
         <thead>
             <tr>
+            <th>STT</th>
             <th>Số ghế</th>
             <th>Ngày đặt</th>
             <th>Ngày nhận</th>
@@ -71,9 +74,11 @@ const LichSuDatVe=()=>{
         </thead>
         <tbody>
             {veXe.map(vx=>{
+                stt=stt+1;
                 return(
                     <>
                     <tr>
+                    <td>{stt}</td>
                     <td>{vx.soGhe}</td>
                     <td>{vx.ngayDat}</td>
                     <td>{vx.ngayNhan}</td>
