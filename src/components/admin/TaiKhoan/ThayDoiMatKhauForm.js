@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { getTinhThanhPho } from "../../hooks/useFunction";
+//import { getTinhThanhPho } from "../../hooks/useFunction";
 
 function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
 

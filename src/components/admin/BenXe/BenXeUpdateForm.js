@@ -13,7 +13,7 @@ function BenXeUpdateForm({showForm, setShowForm, update, id}){
             getBenXeById(id).then(data=>{
                 setBenXe(data);
             });
-            getTinhThanhPho();
+            //getTinhThanhPho();
         }
     },[showForm])
 
