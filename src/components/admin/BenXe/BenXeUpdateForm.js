@@ -3,16 +3,16 @@ import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap"
 import { useNavigate, useParams } from "react-router-dom";
 import { httpGetBenXeById } from "../../hooks/Request";
 import useBenXe from "../../hooks/useBenXe";
-import {getBenXeById, getTinhThanhPho} from "../../hooks/useFunction"
+//import {getBenXeById, getTinhThanhPho} from "../../hooks/useFunction"
 
 function BenXeUpdateForm({showForm, setShowForm, update, id}){
 
     const [benXe, setBenXe] = useState([]);
     useEffect(()=>{
         if(showForm===true){
-            getBenXeById(id).then(data=>{
-                setBenXe(data);
-            });
+            //getBenXeById(id).then(data=>{
+                //setBenXe(data);
+            //});
             //getTinhThanhPho();
         }
     },[showForm])
