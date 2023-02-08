@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-//import {getTinhThanhPho} from "../../hooks/useFunction"
+import {getTinhThanhPho} from "../../hooks/useFunction"
 
 function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
 
@@ -85,7 +85,7 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
 
     useEffect(()=>{
         if(role==="NHAXE"){
-            //getTinhThanhPho();
+            getTinhThanhPho();
         }
     },[role])
 

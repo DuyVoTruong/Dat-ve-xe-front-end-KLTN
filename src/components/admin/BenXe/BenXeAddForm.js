@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-//import { getTinhThanhPho } from "../../hooks/useFunction";
+import { getTinhThanhPho } from "../../hooks/useFunction";
 
 function BenXeAddForm({showFormAdd, setShowFormAdd, addBenXe}){
 
     useEffect(()=>{
         if(showFormAdd===true){
-            //getTinhThanhPho();
+            getTinhThanhPho();
         }
     },[showFormAdd]);
 

@@ -1,7 +1,7 @@
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useSignUp from "../../hooks/useSignUp";
-//import {getTinhThanhPho} from "../../hooks/useFunction"
+import {getTinhThanhPho} from "../../hooks/useFunction"
 import { useEffect } from "react";
 
 function NhaXeAdminAdd(){
@@ -41,7 +41,7 @@ function NhaXeAdminAdd(){
     }
 
     useEffect(()=>{
-        //getTinhThanhPho();
+        getTinhThanhPho();
     },[])
 
     return(

@@ -1,6 +1,6 @@
 const { httpGetBenXeById, httpGetLoaiXeById, httpGetBenXeUser, httpGetNhaXeById, httpGetAllDanhGiaByIdNhaXe, httpGetTuyenXeFindByAddress, httpGetAllVeXeByTuyenXeId, httpGetTuyenXeById, httpGetNhaXeUserById, httpGetNhaXeUserAll, httpGetVeXeUserById, httpGetTuyenXeFindByAddressDate, httpGetSaoTrungBinhNhaXe, httpGetHangHoaByUserId, httpGetHangHoaByTuyenXeId } = require("./Request");
 
-const getTinhThanhPho=()=>{
+export const getTinhThanhPho=()=>{
     var citis = document.getElementById("city");
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
@@ -41,28 +41,28 @@ const getTinhThanhPho=()=>{
     }
 }
 
-const getBenXeById = async(id) => {
+export const getBenXeById = async(id) => {
     const res = await httpGetBenXeById(id);
     if (res.status==200){
         return res.object
     }
 }
 
-const getLoaiXeById = async(id) => {
+export const getLoaiXeById = async(id) => {
     const res = await httpGetLoaiXeById(id);
     if (res.status==200){
         return res.object
     }
 }
 
-const getNhaXeById = async(id) => {
+export const getNhaXeById = async(id) => {
     const res = await httpGetNhaXeById(id);
     if (res.status==200){
         return res.object
     }
 }
 
-const getAllBenXeUser = async() => {
+export const getAllBenXeUser = async() => {
     const res = await httpGetBenXeUser();
     if (res.status == 200){
         return res.object
@@ -70,7 +70,7 @@ const getAllBenXeUser = async() => {
    
 };
 
-const getAllDanhGiaByIdNhaXe = async(id, token) => {
+export const getAllDanhGiaByIdNhaXe = async(id, token) => {
     const res = await httpGetAllDanhGiaByIdNhaXe(id, token);
     if (res.status == 200){
         return res.object
@@ -78,7 +78,7 @@ const getAllDanhGiaByIdNhaXe = async(id, token) => {
    
 };
 
-const getTuyenXeFindByAddress = async(data) => {
+export const getTuyenXeFindByAddress = async(data) => {
     const res = await httpGetTuyenXeFindByAddress(data);
     console.log(res)
     if (res.status == 200){
@@ -88,7 +88,7 @@ const getTuyenXeFindByAddress = async(data) => {
    
 };
 
-const getAllVeXeByTuyenXeId = async(id, token) => {
+export const getAllVeXeByTuyenXeId = async(id, token) => {
     const res = await httpGetAllVeXeByTuyenXeId(id, token);
     console.log(res)
     if (res.status == 200){
@@ -97,7 +97,7 @@ const getAllVeXeByTuyenXeId = async(id, token) => {
     }
 };
 
-const getTuyenXeById = async(id, token) => {
+export const getTuyenXeById = async(id, token) => {
     const res = await httpGetTuyenXeById(id, token);
     console.log(res)
     if (res.status == 200){
@@ -106,7 +106,7 @@ const getTuyenXeById = async(id, token) => {
     }
 };
 
-const getNhaXeUserById = async(id, token) => {
+export const getNhaXeUserById = async(id, token) => {
     const res = await httpGetNhaXeUserById(id, token);
     console.log(res)
     if (res.status == 200){
@@ -115,7 +115,7 @@ const getNhaXeUserById = async(id, token) => {
     }
 };
 
-const getNhaXeUserAll = async(token) => {
+export const getNhaXeUserAll = async(token) => {
     const res = await httpGetNhaXeUserAll(token);
     console.log(res)
     if (res.status == 200){
@@ -124,7 +124,7 @@ const getNhaXeUserAll = async(token) => {
     }
 };
 
-const getVeXeUserById = async(id, token) => {
+export const getVeXeUserById = async(id, token) => {
     const res = await httpGetVeXeUserById(id, token);
     console.log(res)
     if (res.status == 200){
@@ -133,7 +133,7 @@ const getVeXeUserById = async(id, token) => {
     }
 };
 
-const getTuyenXeFindByAddressDate = async(data, token) => {
+export const getTuyenXeFindByAddressDate = async(data, token) => {
     console.log(data)
     const res = await httpGetTuyenXeFindByAddressDate(data, token);
     if (res.status == 200){
@@ -142,7 +142,7 @@ const getTuyenXeFindByAddressDate = async(data, token) => {
     }
 };
 
-const getSaoTrungBinhNhaXe = async(id) => {
+export const getSaoTrungBinhNhaXe = async(id) => {
     const res = await httpGetSaoTrungBinhNhaXe(id);
     if (res.status == 200){
         console.log(res.object)
@@ -150,7 +150,7 @@ const getSaoTrungBinhNhaXe = async(id) => {
     }
 };
 
-const getHangHoaByUserId = async(id, token) => {
+export const getHangHoaByUserId = async(id, token) => {
     const res = await httpGetHangHoaByUserId(id, token);
     console.log(res)
     if (res.status == 200){
@@ -159,7 +159,7 @@ const getHangHoaByUserId = async(id, token) => {
     }
 };
 
-const getHangHoaByTuyenXeId = async(id, token) => {
+export const getHangHoaByTuyenXeId = async(id, token) => {
     const res = await httpGetHangHoaByTuyenXeId(id, token);
     console.log(res)
     if (res.status == 200){
@@ -167,22 +167,3 @@ const getHangHoaByTuyenXeId = async(id, token) => {
         return res.object
     }
 };
-
-module.exports = {
-    getTinhThanhPho,
-    getBenXeById,
-    getLoaiXeById,
-    getAllBenXeUser,
-    getNhaXeById,
-    getAllDanhGiaByIdNhaXe,
-    getTuyenXeFindByAddress,
-    getAllVeXeByTuyenXeId,
-    getTuyenXeById,
-    getNhaXeUserById,
-    getNhaXeUserAll,
-    getVeXeUserById,
-    getTuyenXeFindByAddressDate,
-    getSaoTrungBinhNhaXe,
-    getHangHoaByUserId,
-    getHangHoaByTuyenXeId,
-}

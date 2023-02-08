@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import useSignUp from "../hooks/useSignUp";
-//import {getTinhThanhPho} from "../hooks/useFunction"
+import {getTinhThanhPho} from "../hooks/useFunction"
 import { httpPostSignUp } from "../hooks/Request";
 import { MyContext } from "../../App";
 
@@ -80,7 +80,7 @@ function Signup(){
 
     useEffect(()=>{
         if(role==="NHAXE"){
-            //getTinhThanhPho();
+            getTinhThanhPho();
         }
     },[role])
 
