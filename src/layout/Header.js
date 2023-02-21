@@ -53,20 +53,20 @@ function Header(){
             {/* Navbar Start*/}
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/">WEBTOUR</Navbar.Brand>
+                <Navbar.Brand href="#/">WEBTOUR</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/">TRANG CHỦ</Nav.Link>
-                    <Nav.Link href="/lich-trinh">LỊCH TRÌNH</Nav.Link>
-                    <Nav.Link href="/tuyen-xe">TUYẾN XE</Nav.Link>
+                    <Nav.Link href="#/">TRANG CHỦ</Nav.Link>
+                    <Nav.Link href="#/lich-trinh">LỊCH TRÌNH</Nav.Link>
+                    <Nav.Link href="#/tuyen-xe">TUYẾN XE</Nav.Link>
                     {
                         (()=>{
                             if(account){
                                return(
                                 <>
-                                    <Nav.Link href="/lich-su-dat-ve">XEM LỊCH SỬ ĐẶT VÉ</Nav.Link>
-                                    <Nav.Link href="/lich-su-gui-hang">XEM LỊCH SỬ GỬI HÀNG</Nav.Link>
+                                    <Nav.Link href="#/lich-su-dat-ve">XEM LỊCH SỬ ĐẶT VÉ</Nav.Link>
+                                    <Nav.Link href="#/lich-su-gui-hang">XEM LỊCH SỬ GỬI HÀNG</Nav.Link>
                                 </>
                                ) 
                             }
@@ -85,13 +85,13 @@ function Header(){
                                                 <i class="fa fa-user"></i>
                                             </a>
                                         </div>
-                                            <a href="/thong-tin-tai-khoan">{account.username}</a>
+                                            <a href="#/thong-tin-tai-khoan">{account.username}</a>
 
                                         <div style={{marginRight:"10px", marginLeft:"10px"}}>
                                             <a class="text-white pl-2">
                                                 <i class="fas fa-sign-out-alt"></i>
                                             </a>
-                                            <a onClick={logout} class="text-blue pl-2" href="/">Log out</a>
+                                            <a onClick={logout} class="text-blue pl-2" href="#/">Log out</a>
                                         </div>
                                     </Navbar.Collapse>
                                 </>
@@ -105,14 +105,14 @@ function Header(){
                                                 <i class="fa fa-user"></i>
                                             </a>
                                         </div>
-                                            <a href="/login">Login</a>
+                                            <a href="#/login">Login</a>
 
                                         <div style={{marginRight:"10px", marginLeft:"10px"}}>
                                             <a class="text-white pl-2" href="">
                                                 <i class="fa fa-user-plus"></i>
                                             </a>
                                         </div>
-                                            <a href="/sign-up">Sign up</a>
+                                            <a href="#/sign-up">Sign up</a>
 
                                     </Navbar.Collapse>
                                 </>
