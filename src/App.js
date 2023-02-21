@@ -54,7 +54,7 @@ function App() {
   if(!account){
       return(
         <MyContext.Provider value={{token, setToken, account, setAccount}}>
-        <BrowserRouter>
+        {/*<BrowserRouter>*/}
         <Routes>
         <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
             <Route path='' element={<Home></Home>}></Route>
@@ -69,14 +69,14 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />}></Route>
           </Route>
         </Routes>
-        </BrowserRouter>
+        {/*</BrowserRouter>*/}
       </MyContext.Provider>
     )
   } else {
     if(account.role==="ADMIN"){
       return(
         <MyContext.Provider value={{token, setToken, account, setAccount}}>
-        <BrowserRouter>
+        {/*<BrowserRouter>*/}
           <Routes>
             <Route path='/*' element={<Navigate to="/admin/home" replace />}></Route>
             <Route path="/admin/*" element={<LayoutAdmin account={account}></LayoutAdmin>}>
@@ -100,12 +100,12 @@ function App() {
               {/*<Route path="*" element={<Navigate to="home" replace />}></Route>*/}
             </Route>
           </Routes>
-        </BrowserRouter>
+        {/*</BrowserRouter>*/}
         </MyContext.Provider>)
       }else if(account.role==="NHAXE"){
         return(
           <MyContext.Provider value={{token, setToken, account, setAccount}}>
-          <BrowserRouter>
+          {/*<BrowserRouter>*/}
           <Routes>
             <Route path='/*' element={<Navigate to="/nha-xe/home" replace />}></Route>
             <Route path='/nha-xe/*' element={<LayoutNhaXe account={account}></LayoutNhaXe>}>
@@ -121,13 +121,13 @@ function App() {
                 <Route path="*" element={<Navigate to="home" replace />}></Route>
             </Route>
           </Routes>
-          </BrowserRouter>
+          {/*</BrowserRouter>*/}
           </MyContext.Provider>
         )
       }else {
         return(
           <MyContext.Provider value={{token, setToken, account, setAccount}}>
-          <BrowserRouter>
+          {/*<BrowserRouter>*/}
           <Routes>
             <Route path='/*' element={<LayoutWeb account={account}></LayoutWeb>}>
                 <Route path='' element={<Home></Home>}></Route>
@@ -146,7 +146,7 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />}></Route>
               </Route>
           </Routes>
-        </BrowserRouter>
+        {/*</BrowserRouter>*/}
         </MyContext.Provider>
       )
     }

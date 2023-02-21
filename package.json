@@ -2,7 +2,7 @@
   "name": "dat-ve-xe",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://DuyVoTruong.github.io/Dat-ve-xe-front-end",
+  "homepage": "https://DuyVoTruong.github.io/Dat-ve-xe-front-end/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
