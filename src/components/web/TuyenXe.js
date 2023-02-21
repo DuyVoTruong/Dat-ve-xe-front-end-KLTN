@@ -5,6 +5,8 @@ import {GrDescend, GrAscend} from "react-icons/gr"
 import { getAllBenXeUser, getAllVeXeByTuyenXeId, getTuyenXeFindByAddressDate } from "../hooks/useFunction";
 import useNhaXe from "../hooks/useNhaXe";
 import { MyContext } from "../../App";
+import imageDatVe from '../../assets/img/ticket-icon.png';
+import imageChuyenHang from '../../assets/img/chuyen-hang.png'
 
 function TuyenXe(){
 
@@ -208,8 +210,8 @@ function TuyenXe(){
                     <td>{tx.thoiGianHanhTrinh}</td>
                     <td>{tx.giaVe}</td>
                     <td style={{textAlign: "center"}}>
-                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/ticket-icon.png"></img><span style={{marginRight: "10px"}}>Đặt vé xe</span></button>
-                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/img/chuyen-hang.png"></img><span style={{marginRight: "10px"}}>Giao hàng</span></button>
+                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDatVe}></img><span style={{marginRight: "10px"}}>Đặt vé xe</span></button>
+                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageChuyenHang}></img><span style={{marginRight: "10px"}}>Giao hàng</span></button>
                     </td>
                     </tr>
                     </>

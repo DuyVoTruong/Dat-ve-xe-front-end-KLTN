@@ -6,6 +6,7 @@ import "../../css/comment.css"
 import { MyContext } from "../../App";
 import {getTuyenXeById} from "../hooks/useFunction"
 import useTuyenXe from "../hooks/useTuyenXe";
+import imageDetail from '../../assets/img/view-details.png'
 
 const NhaXeChiTiet =()=>{
 
@@ -146,7 +147,7 @@ const NhaXeChiTiet =()=>{
                                         <tr>
                                             <td>{tx.benXeDi.tinhThanh}</td>
                                             <td>{tx.benXeDen.tinhThanh}</td>
-                                            <td style={{textAlign: "center"}}><button type="button" onClick={()=>redirect(tx.benXeDi.tinhThanh,tx.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
+                                            <td style={{textAlign: "center"}}><button type="button" onClick={()=>redirect(tx.benXeDi.tinhThanh,tx.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
                                         </tr>
                                     );
                                 }

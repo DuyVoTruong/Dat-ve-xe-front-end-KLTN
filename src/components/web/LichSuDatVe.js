@@ -7,6 +7,7 @@ import { getVeXeUserById } from "../hooks/useFunction";
 import useUser from "../hooks/useUser";
 import useVeXe from "../hooks/useVeXe";
 import { FiDelete } from "react-icons/fi"
+import imageDetail from '../../assets/img/view-details.png'
 
 const LichSuDatVe=()=>{
 
@@ -87,7 +88,7 @@ const LichSuDatVe=()=>{
                     <td>{vx.tuyenXe.xe.nhaXe.tenNhaXe}</td>
                     <td>{vx.trangThai}</td>
                     <td style={{textAlign: "center"}}>
-                        <button onClick={()=>redirectVeXeChiTiet(vx)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button>
+                        <button onClick={()=>redirectVeXeChiTiet(vx)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button>
                         {
                             (()=>{
                                 if(vx.trangThai==="INACTIVE"){

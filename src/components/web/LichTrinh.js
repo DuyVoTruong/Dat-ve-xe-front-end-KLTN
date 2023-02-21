@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { getTuyenXeFindByAddress } from "../hooks/useFunction"
+import { getTuyenXeFindByAddress } from "../hooks/useFunction";
+import image from '../../assets/img/picture2.png';
+import imageDetail from '../../assets/img/view-details.png';
 
 function LichTrinh(){
 
@@ -39,7 +41,7 @@ function LichTrinh(){
     return(
         <>
         <Container>
-        <img src="/picture2.png" style={{height: "300px", width: "100%", display: "inline-block",}}/>
+        <img src={image} style={{height: "300px", width: "100%", display: "inline-block",}}/>
         </Container>
         <Container>
             <div class="row" style={{margin:"20px"}}>
@@ -76,7 +78,7 @@ function LichTrinh(){
                                 <tr>
                                 <td>{item.benXeDi.tinhThanh}</td>
                                 <td>{item.benXeDen.tinhThanh}</td>
-                                <td style={{textAlign: "center"}}><button onClick={()=>redirect(item.benXeDi.tinhThanh,item.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src="/view-details.png"></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
+                                <td style={{textAlign: "center"}}><button onClick={()=>redirect(item.benXeDi.tinhThanh,item.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
                                 </tr>
                                 </>
                             )

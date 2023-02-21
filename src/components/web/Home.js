@@ -7,6 +7,10 @@ import useTuyenXe from '../hooks/useTuyenXe';
 import {getAllBenXeUser, getNhaXeUserAll, getSaoTrungBinhNhaXe} from '../hooks/useFunction'
 import "../../css/rating.css"
 import { MyContext } from '../../App';
+import image from '../../assets/img/picture1.png';
+import imageXe from '../../assets/img/xe.png';
+import imageDiemDen from '../../assets/img/diemDen.png';
+
 
 function Home(){
   
@@ -114,7 +118,7 @@ function Home(){
 
     return(
         <>
-        <img src="/picture1.png" style={{height: "700px", width: "100%", display: "inline-block",}}/>
+        <img src={image} style={{height: "700px", width: "100%", display: "inline-block",}}/>
         <Container>
           <div id="booking" class="section">
             <div class="section-center">
@@ -214,7 +218,7 @@ function Home(){
           {benXe.map(bx =>{
             return(
                 <Card onClick={()=>danhSachTuyenXe(bx.tinhThanh)} style={{ margin: "2rem" }} className="shadow card-transform">
-                  <Card.Img height={"200px"} variant="top" src={"/img/diemDen.png"} />
+                  <Card.Img height={"200px"} variant="top" src={imageDiemDen} />
                   <Card.Body>
                       <Card.Title>{bx.tenBenXe}</Card.Title>
                       <Card.Text>
@@ -231,7 +235,7 @@ function Home(){
           {nhaXe.map(nx =>{
             return(
                 <Card style={{ margin: "2rem" }} className="shadow card-transform">
-                  <Card.Img height={"150px"} variant="top" src={"/img/xe.png"} />
+                  <Card.Img height={"150px"} variant="top" src={imageXe} />
                   <Card.Body>
                       <Card.Title>{nx.tenNhaXe}</Card.Title>
                       {
