@@ -37,7 +37,7 @@ function HeaderDashboard(){
                                         <a class="text-white pl-2" href="">
                                             <i class="fas fa-sign-out-alt"></i>
                                         </a>
-                                        <a onClick={logout} href="/#/home">Log out</a>
+                                        <a onClick={logout} href="/Dat-ve-xe-front-end">Log out</a>
                                     </div>
                                     </>
                                 )
@@ -62,7 +62,7 @@ function HeaderDashboard(){
                                         <a class="text-white pl-2" href="">
                                             <i class="fas fa-sign-out-alt"></i>
                                         </a>
-                                        <a href="/#/home">Log out</a>
+                                        <a href="/Dat-ve-xe-front-end">Log out</a>
                                     </div>
                                     </>
                                 )
