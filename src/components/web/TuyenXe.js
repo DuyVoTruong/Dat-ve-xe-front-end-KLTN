@@ -66,6 +66,7 @@ function TuyenXe(){
         setTuyenXe([])
       }else{
         getTuyenXeFindByAddressDate(data).then(data=>{
+          console.log(data);
           if(data){
             setTuyenXe(data)
           }
