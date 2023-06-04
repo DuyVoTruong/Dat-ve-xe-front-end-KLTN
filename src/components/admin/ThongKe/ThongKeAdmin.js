@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { MyContext } from "../../../App";
 import BarChart from "../../thongKe/BarChart";
 import PieChart from "../../thongKe/PieChart";
+import { useTranslation } from "react-i18next";
 
 const ThongKeAdmin =()=>{
     const token = useContext(MyContext).token;
@@ -25,6 +26,7 @@ const ThongKeAdmin =()=>{
     const [year, setYear] = useState("");
     const [soDon, setSoDon] = useState([]);
     const [doanhThu, setDoanhThu] = useState([]);
+    const {t} = useTranslation();
 
     useEffect(()=>{
       if(Number(month)&&Number(year)){
@@ -59,9 +61,9 @@ const ThongKeAdmin =()=>{
     const thongKeTheoTanSuatSuDung =()=>{
 
       if(!Number(month)||!Number(year)){
-        window.alert("Tháng và năm phải là số!!!");
+        window.alert(("thangvanamphailaso"));
       }else if(Number(month)>12||Number(month)<0){
-        window.alert("Tháng phải nằm trong khoảng từ 1 đến 12")
+        window.alert(t("thangphainamtrongkhoangtu1den12"))
       }
       else{
 
@@ -69,7 +71,7 @@ const ThongKeAdmin =()=>{
           labels: soDon.map(sd=>sd.tenNhaXe),
           datasets: [
             {
-              label: "Số vé bán được (đơn vị: vé)",
+              label: t("sovebanduoc"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -86,7 +88,7 @@ const ThongKeAdmin =()=>{
           labels: soDon.map(sd=>sd.tenNhaXe),
           datasets: [
             {
-              label: "Tỷ lệ (đơn vị: %)",
+              label: t("tyle"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -108,7 +110,7 @@ const ThongKeAdmin =()=>{
             },
             title: {
               display: true,
-              text: "Số vé bán được của các nhà xe"
+              text: t("sovebanduoccuacacnhaxe")
             }
           }
         });
@@ -122,7 +124,7 @@ const ThongKeAdmin =()=>{
             },
             title: {
               display: true,
-              text: "Tỷ lệ phần trăm số vé bán được của các nhà xe"
+              text: t("tylephantramsovebanduoccuacacnhaxe")
             }
           }
         });
@@ -131,7 +133,7 @@ const ThongKeAdmin =()=>{
           labels: soDon.map(sd=>sd.tenNhaXe),
           datasets: [
             {
-              label: "Số hàng hóa được giao (đơn vị: lượt)",
+              label: t("sohanghoaduocgiao"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -148,7 +150,7 @@ const ThongKeAdmin =()=>{
           labels: soDon.map(sd=>sd.tenNhaXe),
           datasets: [
             {
-              label: "Tỷ lệ (đơn vị: %)",
+              label: t("tyle"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -170,7 +172,7 @@ const ThongKeAdmin =()=>{
             },
             title: {
               display: true,
-              text: "Tỷ lệ phần trăm số hàng hóa được giao của các nhà xe"
+              text: t("tylephantramsohanghoaduocgiaocuacacnhaxe")
             }
           }
         });
@@ -184,7 +186,7 @@ const ThongKeAdmin =()=>{
             },
             title: {
               display: true,
-              text: "Số hàng hóa được giao của các nhà xe"
+              text: t("sohanghoaduocgiaocuacacnhaxe")
             }
           }
         });
@@ -195,16 +197,16 @@ const ThongKeAdmin =()=>{
 
     const thongKeTheoDoanhThu =()=>{
       if(!Number(month)||!Number(year)){
-        window.alert("Tháng và năm phải là số!!!");
+        window.alert(t("thangvanamphailaso"));
       }else if(Number(month)>12||Number(month)<0){
-        window.alert("Tháng phải nằm trong khoảng từ 1 đến 12")
+        window.alert(t("thangphainamtrongkhoangtu1den12"))
       }
       else{
         setDataBar({
           labels: doanhThu.map(dt=>dt.tenNhaXe),
           datasets: [
             {
-              label: "Doanh thu (đơn vị: nghìn đồng)",
+              label: t("doanhthu"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -221,7 +223,7 @@ const ThongKeAdmin =()=>{
           labels: doanhThu.map(dt=>dt.tenNhaXe),
           datasets: [
             {
-              label: "Tỷ lệ (đơn vị: %)",
+              label: t("tyle"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -243,7 +245,7 @@ const ThongKeAdmin =()=>{
             },
             title: {
               display: true,
-              text: "Doanh thu của các nhà xe"
+              text: t("doanhthucuacacnhaxe")
             }
           }
         });
@@ -257,7 +259,7 @@ const ThongKeAdmin =()=>{
             },
             title: {
               display: true,
-              text: "Tỷ lệ phần trăm doanh thu của các nhà xe"
+              text: t("tylephantramdoanhthucuacacnhaxe")
             }
           }
         });
@@ -267,17 +269,17 @@ const ThongKeAdmin =()=>{
 
     return(
         <>
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h1>Thống kê</h1></div>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h1>{t("thongke")}</h1></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display:"flex"}}>
           <Form.Label style={{margin:"15px"}}>Tháng:</Form.Label>
-          <Form.Control onChange={e=>setMonth(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder="Nhập tháng cần thống kê"></Form.Control>
+          <Form.Control onChange={e=>setMonth(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("nhapthangcanthongke")}></Form.Control>
           <Form.Label style={{margin:"15px"}}>Năm:</Form.Label>
-          <Form.Control onChange={e=>setYear(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder="Nhập năm cần thống kê"></Form.Control>
+          <Form.Control onChange={e=>setYear(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("nhapnamcanthongke")}></Form.Control>
         </div>
         <div style={{display:"flex"}}>
-          <Button style={{margin: "10px"}} onClick={thongKeTheoTanSuatSuDung}>Thống kê tần suất sử dụng</Button>
-          <Button style={{margin: "10px"}} onClick={thongKeTheoDoanhThu}>Thống kê doanh thu</Button>
+          <Button style={{margin: "10px"}} onClick={thongKeTheoTanSuatSuDung}>{t("thongketansuatsudung")}</Button>
+          <Button style={{margin: "10px"}} onClick={thongKeTheoDoanhThu}>{t("thongkedoanhthu")}</Button>
         </div>
           {
             (()=>{

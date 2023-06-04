@@ -6,6 +6,7 @@ import "../../css/rating.css"
 import useDanhGia from "../hooks/useDanhGia";
 import {getNhaXeById, getNhaXeUserById} from "../hooks/useFunction"
 import useUser from "../hooks/useUser";
+import { useTranslation } from "react-i18next";
 
 const NhaXeDanhGia =()=>{
 
@@ -20,6 +21,7 @@ const NhaXeDanhGia =()=>{
 
     const {user} = useUser();
     const nav = useNavigate();
+    const {t} = useTranslation();
 
     useEffect(()=>{
        window.scrollTo(0,0);
@@ -73,11 +75,11 @@ const NhaXeDanhGia =()=>{
         let noiDung = document.getElementById("comment").value;
         
         if(soSao===0){
-            window.alert("Bạn phải chọn số sao")
+            window.alert(t("banphaichonsosao"))
         } else if(!gioDang||!ngayDang||!noiDung||!soSao){
-            window.alert("Bạn phải điền đầy đủ thông tin!!!")
+            window.alert(t("banphaidiendayduthongtin"))
         }else if(!account.id){
-            window.alert("Bạn phải đăng nhập để đánh giá nhà xe!!!")
+            window.alert(t("banphaidangnhapdedanhgianhaxe"))
         }
         else {
             let data = { 
@@ -108,9 +110,9 @@ const NhaXeDanhGia =()=>{
             <Card.Img style={{ width: "80%", height:"80%", maxHeight: "250px", maxWidth: "500px", marginLeft: "auto", marginRight:"auto", marginTop: "10px"}} variant="top" src={"https://nld.mediacdn.vn/k:2016/ben-xe-mt-1466755631165/thong-qua-dia-diem-xay-dung-ben-xe-mien-tay-moi.jpg"} />
             <Card.Body>
             <Card.Title>{nhaXe.tenNhaXe}</Card.Title>
-            <Card.Text>Số điện thoại: {nhaXe.sdt}</Card.Text>
-            <Card.Text>Giới thiệu: {nhaXe.moTaNgan}</Card.Text>
-            <Card.Title>Đánh giá của bạn</Card.Title>
+            <Card.Text>{t("sodienthoai")}: {nhaXe.sdt}</Card.Text>
+            <Card.Text>{t("motangan")}: {nhaXe.moTaNgan}</Card.Text>
+            <Card.Title>{t("danhgiacuaban")}</Card.Title>
             <div class="rate">
                 <input type="radio" id="star5" name="rate" value="5" />
                 <label for="star5" title="text">5 stars</label>
@@ -125,11 +127,11 @@ const NhaXeDanhGia =()=>{
             </div>
             <div style={{marginTop: "60px"}}>
                 <Form.Group className="mb-3" controlId="comment">
-                    <Form.Label>Nội dung đánh giá</Form.Label>
+                    <Form.Label>{t("noidungdanhgia")}</Form.Label>
                     <Form.Control as="textarea" rows={3} />
                 </Form.Group>
             </div>
-            <Button onClick={handleAddDanhGia}>Đánh giá</Button>
+            <Button onClick={handleAddDanhGia}>{t("danhgia")}</Button>
             </Card.Body>
             </Card>
             </Col>

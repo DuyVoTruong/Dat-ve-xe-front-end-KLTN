@@ -4,10 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { httpGetBenXeById } from "../../hooks/Request";
 import useBenXe from "../../hooks/useBenXe";
 import {getBenXeById, getTinhThanhPho} from "../../hooks/useFunction"
+import { useTranslation } from "react-i18next";
 
 function BenXeUpdateForm({showForm, setShowForm, update, id}){
 
     const [benXe, setBenXe] = useState([]);
+    const {t} = useTranslation();
     useEffect(()=>{
         if(showForm===true){
             getBenXeById(id).then(data=>{
@@ -44,36 +46,36 @@ function BenXeUpdateForm({showForm, setShowForm, update, id}){
         <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Cập nhật thông tin bến xe</Modal.Title>
+              <Modal.Title>{t("capnhatthongtinbenxe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                   <Form>
                       <Form.Group className="mb-3" controlId="formTenBenXe">
                           <Form.Label className="text-center">
-                          Tên bến xe
+                          {t("tenbenxe")}
                           </Form.Label>
-                          <Form.Control type="text" placeholder="Nhập tên nhà xe" defaultValue={benXe.tenBenXe}/>
+                          <Form.Control type="text" placeholder={t("nhaptenbenxe")} defaultValue={benXe.tenBenXe}/>
                       </Form.Group>
   
                       <Form.Group className="mb-3" controlId="formDiaChi">
-                          <Form.Label>Địa chỉ</Form.Label>
+                          <Form.Label>{t("diachi")}</Form.Label>
                           <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
-                              <option>Chọn tỉnh thành</option>
+                              <option>{t("chontinhthanh")}</option>
                           </Form.Select>
                           
                           <Form.Select className="mb-3" id="district" aria-label="Chọn quận huyện">
-                              <option>Chọn quận huyện</option>
+                              <option>{t("chonquanhuyen")}</option>
                           </Form.Select>
                                   
                           <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
-                              <option>Chọn phường xã</option>
+                              <option>{t("chonphuongxa")}</option>
                           </Form.Select>
   
                             {
                                 (()=>{
                                     if(benXe.diaChiChiTiet){
                                         return(
-                                            <Form.Control type="text" placeholder="Nhập số nhà" defaultValue={benXe.diaChiChiTiet.split(', ')[0]}/>
+                                            <Form.Control type="text" placeholder={t("nhapsonha")} defaultValue={benXe.diaChiChiTiet.split(', ')[0]}/>
                                         )
                                     }
                                 })()
@@ -84,10 +86,10 @@ function BenXeUpdateForm({showForm, setShowForm, update, id}){
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                Close
+                {t("dong")}
               </Button>
               <Button variant="primary" type="button" onClick={UpdateBenXe}>
-                Update
+                {t("capnhat")}
               </Button>
             </Modal.Footer>
           </Modal>

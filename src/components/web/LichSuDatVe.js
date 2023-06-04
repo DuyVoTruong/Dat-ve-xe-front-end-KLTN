@@ -8,6 +8,7 @@ import useUser from "../hooks/useUser";
 import useVeXe from "../hooks/useVeXe";
 import { FiDelete } from "react-icons/fi"
 import imageDetail from '../../assets/img/view-details.png'
+import { useTranslation } from "react-i18next";
 
 const LichSuDatVe=()=>{
 
@@ -36,7 +37,7 @@ const LichSuDatVe=()=>{
     }
 
     const deleteVeXe =(id)=>{
-        if(window.confirm("Bạn muốn hủy vé xe này?")===true){
+        if(window.confirm(t("banmuonhuyvexenay"))===true){
             fetch("http://localhost:8080/api/vexe/"+id,{
             method: "DELETE",
             headers: {
@@ -45,14 +46,16 @@ const LichSuDatVe=()=>{
             },
             }).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    window.alert("Hủy vé xe thành công!!!");
+                    window.alert(t("huyvexethanhcong"));
                     setLoad(true);
                 }else{
-                    window.alert("Đã xảy ra lỗi!!!");
+                    window.alert(t("daxayraloi"));
                 }
             })
         }
     }
+
+    const { t } = useTranslation();
 
     return (
         <>
@@ -63,14 +66,14 @@ const LichSuDatVe=()=>{
         <thead>
             <tr>
             <th>STT</th>
-            <th>Số ghế</th>
-            <th>Ngày đặt</th>
-            <th>Ngày nhận</th>
-            <th>Bến xe đi</th>
-            <th>Bến xe đến</th>
-            <th>Nhà xe</th>
-            <th>Trạng thái</th>
-            <th>Xem chi tiết / Hủy đơn</th>
+            <th>{t("soghe")}</th>
+            <th>{t("ngaydat")}</th>
+            <th>{t("ngaynhan")}</th>
+            <th>{t("benxedi")}</th>
+            <th>{t("benxeden")}</th>
+            <th>{t("nhaxe")}</th>
+            <th>{t("trangthai")}</th>
+            <th>{t("chitiet")} / {t("huydon")}</th>
             </tr>
         </thead>
         <tbody>
@@ -88,13 +91,13 @@ const LichSuDatVe=()=>{
                     <td>{vx.tuyenXe.xe.nhaXe.tenNhaXe}</td>
                     <td>{vx.trangThai}</td>
                     <td style={{textAlign: "center"}}>
-                        <button onClick={()=>redirectVeXeChiTiet(vx)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button>
+                        <button onClick={()=>redirectVeXeChiTiet(vx)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("chitiet")}</span></button>
                         {
                             (()=>{
                                 if(vx.trangThai==="INACTIVE"){
                                     return(
                                         <>
-                                            <button onClick={()=>deleteVeXe(vx.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>Huỷ đơn</span></button>
+                                            <button onClick={()=>deleteVeXe(vx.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
                                         </>
                                     );
                                 }

@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useLoaiXe from "../../hooks/useLoaiXe";
+import { useTranslation } from "react-i18next";
 
 function LoaiXeAddForm({showForm, setShowForm, add}){
+
+    const {t} = useTranslation();
 
     const AddLoaiXe = (event) => {
         event.preventDefault();
@@ -29,30 +32,30 @@ function LoaiXeAddForm({showForm, setShowForm, add}){
         <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Thêm loại xe</Modal.Title>
+              <Modal.Title>{t("themloaixe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="formTenLoaiXe">
                         <Form.Label className="text-center">
-                        Tên loại xe
+                        {t("tenloaixe")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập tên loại xe" />
+                        <Form.Control type="text" placeholder={t("nhaptenloaixe")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSucChua">
-                        <Form.Label>Sức chứa</Form.Label>
-                        <Form.Control type="number" min={1} defaultValue={1} placeholder="Nhập sức chứa của xe" />
+                        <Form.Label>{t("succhua")}</Form.Label>
+                        <Form.Control type="number" min={1} defaultValue={1} placeholder={t("nhapsucchuacuaxe")} />
                     </Form.Group>
 
                 </Form>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                Close
+                {t("dong")}
               </Button>
               <Button variant="primary" type="button" onClick={AddLoaiXe}>
-                Add
+                {t("them")}
               </Button>
             </Modal.Footer>
           </Modal>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
   
 const SubMenuNhaXe = ({ item, isOpen }) => {
@@ -6,12 +7,14 @@ const SubMenuNhaXe = ({ item, isOpen }) => {
   
   const showSubnav = () => setSubnav(!subnav);
 
+  const { t } = useTranslation();
+
   return (
     <>
         <Link className="link" to={item.path} onClick={item.subNav && showSubnav} >
             <div style={{justifyContent: "space-between", alignItems: "center", display: "flex"}}>
                 {item.icon}
-                <span style={{display: isOpen ? "block" : "none", marginLeft: "16px"}}>{item.title}</span>
+                <span style={{display: isOpen ? "block" : "none", marginLeft: "16px"}}>{t(item.title)}</span>
             </div>
             <div style={{display: isOpen ? "block" : "none"}}>
                 {item.subNav && subnav 
@@ -25,7 +28,7 @@ const SubMenuNhaXe = ({ item, isOpen }) => {
             return(
                 <Link className="dropdown-link" style={{display: isOpen ? "flex" : "none"}} to={item.path} key={index}>
                     {item.icon}
-                    <span style={{paddingLeft: "16px"}}>{item.title}</span>
+                    <span style={{paddingLeft: "16px"}}>{t(item.title)}</span>
                 </Link>
             )
         })}

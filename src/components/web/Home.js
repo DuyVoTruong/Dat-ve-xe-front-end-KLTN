@@ -10,7 +10,7 @@ import { MyContext } from '../../App';
 import image from '../../assets/img/picture1.png';
 import imageXe from '../../assets/img/xe.png';
 import imageDiemDen from '../../assets/img/diemDen.png';
-
+import { useTranslation } from 'react-i18next';
 
 function Home(){
   
@@ -116,9 +116,11 @@ function Home(){
         }
       };
 
+      const { t } = useTranslation();
+
     return(
         <>
-        <img src={image} style={{height: "700px", width: "100%", display: "inline-block",}}/>
+        <img src={image} style={{maxHeight: "700px", height:"80%", width:"100%", display: "inline-block",}}/>
         <Container>
           <div id="booking" class="section">
             <div class="section-center">
@@ -129,8 +131,8 @@ function Home(){
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <span class="form-label">Điểm đi</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi" onChange={e=>setDiemDi(e.target.value)}/>
+                            <span class="form-label">{t("diemdi")}</span>
+                            <input class="form-control" type="text" placeholder={t("chondiemdi")} list="DiemDi" onChange={e=>setDiemDi(e.target.value)}/>
                             <datalist id="DiemDi">
                             {benXe.map(bx=>{
                                 return(<option value={bx.tinhThanh}></option>);
@@ -140,8 +142,8 @@ function Home(){
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <span class="form-label">Điểm đến</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen" onChange={e=>setDiemDen(e.target.value)}/>
+                            <span class="form-label">{t("diemden")}</span>
+                            <input class="form-control" type="text" placeholder={t("chondiemden")} list="DiemDen" onChange={e=>setDiemDen(e.target.value)}/>
                             <datalist id="DiemDen">
                             {benXe.map(bx=>{
                               if(tinhThanh.indexOf(bx.tinhThanh)<0){
@@ -156,13 +158,13 @@ function Home(){
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <span class="form-label">Ngày đi</span>
-                            <input class="form-control" type="date" required onChange={e=>setDate(e.target.value)}/>
+                            <span class="form-label">{t("ngaydi")}</span>
+                            <input class="form-control" type="date" required onChange={e=>setDate(e.target.value)} min={new Date().toISOString().split('T')[0]}/>
                           </div>
                         </div>
                         <div class="col-md-3">
                           <div class="form-btn">
-                          <button class="submit-btn" type='button' onClick={timKiem}><i class="text-white px-2 fa fa-search">TÌM KIẾM</i></button>
+                          <button class="submit-btn" type='button' onClick={timKiem}><i class="text-white px-2 fa fa-search">{t("timkiem")}</i></button>
                           </div>
                         </div>
                       </div>
@@ -176,12 +178,12 @@ function Home(){
 
         <Container>
 
-          <h1 style={{marginTop:"50px"}}>Các tuyến xe trong ngày</h1>
+          <h1 style={{marginTop:"50px", marginLeft: "30px"}}>{t("cactuyenxetrongngay")}</h1>
           <Carousel infinite={true} autoPlay={false} autoPlaySpeed={2000} responsive={responsive}>
             {tuyenXe.map(tx =>{
               if(tx.ngayDi.indexOf(toDay)>=0){
                 return(
-                  <Card onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{ margin: "2rem" }} className="shadow card-transform">
+                  <Card onClick={()=>{if(!account){window.alert(t("banphaidangnhapdedatve"))}else{datVe(tx)}}} style={{ margin: "2rem" }} className="shadow card-transform">
                     <Card.Body>
                       {
                         (()=>{
@@ -198,13 +200,13 @@ function Home(){
                         })()
                       }
                           <Card.Text>
-                          Ngày đi: {tx.ngayDi}
+                          {t('ngaydi')}: {tx.ngayDi}
                           </Card.Text>
                           <Card.Text>
-                          Thời gian hành trình: {tx.thoiGianHanhTrinh}
+                          {t("thoigianhanhtrinh")}: {tx.thoiGianHanhTrinh}
                           </Card.Text>
                           <Card.Text>
-                          Giá vé: {tx.giaVe}
+                          {t("gia")}: {tx.giaVe}
                           </Card.Text>
                     </Card.Body>
                   </Card>
@@ -213,7 +215,7 @@ function Home(){
             })}
           </Carousel>
 
-        <h1 style={{marginTop:"50px"}}>Danh sách các điểm đến</h1>
+        <h1 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacdiemden")}</h1>
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {benXe.map(bx =>{
             return(
@@ -230,14 +232,15 @@ function Home(){
           })}
         </Carousel>
 
-        <h1 style={{marginTop:"50px"}}>Danh sách các nhà xe</h1>
+        <h1 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacnhaxe")}</h1>
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {nhaXe.map(nx =>{
             return(
                 <Card style={{ margin: "2rem" }} className="shadow card-transform">
                   <Card.Img height={"150px"} variant="top" src={imageXe} />
                   <Card.Body>
-                      <Card.Title>{nx.tenNhaXe}</Card.Title>
+                      <Card.Title>{nx.tenNhaXe}
+                      <span style={{marginLeft: "20px"}}>
                       {
                         [1,2,3,4,5].map((i, index)=>{
                           let soSao;
@@ -249,11 +252,13 @@ function Home(){
                           return checkStar(i, soSao);
                         })
                       }
+                      </span>
+                      </Card.Title>
                       <Card.Text>
-                      Sđt: {nx.sdt}
+                      {t('sdt')}: {nx.sdt}
                       </Card.Text>
-                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">Xem chi tiết</Button>
-                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đánh giá!!!")}else{danhGiaNhaXe(nx.id)}}} variant="primary">Đánh giá</Button>
+                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">{t("chitiet")}</Button>
+                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>{if(!account){window.alert(t("banphaidangnhapdedanhgia"))}else{danhGiaNhaXe(nx.id)}}} variant="primary">{t("danhgia")}</Button>
                   </Card.Body>
                 </Card>
             );

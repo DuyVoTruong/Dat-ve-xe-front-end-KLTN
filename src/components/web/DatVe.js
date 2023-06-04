@@ -13,6 +13,7 @@ import useVeXe from "../hooks/useVeXe";
 import useXe from "../hooks/useXe";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from "react-i18next";
 
 function DatVe(){
 
@@ -25,6 +26,7 @@ function DatVe(){
     let sucChua = 20;
     const [hinhThucThanhToan, setHinhThucThanhToan]=useState("ONLINE");
     var today = new Date();
+    const {t} = useTranslation();
 
     let ngayDat = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
     var tomorrow = new Date();
@@ -91,10 +93,10 @@ function DatVe(){
         ngayNhan=convertNgayNhan();
 
         if(!ngayDat||!ngayNhan||!hinhThucThanhToan||!tuyenXeId||soGhe.length==0){
-            toast.info("Bạn phải điền đầy đủ thông tin")
+            toast.info(t("vuilongdiendayduthongtin"))
         }
         else if(userId===null){
-            toast.info("Bạn phải đăng nhập để đặt vé!!!")
+            toast.info(t("banphaidangnhapdedatve"))
         }
         else {
             let data = {
@@ -105,7 +107,7 @@ function DatVe(){
 
             httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    toast.success("Bạn đã đặt vé thành công")
+                    toast.success(t("bandadatvethanhcong"))
                     setTimeout(()=>{nav("/lich-su-dat-ve")},3000);
                 }
                 else{
@@ -142,12 +144,12 @@ function DatVe(){
                 <Card className="shadow">
                     <Card.Body>
                     <div className="mb-3 mt-md-4">
-                        <p className=" mb-5">Vui lòng chọn hình thức thanh toán và số ghế bên dưới!</p>
+                        <p className=" mb-5">{t("vuilongchonhinhthucthanhtoanvasoghebenduoi")}</p>
                         <div className="mb-3">
                         <Form>
                             <Form.Group className="mb-3" controlId="formUsername">
                             <Form.Label className="text-center">
-                                Tên tài khoản đặt
+                                {t("tentaikhoan")}
                             </Form.Label>
                             <Form.Control type="text" value={account.username} readOnly/>
                             </Form.Group>
@@ -173,7 +175,7 @@ function DatVe(){
                                             <>
                                             <Form.Group className="mb-3" controlId="formTuyenXe">
                                             <Form.Label className="text-center">
-                                                Tuyến xe
+                                                {t("tuyenxe")}
                                             </Form.Label>
 
                                             <Form.Control type="text" value={tenBenXeDi+" => "+tenBenXeDen} readOnly/>
@@ -185,42 +187,42 @@ function DatVe(){
 
                             <Form.Group className="mb-3" controlId="formNhaXe">
                             <Form.Label className="text-center">
-                                Nhà xe
+                                {t("nhaxe")}
                             </Form.Label>
                             <Form.Control type="text" value={tenNhaXe+" - SĐT: "+sdt} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGioDi">
                             <Form.Label className="text-center">
-                                Giờ khởi hành
+                                {t("giokhoihanh")}
                             </Form.Label>
                             <Form.Control type="time" value={tuyenXeById.gioDi} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formNgayDi">
                             <Form.Label className="text-center">
-                                Ngày Đi (yy-mm-dd)
+                                {t("ngaydi")} (yy-mm-dd)
                             </Form.Label>
                             <Form.Control type="datetime" value={tuyenXeById.ngayDi} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formNgayDat">
                             <Form.Label className="text-center">
-                                Ngày đặt (yy-mm-dd)
+                                {t("ngaydat")} (yy-mm-dd)
                             </Form.Label>
                             <Form.Control type="datetime" value={ngayDat} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formNgayNhan">
                             <Form.Label className="text-center">
-                                Ngày nhận (yy-mm-dd)
+                                {t("ngaynhan")} (yy-mm-dd)
                             </Form.Label>
                             <Form.Control type="datetime" value={ngayNhan} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formHinhThucThanhToan">
                             <Form.Label className="text-center">
-                                Hình thức thanh toán
+                                {t("hinhthucthanhtoan")}
                             </Form.Label>
                             <Form.Select onChange={evt=>setHinhThucThanhToan(evt.target.value)}>
                                 <option key={"online"} defaultChecked value={"ONLINE"}>online</option>
@@ -230,7 +232,7 @@ function DatVe(){
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label className="text-center">
-                                Chọn số ghế
+                                {t("chonsoghe")}
                             </Form.Label>
                             
                             </Form.Group>
@@ -307,7 +309,7 @@ function DatVe(){
 
                             <div className="d-grid">
                             <Button variant="primary" type="button" onClick={DatVe}>
-                                Đặt vé
+                                {t("datve")}
                             </Button>
                             </div>
                         </Form>

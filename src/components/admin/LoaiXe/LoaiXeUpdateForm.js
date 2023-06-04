@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {getLoaiXeById} from "../../hooks/useFunction"
+import { useTranslation } from "react-i18next";
 
 function LoaiXeUpdateForm({showForm, setShowForm, update, id, lx}){
 
     const handleClose = () => {setShowForm(false)};
+    const {t} = useTranslation();
 
     const UpdateLoaiXe = (event) => {
         event.preventDefault();
@@ -31,29 +33,29 @@ function LoaiXeUpdateForm({showForm, setShowForm, update, id, lx}){
         <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Cập nhật thông tin loại xe</Modal.Title>
+              <Modal.Title>{t("capnhatthongtinloaixe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="formTenLoaiXe">
                         <Form.Label className="text-center">
-                        Tên loại xe
+                        {t("tenloaixe")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập tên loại xe" defaultValue={lx.tenLoaiXe}/>
+                        <Form.Control type="text" placeholder={t("nhaptenloaixe")} defaultValue={lx.tenLoaiXe}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSucChua">
-                        <Form.Label>Sức chứa</Form.Label>
-                        <Form.Control type="number" min={1} defaultValue={lx.sucChua} placeholder="Nhập sức chứa của xe" />
+                        <Form.Label>{t("succhua")}</Form.Label>
+                        <Form.Control type="number" min={1} defaultValue={lx.sucChua} placeholder={t("nhapsucchuacuaxe")} />
                     </Form.Group>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                Close
+                {t("dong")}
               </Button>
               <Button variant="primary" type="button" onClick={UpdateLoaiXe}>
-                Update
+                {t("capnhat")}
               </Button>
             </Modal.Footer>
           </Modal>

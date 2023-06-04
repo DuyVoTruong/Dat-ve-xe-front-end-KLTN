@@ -3,6 +3,9 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpLogin } from "../hooks/Request";
+import { FcGoogle } from "react-icons/fc";
+import backgroundLogin from "../../assets/img/background-login2.jpg";
+import { useTranslation } from "react-i18next";
 
 function Login() {
 
@@ -10,6 +13,7 @@ function Login() {
   const [role, setRole] = useState("USER");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const {t} = useTranslation();
 
   const nav = useNavigate();
   const login = async(e)=>{
@@ -47,23 +51,25 @@ function Login() {
   }
 
   return (
-    <div>
+    <>
+      <img src={backgroundLogin} style={{width: '100vw', height: '100vh', objectFit: "cover", filter: "brightness(60%)"}}></img>
+      <div style={{position: "absolute", top: "0px", left: "0px", width: '100vw', height: '100vh'}}>
       <Container>
-        <Row className="d-flex justify-content-center align-items-center" style={{marginTop:"100px",marginBottom:"100px"}}>
+        <Row className="d-flex justify-content-center align-items-center" style={{height: "100vh"}}>
           <Col md={8} lg={6} xs={12}>
-          <div style={{border: "solid 10px blue", background:"blue"}}></div>
-            <Card className="shadow">
+          <div style={{border: "solid 10px blue", background:"blue", borderRadius: "8px 8px 0px 0px"}}></div>
+            <Card className="shadow" style={{borderRadius: "0px 0px 8px 8px"}}>
               <Card.Body>
                 <div className="mb-3 mt-md-4">
                   <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
-                  <p className=" mb-5">Please enter your username and password!</p>
+                  <p className=" mb-5">{t("vuilongnhapusernamevapasswordcuaban")}</p>
                   <div className="mb-3">
                     <Form onSubmit={login}>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-center">
                           Username
                         </Form.Label>
-                        <Form.Control onChange={(e)=>setUsername(e.target.value)} type="text" placeholder="Enter username"/>
+                        <Form.Control onChange={(e)=>setUsername(e.target.value)} type="text" placeholder={t("nhapusername")}/>
                       </Form.Group>
 
                       <Form.Group
@@ -71,7 +77,7 @@ function Login() {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Enter Password" />
+                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder={t("nhappassword")} />
                       </Form.Group>
 
                       {/*<Form.Group
@@ -98,25 +104,30 @@ function Login() {
                     </Form.Group>*/}
                       <div className="d-grid">
                         <Button variant="primary" type="submit">
-                          Login
+                          {t("login")}
                         </Button>
                       </div>
                     </Form>
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                        Don't have an account?{" "}
+                        {t("khongcotaikhoan")}{" "}
                         <a href="/sign-up" className="text-primary fw-bold">
                           <Link to="/sign-up">Sign Up</Link>
                         </a>
                       </p>
-                      {/*
-                      <p className="mb-0  text-center">
-                        or
+                      <p className="mb-2  text-center">
+                        {t("or")}
                       </p>
                       <p className="mb-0  text-center">
-                        <Button style={{backgroundColor: "red", borderColor: "red"}}><img src="/img/btn_google_signin.png" alt=""></img></Button>
+                        <Button style={{backgroundColor: "white", borderColor: "red"}}><FcGoogle size={35}></FcGoogle><span style={{color:"black", marginLeft: "10px"}}>Login with google</span></Button>
                       </p>
-                      */}
+                    </div>
+                    <div className="mt-3">
+                      <p className="mb-0  text-center">
+                        <a lassName="text-primary fw-bold">
+                          <Link to="/">{t("dentrangchu")}</Link>
+                        </a>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -125,7 +136,8 @@ function Login() {
           </Col>
         </Row>
       </Container>
-    </div>
+      </div>
+    </>
   );
 }
 

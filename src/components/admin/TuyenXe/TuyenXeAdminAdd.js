@@ -5,6 +5,7 @@ import useNhaXe from "../../hooks/useNhaXe";
 import useXe from "../../hooks/useXe";
 import {getAllBenXeUser} from "../../hooks/useFunction"
 import { MyContext } from "../../../App";
+import { useTranslation } from "react-i18next";
 
 function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
 
@@ -12,6 +13,7 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
     const {xe} = useXe();
     const {benXe} = useBenXe(role);
     const account = useContext(MyContext).account;
+    const { t } = useTranslation();
 
     const AddTuyenXe = (event) => {
         //event.preventDefault();
@@ -51,13 +53,13 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
         <>
           <Modal show={showFormAdd} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Thêm tuyến xe</Modal.Title>
+              <Modal.Title>{t("themtuyenxe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Bến xe đi
+                        {t("benxedi")}
                     </Form.Label>
                     <Form.Select id="benXeDi">
                         {benXe.map(bx=>{
@@ -72,7 +74,7 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Bến xe đến
+                        {t("benxeden")}
                     </Form.Label>
                     <Form.Select id="benXeDen">
                         {benXe.map(bx=>{
@@ -87,7 +89,7 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Xe
+                        {t("xe")}
                     </Form.Label>
                     <Form.Select id="xe">
                         {xe.map(x=>{
@@ -114,35 +116,35 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Giờ khởi hành
+                        {t("giokhoihanh")}
                     </Form.Label>
                     <Form.Control id="gioDi" type="time" />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Ngày đi (yy-mm-dd)
+                        {t("ngaydi")} (yy-mm-dd)
                     </Form.Label>
                     <Form.Control id="ngayDi" type="date" />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Thời gian hành trình
+                        {t("thoigianhanhtrinh")}
                     </Form.Label>
                     <Form.Control id="thoiGianHanhTrinh" type="text" />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        Giá vé (đơn vị: nghìn đồng)
+                        {t("gia")} {t("donvi")}
                     </Form.Label>
                     <Form.Control id="giaVe" type="number" min={1} />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                    Trạng thái hoạt động
+                    {t("trangthai")}
                     </Form.Label>
                     <br></br>
                         <Form.Check
@@ -168,10 +170,10 @@ function TuyenXeAdminAdd({showFormAdd, setShowFormAdd, add, role}){
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                Close
+                {t("dong")}
               </Button>
               <Button variant="primary" type="button" onClick={AddTuyenXe}>
-                Add
+                {t("them")}
               </Button>
             </Modal.Footer>
           </Modal>

@@ -4,6 +4,8 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getTuyenXeFindByAddress } from "../hooks/useFunction";
 import image from '../../assets/img/picture2.png';
 import imageDetail from '../../assets/img/view-details.png';
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 function LichTrinh(){
 
@@ -38,21 +40,23 @@ function LichTrinh(){
         nav(`/tuyen-xe/?diemDi=${diemDi}&diemDen=${diemDen}`);
     }
 
+    const { t } = useTranslation();
+
     return(
         <>
         <Container>
-        <img src={image} style={{height: "300px", width: "100%", display: "inline-block",}}/>
+        <img src={image} style={{maxHeight: "300px", width: "100%", height: "80%", display: "inline-block",}}/>
         </Container>
         <Container>
             <div class="row" style={{margin:"20px"}}>
                 <div class="col-md-6">
                     <div class="form-group">
-                    <input onChange={evt=>setDiemDi(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi" defaultValue={diemDi}/>
+                    <input onChange={evt=>setDiemDi(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder={t("chondiemdi")} list="DiemDi" defaultValue={diemDi}/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                    <input onChange={evt=>setDiemDen(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen" defaultValue={diemDen}/>
+                    <input onChange={evt=>setDiemDen(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder={t("chondiemden")} list="DiemDen" defaultValue={diemDen}/>
                     </div>
                 </div>
             </div>
@@ -63,8 +67,8 @@ function LichTrinh(){
         <Table striped bordered hover style={{backgroundColor: "white"}}>
         <thead>
             <tr>
-            <th>Điểm đi</th>
-            <th>Điểm đến</th>
+            <th>{t("diemdi")}</th>
+            <th>{t("diemden")}</th>
             <th></th>
             </tr>
         </thead>
@@ -78,7 +82,7 @@ function LichTrinh(){
                                 <tr>
                                 <td>{item.benXeDi.tinhThanh}</td>
                                 <td>{item.benXeDen.tinhThanh}</td>
-                                <td style={{textAlign: "center"}}><button onClick={()=>redirect(item.benXeDi.tinhThanh,item.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
+                                <td style={{textAlign: "center"}}><button onClick={()=>redirect(item.benXeDi.tinhThanh,item.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("chitiet")}</span></button></td>
                                 </tr>
                                 </>
                             )

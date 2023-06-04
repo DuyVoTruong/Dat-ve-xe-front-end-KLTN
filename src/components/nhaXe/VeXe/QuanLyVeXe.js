@@ -5,9 +5,12 @@ import { BsPlusSquareFill } from "react-icons/bs";
 import { ImBin } from "react-icons/im";
 import { useLocation, useParams } from "react-router-dom";
 import { MyContext } from "../../../App";
-import { getAllVeXeByTuyenXeId, getTuyenXeById } from "../../hooks/useFunction";
+import { convert_vi_to_en, getAllVeXeByTuyenXeId, getTuyenXeById } from "../../hooks/useFunction";
 import useTuyenXe from "../../hooks/useTuyenXe";
 import useVeXe from "../../hooks/useVeXe";
+import DataTable, { defaultThemes } from "react-data-table-component";
+import { GrSearch } from "react-icons/gr";
+import { useTranslation } from "react-i18next";
 
 const QuanLyVeXe =()=>{
     const account = useContext(MyContext).account;
@@ -18,6 +21,7 @@ const QuanLyVeXe =()=>{
     const [tuyenXe, setTuyenXe] = useState([]);
     const [load,setLoad] = useState(false);
     let stt = 0;
+    const {t} = useTranslation();
 
 
     const updateVeXe =(id,data)=>{
@@ -111,8 +115,179 @@ const QuanLyVeXe =()=>{
         }
     }
 
+    const columns = [
+        {
+            name: <div>{t("nguoidat")}</div>,
+            selector: row => row.user.hoTen,
+            sortable: true,
+            wrap: true,
+            width: "15%",
+        },
+        {
+            name: <div>{t("sodienthoai")}</div>,
+            selector: row => row.user.sdt,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("ngaydat")}</div>,
+            selector: row => row.ngayDat,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("ngaynhan")}</div>,
+            selector: row => row.ngayNhan,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("soghe")}</div>,
+            selector: row => row.soGhe,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("loaighe")}</div>,
+            selector: row => row.tuyenXe.xe.loaiXe.tenLoaiXe,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("trangthai")}</div>,
+            selector: row => row.trangThai,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: '',
+            selector: (row, index)=>{
+                return(()=>{
+                    if(row.trangThai==="INACTIVE"){
+                        return(
+                            <>
+                            <div>
+                                <Button onClick={()=>xacNhan(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("xacnhan")}</Button>
+                                <Button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("huy")}</Button>
+                            </div>
+                            </>
+                        )
+                    }
+                    else if(row.trangThai==="ACTIVE"){
+                        return(
+                            <>
+                            <div>
+                                <Button onClick={()=>xacNhanHoanThanh(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("xacnhanhoanthanh")}</Button>
+                                <Button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("huy")}</Button>
+                            </div>
+                            </>
+                        )
+                    }
+                })()
+            },
+            wrap: true,
+            width: "20%",
+        },
+    ];
+
+    const tableCustomStyles = {
+        rows: {
+          style: {
+            fontSize: "16px",
+            borderTopStyle: 'solid',
+			borderTopWidth: '1px',
+			borderTopColor: defaultThemes.default.divider.default,
+            borderLeftStyle: 'solid',
+            borderLeftWidth: '1px',
+            borderLeftColor: defaultThemes.default.divider.default,
+          },
+        },
+        headCells: {
+            style: {
+                fontSize: "16px",
+                borderRightStyle: 'solid',
+                borderRightWidth: '1px',
+                borderTopColor: defaultThemes.default.divider.default,
+                borderTopStyle: 'solid',
+                borderTopWidth: '1px',
+                borderRightColor: defaultThemes.default.divider.default,
+                borderLeftStyle: 'solid',
+                borderLeftWidth: '1px',
+                borderLeftColor: defaultThemes.default.divider.default,
+            }
+        },
+        cells: {
+    		style: {
+                borderRightStyle: 'solid',
+                borderRightWidth: '1px',
+                borderRightColor: defaultThemes.default.divider.default,
+    		},
+    	},
+      }
+
+    const [pending, setPending] = useState(true);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setPending(false);
+        }, 1000);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    const handleKeyDown=(event)=>{
+        if (event.key === 'Enter') {
+            setSearch(event.target.value);
+        }
+    }
+
+    const handleSearch=()=>{
+        setSearch(document.getElementById("searchText").value);
+    }
+
     return(
         <>
+        <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
+        <div style={{display: "flex"}}>
+        <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheotennguoidat")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("timkiem")}</Button></div>
+            <BsPlusSquareFill style={{marginTop: "25px"}} onClick={0} className="add-btn"></BsPlusSquareFill>
+        </div>
+        <div style={{padding:"20px", overflow: "auto"}}>
+        {
+            (()=>{
+                if(tuyenXe){
+                    if(tuyenXe.benXeDi&&tuyenXe.benXeDen&&tuyenXe.xe)
+                    return(
+                        <>
+                        <div>{t("quanlyvexecuatuyenxe")}:</div>
+                        <div><b>{t("benxedi")}:</b> {tuyenXe.benXeDi.tenBenXe} - <b>{t("benxeden")}:</b> {tuyenXe.benXeDen.tenBenXe} - <b>{t("biensoxe")}:</b> {tuyenXe.xe.bienSoXe} - <b>{t("ngaydi")}:</b> {tuyenXe.ngayDi} - <b>{t("giokhoihanh")}:</b> {tuyenXe.gioDi}</div>
+                        </>
+                    )
+                }
+            })()
+        }
+        <h1 style={{textAlign: "center"}}>{t("danhsachcacvexe")}</h1>
+        <DataTable
+            columns={columns}
+            data={veXe.filter(item=>convert_vi_to_en(item.user.hoTen.toLowerCase()).indexOf(convert_vi_to_en(search.toLowerCase()))>=0)}
+            pagination
+            highlightOnHover
+		    pointerOnHover
+            striped
+            responsive
+            customStyles={tableCustomStyles}
+            progressPending={pending}
+        />
+        </div>
+        </div>
+        </>
+    );
+}
+
+export default QuanLyVeXe;
+
+
+
+{/*        
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
             <input onChange={e=>setSearch(e.target.value)} className="form-control" style={{margin: "20px", width: "30%"}} type={"search"} placeholder="Tìm kiếm theo tên người đặt..."></input>
@@ -188,9 +363,4 @@ const QuanLyVeXe =()=>{
         </tbody>
         </Table>
         </div>
-        </div>
-        </>
-    );
-}
-
-export default QuanLyVeXe;
+        </div> */}

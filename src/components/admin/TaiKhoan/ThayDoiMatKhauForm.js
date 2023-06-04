@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { getTinhThanhPho } from "../../hooks/useFunction";
+import { useTranslation } from "react-i18next";
 
 function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
 
+  const {t} = useTranslation();
 
     const HandleUpdate = () => {
         //event.preventDefault();
@@ -35,7 +37,7 @@ function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
       <>
         <Modal show={showForm} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Thay đổi mật khẩu</Modal.Title>
+            <Modal.Title>{t("thaydoipassword")}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
                 <Form onSubmit={HandleUpdate}>
@@ -43,23 +45,23 @@ function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
                         <Form.Label className="text-center">
                         Password
                         </Form.Label>
-                        <Form.Control type="password" placeholder="Nhập password" />
+                        <Form.Control type="password" placeholder={t("nhappassword")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formConfirmPassword">
                         <Form.Label className="text-center">
                         Confirm password
                         </Form.Label>
-                        <Form.Control type="password" placeholder="Nhập confirm password" />
+                        <Form.Control type="password" placeholder={t("nhapconfirmpassword")} />
                     </Form.Group>
                 </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Close
+              {t("dong")}
             </Button>
             <Button variant="primary" type="button" onClick={HandleUpdate}>
-              Update
+              {t("capnhat")}
             </Button>
           </Modal.Footer>
         </Modal>

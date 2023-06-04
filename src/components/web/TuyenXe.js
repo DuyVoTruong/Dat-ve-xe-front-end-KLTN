@@ -1,5 +1,6 @@
+import './../../css/tuyenXe.css';
 import { useContext, useEffect, useState } from "react";
-import { Container, Table, ToastBody } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Table, ToastBody } from "react-bootstrap";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {GrDescend, GrAscend} from "react-icons/gr"
 import { getAllBenXeUser, getAllVeXeByTuyenXeId, getTuyenXeFindByAddressDate } from "../hooks/useFunction";
@@ -7,6 +8,18 @@ import useNhaXe from "../hooks/useNhaXe";
 import { MyContext } from "../../App";
 import imageDatVe from '../../assets/img/ticket-icon.png';
 import imageChuyenHang from '../../assets/img/chuyen-hang.png'
+import {ImRadioUnchecked} from "react-icons/im"
+import {FaMapMarkerAlt, FaRegClock} from "react-icons/fa"
+import {VscArrowSwap} from "react-icons/vsc"
+import imageDiemDen from '../../assets/img/diemDen.png';
+import LazyLoad from 'react-lazy-load';
+import { useTranslation } from 'react-i18next';
+
+const Loading = () => (
+  <div className="post loading">
+    <h5>Loading...</h5>
+  </div>
+)
 
 function TuyenXe(){
 
@@ -15,7 +28,7 @@ function TuyenXe(){
     const [benXe, setBenXe] = useState([]);
     const [tuyenXe, setTuyenXe] = useState([]);
     const {nhaXe} = useNhaXe();
-    const tinhThanh = [];
+    const [tinhThanh, setTinhThanh] = useState([]);
     let d = new Date();
     const toDay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 
@@ -50,10 +63,24 @@ function TuyenXe(){
         SetAscending(!Ascending);
     }
 
+    const onClickSwap =(event)=>{
+      event.preventDefault();
+      const temp = diemDi;
+      setDiemDi(diemDen);
+      setDiemDen(temp);
+    }
+
     useEffect(()=>{
       getAllBenXeUser().then(data=>{
         if(data){
           setBenXe(data)
+          const tempt = [];
+          for(let i=0; i<data.length; i++){
+            if(tempt.indexOf(data[i].tinhThanh)<0){
+              tempt.push(data[i].tinhThanh);
+            }
+          }
+          setTinhThanh(tempt)
         }
       })
 
@@ -90,8 +117,11 @@ function TuyenXe(){
       nav("/giao-hang/"+tx.id);
     }
 
+    const { t } = useTranslation();
+
     return(
         <>
+        {/*
         <Container>
           <div id="booking" class="section" style={{marginBottom: "100px"}}>
             <div class="section-center">
@@ -104,25 +134,36 @@ function TuyenXe(){
                           <div class="form-group">
                             <span class="form-label">Điểm đi</span>
                             <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi" defaultValue={diemDi} onChange={e=>setDiemDi(e.target.value)}/>
-                            <datalist id="DiemDi">
-                            {benXe.map(bx=>{
-                                return(<option value={bx.tinhThanh}></option>);
-                            })}
-                            </datalist>
+                            <select className='form-control' id="DiemDi" onChange={e=>setDiemDi(e.target.value)}>
+                            {
+                              tinhThanh.map(t=>{
+                                if(t!==diemDi){
+                                  return(<option key={`ttdi${t}`} value={t}>{t}</option>)
+                                }else{
+                                  return(<option selected key={`ttdi${t}`} value={t}>{t}</option>)
+                                }
+                              })
+                            }
+                            <option hidden>Chọn điểm đi</option>
+                            </select>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <span class="form-label">Điểm đến</span>
+                          <span class="form-label">Điểm đến</span>
                             <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen" defaultValue={diemDen} onChange={e=>setDiemDen(e.target.value)}/>
-                            <datalist id="DiemDen">
-                            {benXe.map(bx=>{
-                              if(tinhThanh.indexOf(bx.tinhThanh)<0){
-                                tinhThanh.push(bx.tinhThanh);
-                                return(<option value={bx.tinhThanh}></option>);
+                            <select className='form-control' id="DiemDen" onChange={e=>setDiemDen(e.target.value)}>
+                              {
+                                tinhThanh.map(t=>{
+                                  if(t!==diemDen){
+                                    return(<option key={`ttden${t}`} value={t}>{t}</option>)
+                                  }else{
+                                    return(<option selected key={`ttden${t}`} value={t}>{t}</option>)
+                                  }
+                                })
                               }
-                            })}
-                            </datalist>
+                              <option hidden>Chọn điểm đến</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -132,8 +173,8 @@ function TuyenXe(){
                             <span class="form-label">Ngày đi</span>
                             <input class="form-control" type="date" required defaultValue={date||convertNgay(d)} onChange={e=>setDate(e.target.value)}/>
                           </div>
-                        </div>
-                        {/*
+                            </div>
+                        {
                             (()=>{
                                 if(Ascending === true){
                                     return(
@@ -163,14 +204,14 @@ function TuyenXe(){
                                         </div>
                                     );
                                 }
-                            })()*/
+                            })()
                         }
-                        {/*
+                        
                         <div class="col-md-3">
                           <div class="form-btn">
                           <button class="submit-btn"><i class="text-white px-2 fa fa-search">TÌM KIẾM</i></button>
-                          </div>
-                      </div>*/}
+                          </div>https://galaxylands.com.vn/wp-content/uploads/2022/12/tieu-su-ca-si-rose-blackpink-12.jpg
+                      </div>
                       </div>
                     </form>
                   </div>
@@ -178,8 +219,130 @@ function TuyenXe(){
               </div>
             </div>
           </div>
+        </Container>*/}
+
+        <Container>
+          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <div className='search-form-container shadow'>
+          <Row>
+            <Col md={10}>
+            <div className='search-form-border'>
+              <div style={{margin:"0px 10px"}}>
+              <Row>
+                <Col md={4}>
+                <div className='search-form-label'>{t("diemdi")}</div>
+                <select className='search-form-select' id="DiemDi" onChange={e=>setDiemDi(e.target.value)}>
+                {
+                  tinhThanh.map(t=>{
+                    if(t!==diemDi){
+                      return(<option key={`ttdi${t}`} value={t}>{t}</option>)
+                    }else{
+                      return(<option selected key={`ttdi${t}`} value={t}>{t}</option>)
+                    }
+                  })
+                }
+                <option hidden>{t("chondiemdi")}</option>
+                  </select>
+                </Col>
+                <Col md={1}>
+                <div className='search-form-line'><div className='search-form-line-icon' onClick={onClickSwap}><VscArrowSwap></VscArrowSwap></div></div>
+                </Col>
+                <Col md={4}>
+                <div className='search-form-label'>{t("diemden")}</div>
+                <select className='search-form-select' id="DiemDen" onChange={e=>setDiemDen(e.target.value)}>
+                  {
+                    tinhThanh.map(t=>{
+                      if(t!==diemDen){
+                        return(<option key={`ttden${t}`} value={t}>{t}</option>)
+                      }else{
+                        return(<option selected key={`ttden${t}`} value={t}>{t}</option>)
+                      }
+                    })
+                  }
+                  <option hidden>{t("chondiemden")}</option>
+                  </select>
+                </Col>
+                <Col md={3}>
+                  <input style={{margin:"20px 0px"}} class="form-control" type="date" required defaultValue={date||convertNgay(d)} onChange={e=>setDate(e.target.value)} min={new Date().toISOString().split('T')[0]}/>
+                </Col>
+                </Row>
+                </div>
+            </div>
+            </Col>
+            <Col md={2}>
+              <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+                <button className='search-form-button'>{t('timkiem')}</button>
+              </div>
+            </Col>
+          </Row>
+          </div>
+          </div>
         </Container>
-        <h1 style={{textAlign:"center"}}>Tất cả tuyến xe trong ngày {new Date(date).toLocaleDateString('vi')}</h1>
+
+        <h1 style={{textAlign:"center", marginBottom: "50px"}}>{t("tatcatuyenxetrongngay")} {new Date(date).toLocaleDateString('vi')}</h1>
+        {
+          tuyenXe.map(tx=>{
+            return(
+              <>
+              <LazyLoad key={tx.id} height={350}>
+              <div className='tuyen-xe-container'>
+                <Container>
+                <Row>
+                  <Col md={4} sm={12}>
+                    <img className='img-fluid' style={{width: "250px", margin: "10px", paddingRight:"10px", marginLeft: "auto", marginRight:"auto", display: "block"}} src={imageDiemDen} />
+                  </Col>
+                  <Col md={8} sm={12}>
+                    <Row>
+                        <Col md={6} ms={12}>
+                          <div className='tuyen-xe-title' style={{marginTop: "10px"}}>{tx.xe.nhaXe.tenNhaXe}</div>
+                        </Col>
+                        <Col md={6} ms={12}>
+                          <div style={{marginTop: "10px", }}>
+                            <div className='tuyen-xe-gia'>{tx.giaVe}000đ</div>
+                          </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                      <div style={{margin:"0px 0px 20px"}}>
+                        <div className='tuyen-xe-infor-container'>
+                          <div className='tuyen-xe-infor-title'>{t("diemdi")}</div>
+                          <div className='tuyen-xe-infor-text'>{tx.benXeDi.tenBenXe} ({tx.benXeDi.tinhThanh})</div>
+                        </div>
+                        <div className='tuyen-xe-infor-container'>
+                          <div className='tuyen-xe-infor-title'>{t("diemden")}</div>
+                          <div className='tuyen-xe-infor-text'>{tx.benXeDen.tenBenXe} ({tx.benXeDen.tinhThanh})</div>
+                        </div>
+                        <div className='tuyen-xe-infor-container'>
+                          <div className='tuyen-xe-infor-title'>{t("thoigianhanhtrinh")}</div>
+                          <div className='tuyen-xe-infor-text'>{tx.thoiGianHanhTrinh}</div>
+                        </div>
+                        <div className='tuyen-xe-infor-container'>
+                          <div className='tuyen-xe-infor-title'>{t("ngaydi")}</div>
+                          <div className='tuyen-xe-infor-text'>{tx.ngayDi}</div>
+                        </div>
+                        <div className='tuyen-xe-infor-container'>
+                          <div className='tuyen-xe-infor-title'>{t("giokhoihanh")}</div>
+                          <div className='tuyen-xe-infor-text'>{tx.gioDi}</div>
+                        </div>
+                      </div>
+                      <Col sm={6}>
+                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{backgroundColor: "green", margin: "0px 0px 20px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDatVe}></img>{t("datve")}</Button>
+                      </Col>
+                      <Col sm={6}>
+                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{backgroundColor: "blue", margin: "0px 0px 20px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageChuyenHang}></img>{t("giaohang")}</Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+                </Container>
+              </div>
+              </LazyLoad>
+              </>
+            )
+          })
+        }
+
+        {/*
         <Container>
         <div style={{marginTop:"30px", height:"500px", backgroundColor:"white", borderRadius: "3px", overflow: "auto"}} className="shadow">
         <div style={{padding: "20px"}}>
@@ -198,6 +361,7 @@ function TuyenXe(){
             </tr>
         </thead>
         <tbody>
+          
             {tuyenXe.map(tx=>{
                 return(
                     <>
@@ -223,11 +387,12 @@ function TuyenXe(){
                     soGheDaDat=0;
                 })()
             }
+
         </tbody>
         </Table>
         </div>
         </div>
-        </Container>
+          </Container> */}
         </>
     )
 }

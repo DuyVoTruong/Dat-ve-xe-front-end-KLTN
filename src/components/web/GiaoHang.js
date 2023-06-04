@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { MyContext } from "../../App";
 import { getTuyenXeById } from "../hooks/useFunction";
 import useHangHoa from "../hooks/useHangHoa";
+import { useTranslation } from "react-i18next";
 
 const GiaoHang =()=>{
 
@@ -13,6 +14,7 @@ const GiaoHang =()=>{
     const [tuyenXe, setTuyenXe] = useState([]);
     const {addHangHoa} = useHangHoa();
     var today = new Date();
+    const {t} = useTranslation();
 
     const convertNgay =(d)=>{
         let ngay;
@@ -51,7 +53,7 @@ const GiaoHang =()=>{
         
 
         if(!canNang||!tenNguoiNhan||!sdtNguoiNhan||!email||!userId||!tuyenXeId||!ngayDat){
-            window.alert("Vui lòng điền đầy đủ thông tin!!!");
+            window.alert(t("vuilongdiendayduthongtin"));
         }
         else{
             let data = {
@@ -73,12 +75,12 @@ const GiaoHang =()=>{
                 <Card className="shadow">
                     <Card.Body>
                     <div className="mb-3 mt-md-4">
-                        <p className=" mb-5">Vui lòng chọn hình thức thanh toán và số ghế bên dưới!</p>
+                        <p className=" mb-5">{t("vuilongchonhinhthucthanhtoanvasoghebenduoi")}</p>
                         <div className="mb-3">
                         <Form>
                             <Form.Group className="mb-3" controlId="formUsername">
                             <Form.Label className="text-center">
-                                Tên tài khoản
+                                {t("tentaikhoan")}
                             </Form.Label>
                             <Form.Control type="text" value={account.username} readOnly/>
                             </Form.Group>
@@ -90,42 +92,42 @@ const GiaoHang =()=>{
                                             <>
                                                 <Form.Group className="mb-3" controlId="formNhaXe">
                                                 <Form.Label className="text-center">
-                                                    Nhà xe
+                                                    {t("nhaxe")}
                                                 </Form.Label>
                                                 <Form.Control type="text" value={`${tuyenXe.xe.nhaXe.tenNhaXe} - SĐT: ${tuyenXe.xe.nhaXe.sdt}`} readOnly/>
                                                 </Form.Group>
 
                                                 <Form.Group className="mb-3" controlId="formGioDi">
                                                 <Form.Label className="text-center">
-                                                    Giờ khởi hành
+                                                    {t("giokhoihanh")}
                                                 </Form.Label>
                                                 <Form.Control type="time" value={tuyenXe.gioDi} readOnly/>
                                                 </Form.Group>
 
                                                 <Form.Group className="mb-3" controlId="formNgayDi">
                                                 <Form.Label className="text-center">
-                                                    Ngày Đi (yy-mm-dd)
+                                                    {t("ngaydi")} (yy-mm-dd)
                                                 </Form.Label>
                                                 <Form.Control type="date" value={tuyenXe.ngayDi} readOnly/>
                                                 </Form.Group>
 
                                                 <Form.Group className="mb-3" controlId="formCanNang">
                                                 <Form.Label className="text-center">
-                                                    Cân nặng (kg)
+                                                    {t("cannang")} (kg)
                                                 </Form.Label>
                                                 <Form.Control type="number"/>
                                                 </Form.Group>
 
                                                 <Form.Group className="mb-3" controlId="formTenNguoiNhan">
                                                 <Form.Label className="text-center">
-                                                    Tên người nhận
+                                                    {t("tennguoinhan")}
                                                 </Form.Label>
                                                 <Form.Control type="text"/>
                                                 </Form.Group>
 
                                                 <Form.Group className="mb-3" controlId="formSDTNguoiNhan">
                                                 <Form.Label className="text-center">
-                                                    Số điện thoại người nhận
+                                                    {t("sodienthoainguoinhan")}
                                                 </Form.Label>
                                                 <Form.Control type="text"/>
                                                 </Form.Group>
@@ -144,7 +146,7 @@ const GiaoHang =()=>{
                             
                             <div className="d-grid">
                             <Button variant="primary" type="button" onClick={giaoHang}>
-                                Giao hàng
+                                {t("giaohang")}
                             </Button>
                             </div>
                         </Form>

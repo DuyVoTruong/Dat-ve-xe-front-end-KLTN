@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { MyContext } from "../../App";
+import { useTranslation } from "react-i18next";
 
 function NhaXeHome(){
 
     const account = useContext(MyContext).account;
+    const { t } = useTranslation();
 
     return(
         <div className="d-flex justify-content-center align-items-center" style={{height:"90vh"}}>
-            <h1>Welcome {account.username} to home</h1>
+            <h1>{t('chaomung', {nhaxe: account.username})}</h1>
         </div>
     );
 }

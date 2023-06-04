@@ -3,6 +3,7 @@ import { Container, Table } from "react-bootstrap";
 import { FiDelete } from "react-icons/fi";
 import { MyContext } from "../../App";
 import { getHangHoaByUserId } from "../hooks/useFunction";
+import { useTranslation } from "react-i18next";
 
 const LichSuGuiHang=()=>{
 
@@ -26,7 +27,7 @@ const LichSuGuiHang=()=>{
     },[])
 
     const huyDon =(id)=>{
-        if(window.confirm("Bạn muốn xóa đơn giao hàng này")==true){
+        if(window.confirm(t("banmuonxoadongiaohangnay"))==true){
             fetch(`http://localhost:8080/api/hanghoa/${id}`,{
                 method: "DELETE",
                 headers: {
@@ -35,12 +36,14 @@ const LichSuGuiHang=()=>{
                 }
             }).then(res=>res.json()).then(data=>{
                     if(data.status==200){
-                        window.alert("Success");
+                        window.alert(t("xoadongiaohangthanhcong"));
                         setLoad(true);
                     }
                 })
         }
     }
+
+    const { t } = useTranslation();
 
     return (
         <>
@@ -51,14 +54,14 @@ const LichSuGuiHang=()=>{
         <thead>
             <tr>
             <th>STT</th>
-            <th>Cân nặng</th>
-            <th>Giá</th>
-            <th>Tên người nhận</th>
-            <th>Số điện thoại người nhận</th>
+            <th>{t("cannang")}</th>
+            <th>{t("gia")}</th>
+            <th>{t("tennguoinhan")}</th>
+            <th>{t("sodienthoainguoinhan")}</th>
             <th>Email</th>
-            <th>Ngày đặt</th>
-            <th>Trạng thái</th>
-            <th>Hủy đơn</th>
+            <th>{t("ngaydat")}</th>
+            <th>{t("trangthai")}</th>
+            <th>{t("huydon")}</th>
             </tr>
         </thead>
         <tbody>
@@ -81,7 +84,7 @@ const LichSuGuiHang=()=>{
                                 if(h.trangThai==="INACTIVE"){
                                     return(
                                         <>
-                                            <button onClick={()=>huyDon(h.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>Huỷ đơn</span></button>
+                                            <button onClick={()=>huyDon(h.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
                                         </>
                                     );
                                 }

@@ -5,6 +5,7 @@ import useSignUp from "../hooks/useSignUp";
 import {getTinhThanhPho} from "../hooks/useFunction"
 import { httpPostSignUp } from "../hooks/Request";
 import { MyContext } from "../../App";
+import { t } from "i18next";
 
 function Signup(){
 
@@ -28,7 +29,7 @@ function Signup(){
             let email = document.getElementById("formEmail").value;
             let diaChi = document.getElementById("formDiaChi").value;
             if(!role||!username||!password||!hoTen||!cmnd||!sdt||!email||!diaChi){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+                window.alert(t("vuilongdiendayduthongtin"))
             }
             else{
                 let data = {
@@ -54,8 +55,8 @@ function Signup(){
             let sdt = document.getElementById("formSDT").value;
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
-            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("chontinhthanh")||huyen===t("chonquanhuyen")||xa===t("chonphuongxa")){
+                window.alert(t("vuilongdiendayduthongtin"))
             }
             else{
                 let data = {
@@ -64,7 +65,7 @@ function Signup(){
                 try {
                     httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                         if (data.status == 200){
-                            alert("Success!!! Vui lòng liên hệ quản trị viên để được kích hoạt tài khoản qua số điện thoại: 0366441943!!!");
+                            alert(t("tinnhankichhoatnhaxe"));
                         }
                         else {
                             alert(data.message);
@@ -87,11 +88,11 @@ function Signup(){
     if(role==="USER"){
         return(
             <div style={{marginTop: "30px"}}>
-                <h1 style={{textAlign:"center", marginBottom:"30px"}}>Trang đăng ký dành cho người dùng</h1>
+                {/*<h1 style={{textAlign:"center", marginBottom:"30px"}}>Trang đăng ký dành cho người dùng</h1>*/}
                 <div style={{margin: "20px", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "50px"}}>
                 <Col md={8} lg={6} xs={12}>
-                <div style={{border: "solid 10px blue", background:"blue"}}></div>
-                    <Card className="shadow">
+                <div style={{border: "solid 10px blue", background:"blue", borderRadius: "8px 8px 0px 0px"}}></div>
+                    <Card className="shadow" style={{borderRadius: "0px 0px 8px 8px"}}>
                     <Card.Body>
                         <div className="mb-3 mt-md-4">
                         <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
@@ -100,7 +101,7 @@ function Signup(){
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label="Người dùng"
+                            label={t("nguoidung")}
                             name="group"
                             type={"radio"}
                             defaultChecked
@@ -110,7 +111,7 @@ function Signup(){
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label="Nhà xe"
+                            label={t("nhaxe")}
                             name="group"
                             type={"radio"}
                             value={"NHAXE"}
@@ -123,59 +124,59 @@ function Signup(){
                                 <Form.Label className="text-center">
                                 Username
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Enter username" />
+                                <Form.Control type="text" placeholder={t("nhapusername")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formPassword">
                                 <Form.Label>Enter Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control type="password" placeholder={t("nhappassword")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formHoTen">
                                 <Form.Label className="text-center">
-                                Họ tên
+                                {t("hoten")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Nhập họ tên" />
+                                <Form.Control type="text" placeholder={t("nhaphoten")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formCMND">
                                 <Form.Label className="text-center">
-                                CMND
+                                {t("cmnd")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Nhập CMND" />
+                                <Form.Control type="text" placeholder={t("nhapcmnd")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formSDT">
                                 <Form.Label className="text-center">
-                                Số điện thoại
+                                {t("sodienthoai")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Nhập số điện thoại" />
+                                <Form.Control type="text" placeholder={t("nhapsodienthoai")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formEmail">
                                 <Form.Label className="text-center">
                                 Email
                                 </Form.Label>
-                                <Form.Control type="email" placeholder="Nhập Email" />
+                                <Form.Control type="email" placeholder={t("nhapemail")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formDiaChi">
                                 <Form.Label className="text-center">
-                                Địa chỉ
+                                {t("diachi")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Nhập địa chỉ" />
+                                <Form.Control type="text" placeholder={t("nhapdiachi")} />
                             </Form.Group>
     
                             <div className="d-grid">
                                 <Button variant="primary" type="submit">
-                                Sign Up
+                                {t("signup")}
                                 </Button>
                             </div>
                             </Form>
                             <div className="mt-3">
                             <p className="mb-0  text-center">
-                                Or{" "}
-                                <Link className="text-primary fw-bold" to={"/login"}>Login</Link>
+                                {t("or")}{" "}
+                                <Link className="text-primary fw-bold" to={"/login"}>{t("login")}</Link>
                             </p>
                             </div>
                         </div>
@@ -190,20 +191,20 @@ function Signup(){
     else if(role==="NHAXE"){
         return(
             <div style={{marginTop: "30px"}}>
-                <h1 style={{textAlign:"center", marginBottom:"30px"}}>Trang đăng ký dành cho nhà xe</h1>
+                {/*<h1 style={{textAlign:"center", marginBottom:"30px"}}>Trang đăng ký dành cho nhà xe</h1>*/}
                 <div style={{margin: "20px", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "50px"}}>
                 <Col md={8} lg={6} xs={12}>
-                <div style={{border: "solid 10px blue", background:"blue"}}></div>
-                    <Card className="shadow">
+                <div style={{border: "solid 10px blue", background:"blue", borderRadius: "8px 8px 0px 0px"}}></div>
+                    <Card className="shadow" style={{borderRadius: "0px 0px 8px 8px"}}>
                     <Card.Body>
                         <div className="mb-3 mt-md-4">
                         <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
-                        <p>Đăng ký với vai trò</p>
+                        <p>{t("dangkyvoivaitro")}</p>
                         <div style={{marginBottom: "30px", marginTop:"20px"}}>
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label="Người dùng"
+                            label={t("nguoidung")}
                             name="group"
                             type={"radio"}
                             value={"USER"}
@@ -212,7 +213,7 @@ function Signup(){
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label="Nhà xe"
+                            label={t("nhaxe")}
                             name="group"
                             type={"radio"}
                             defaultChecked
@@ -226,62 +227,62 @@ function Signup(){
                                 <Form.Label className="text-center">
                                 Username
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Enter username" />
+                                <Form.Control type="text" placeholder={t("nhapusername")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formPassword">
-                                <Form.Label>Enter Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder={t("nhappassword")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formTenNhaXe">
                                 <Form.Label className="text-center">
-                                Tên nhà xe
+                                {t("tennhaxe")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Nhập tên nhà xe" />
+                                <Form.Control type="text" placeholder={t("nhaptennhaxe")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formSDT">
                                 <Form.Label className="text-center">
-                                Số điện thoại
+                                {t("sodienthoai")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder="Nhập số điện thoại" />
+                                <Form.Control type="text" placeholder={t("nhapsodienthoai")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formMoTaNgan">
                                 <Form.Label className="text-center">
-                                Giới thiệu
+                                {t("motangan")}
                                 </Form.Label>
-                                <Form.Control  as="textarea" rows={3} placeholder="Nhập nội dung giới thiệu" />
+                                <Form.Control  as="textarea" rows={3} placeholder={t("nhapnoidungmotangan")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formDiaChi">
                                 <Form.Label>Địa chỉ</Form.Label>
                                 <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
-                                    <option>Chọn tỉnh thành</option>
+                                    <option>{t("chontinhthanh")}</option>
                                 </Form.Select>
                                 
                                 <Form.Select className="mb-3" id="district" aria-label="Chọn quận huyện">
-                                    <option>Chọn quận huyện</option>
+                                    <option>{t("chonquanhuyen")}</option>
                                 </Form.Select>
                                         
                                 <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
-                                    <option>Chọn phường xã</option>
+                                    <option>{t("chonphuongxa")}</option>
                                 </Form.Select>
     
-                                <Form.Control type="text" placeholder="Nhập số nhà" />
+                                <Form.Control type="text" placeholder={t("nhapsonha")} />
                             </Form.Group>
     
                             <div className="d-grid">
                                 <Button variant="primary" type="submit">
-                                Sign Up
+                                {t("signup")}
                                 </Button>
                             </div>
                             </Form>
                             <div className="mt-3">
                             <p className="mb-0  text-center">
-                                Or{" "}
-                                <Link className="text-primary fw-bold" to={"/login"}>Login</Link>
+                                {t("or")}{" "}
+                                <Link className="text-primary fw-bold" to={"/login"}>{t("login")}</Link>
                             </p>
                             </div>
                         </div>

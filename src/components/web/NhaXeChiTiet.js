@@ -7,6 +7,7 @@ import { MyContext } from "../../App";
 import {getTuyenXeById} from "../hooks/useFunction"
 import useTuyenXe from "../hooks/useTuyenXe";
 import imageDetail from '../../assets/img/view-details.png'
+import { t } from "i18next";
 
 const NhaXeChiTiet =()=>{
 
@@ -50,7 +51,7 @@ const NhaXeChiTiet =()=>{
     }
 
     const deleteDanhGia =(id)=>{
-        if(window.confirm("Bạn muốn xóa đánh giá này?")===true){
+        if(window.confirm(t("banmuonxoadanhgianay"))===true){
             fetch("http://localhost:8080/api/danhgia/"+id,{
             method: "DELETE",
             headers: {
@@ -59,10 +60,10 @@ const NhaXeChiTiet =()=>{
             },
             }).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    window.alert("Xóa đánh giá thành công!!!");
+                    window.alert(t("xoadanhgiathanhcong"));
                     setLoad(true);
                 }else{
-                    window.alert("Đã xảy ra lỗi!!!");
+                    window.alert(t("daxayraloi"));
                 }
             })
         }
@@ -125,16 +126,16 @@ const NhaXeChiTiet =()=>{
 */}
                 <Card style={{ borderRadius: "3px"}} className="shadow">
                 <Card.Body>
-                <Card.Title>Nhà xe {nhaXe.tenNhaXe}</Card.Title>
-                <Card.Text>Số điện thoại: {nhaXe.sdt}</Card.Text>
-                <Card.Text>Giới thiệu: {nhaXe.moTaNgan}</Card.Text>
-                <Card.Title>Các tuyến xe nổi bật</Card.Title>
+                <Card.Title>{t("nhaxe")} {nhaXe.tenNhaXe}</Card.Title>
+                <Card.Text>{t("sodienthoai")}: {nhaXe.sdt}</Card.Text>
+                <Card.Text>{t("motangan")}: {nhaXe.moTaNgan}</Card.Text>
+                <Card.Title>{t("cactuyenxenoibat")}</Card.Title>
                 <div style={{marginTop:"30px", height:"250px", overflowY:"scroll", marginBottom:"10px"}}>
                 <Table striped bordered hover>
                 <thead>
                     <tr>
-                    <th>Điểm đi</th>
-                    <th>Điểm đến</th>
+                    <th>{t("diemdi")}</th>
+                    <th>{t("diemden")}</th>
                     <th></th>
                     </tr>
                 </thead>
@@ -147,7 +148,7 @@ const NhaXeChiTiet =()=>{
                                         <tr>
                                             <td>{tx.benXeDi.tinhThanh}</td>
                                             <td>{tx.benXeDen.tinhThanh}</td>
-                                            <td style={{textAlign: "center"}}><button type="button" onClick={()=>redirect(tx.benXeDi.tinhThanh,tx.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>Xem chi tiết</span></button></td>
+                                            <td style={{textAlign: "center"}}><button type="button" onClick={()=>redirect(tx.benXeDi.tinhThanh,tx.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"15px",width:"15px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("chitiet")}</span></button></td>
                                         </tr>
                                     );
                                 }
@@ -162,7 +163,7 @@ const NhaXeChiTiet =()=>{
 
                 <Card style={{marginTop:"10px"}} className="shadow">
                 <Card.Body>
-                <Card.Title>Đánh giá của người dùng</Card.Title>
+                <Card.Title>{t("danhgiacuanguoidung")}</Card.Title>
                 {
                     [1,2,3,4,5].map(t=>{
                         return Rating(saoTB,t)
@@ -172,12 +173,12 @@ const NhaXeChiTiet =()=>{
                     (()=>{
                        if(Number(saoTB)){
                         return(
-                            <Card.Title style={{marginTop: "10px"}}>{saoTB} sao dựa trên đánh giá của {thongKeSao.soNguoiDanhGia} người dùng</Card.Title>
+                            <Card.Title style={{marginTop: "10px"}}>{saoTB} {t("saoduatrendanhgiacua")} {thongKeSao.soNguoiDanhGia} {t("nguoidung")}</Card.Title>
                         );
                        } 
                        else{
                         return(
-                            <Card.Title style={{marginTop: "10px"}}>Chưa có người dùng nào đánh giá</Card.Title>
+                            <Card.Title style={{marginTop: "10px"}}>{t("chuaconguoidungnaodanhgia")}</Card.Title>
                         );
                        }
                     })()
@@ -186,7 +187,7 @@ const NhaXeChiTiet =()=>{
                 <div style={{textAlign: "center"}}>
                     <Row>
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">5 sao</Card.Text>
+                        <Card.Text className="mb-3">{t("5sao")}</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
                         <ProgressBar className="mb-3" variant="success" now={thongKeSao.sao5/(thongKeSao.sao1+
@@ -197,7 +198,7 @@ const NhaXeChiTiet =()=>{
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">4 sao</Card.Text>
+                        <Card.Text className="mb-3">{t("4sao")}</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
                         <ProgressBar className="mb-3" variant="secondary" now={thongKeSao.sao4/(thongKeSao.sao1+
@@ -208,7 +209,7 @@ const NhaXeChiTiet =()=>{
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">3 sao</Card.Text>
+                        <Card.Text className="mb-3">{t("3sao")}</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
                         <ProgressBar className="mb-3" variant="info" now={thongKeSao.sao3/(thongKeSao.sao1+
@@ -219,7 +220,7 @@ const NhaXeChiTiet =()=>{
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">2 sao</Card.Text>
+                        <Card.Text className="mb-3">{t("2sao")}</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
                         <ProgressBar className="mb-3" variant="warning" now={thongKeSao.sao2/(thongKeSao.sao1+
@@ -230,7 +231,7 @@ const NhaXeChiTiet =()=>{
                     </Col>
 
                     <Col md="2" sm="2" xs="3">
-                        <Card.Text className="mb-3">1 sao</Card.Text>
+                        <Card.Text className="mb-3">{t("1sao")}</Card.Text>
                     </Col>
                     <Col md="8" sm="8" xs="6">
                         <ProgressBar className="mb-3" variant="danger" now={thongKeSao.sao1/(thongKeSao.sao1+
@@ -242,7 +243,7 @@ const NhaXeChiTiet =()=>{
                     </Row>
                 </div>
                 <div className="comment-container">
-                    <label>Nội dung đánh giá của người dùng</label>
+                    <label>{t("noidungdanhgiacuanguoidung")}</label>
 
                     <div className="comment-border">
                         {
@@ -259,7 +260,7 @@ const NhaXeChiTiet =()=>{
                                 return(
                                     <>
                                     <div style={{marginLeft: "20px", marginRight: "20px", marginTop: "20px", marginBottom: "30px"}}>
-                                        <div><label style={{margin: "3px"}}>{dg.user.taiKhoan.username} - ngày đăng: {ngayDang+" "+gioDang}</label></div>
+                                        <div><label style={{margin: "3px"}}>{dg.user.taiKhoan.username} - {t("ngaydang")}: {ngayDang+" "+gioDang}</label></div>
                                         <div><label style={{margin: "3px"}}>
                                         {
                                             [1,2,3,4,5].map(t=>{
@@ -275,8 +276,8 @@ const NhaXeChiTiet =()=>{
                                                     if(account.id==dg.user.id){
                                                         return(
                                                             <div style={{marginTop:"-10px", marginLeft: "10px"}}>
-                                                                <Link onClick={()=>deleteDanhGia(dg.id)} style={{margin: "3px"}}>xóa</Link>
-                                                                <Link to={"/nha-xe-danh-gia/"+nhaXeId} style={{margin: "3px"}}>sửa</Link>
+                                                                <Link onClick={()=>deleteDanhGia(dg.id)} style={{margin: "3px"}}>{t("xoa")}</Link>
+                                                                <Link to={"/nha-xe-danh-gia/"+nhaXeId} style={{margin: "3px"}}>{t("sửa")}</Link>
                                                             </div>
                                                         );
                                                     }
@@ -291,7 +292,7 @@ const NhaXeChiTiet =()=>{
                         }
                     </div>
                 </div>
-                <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đánh giá!!!")}else{themDanhGia(nhaXeId)}}}>Thêm đánh giá</Button>
+                <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đánh giá!!!")}else{themDanhGia(nhaXeId)}}}>{t("themdanhgia")}</Button>
                 </Card.Body>
                 </Card>
                 </Col>

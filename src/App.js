@@ -1,5 +1,5 @@
 import './App.css';
-import './css/searchForm.css'
+import './css/searchForm.css';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import LayoutAdmin from './layout/LayoutAdmin';
 import AdminHome from './components/admin/AdminHome';
@@ -58,7 +58,7 @@ function App() {
         <Routes>
         <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
             <Route path='' element={<Home></Home>}></Route>
-            <Route path='login' element={<Login></Login>}></Route>
+            {/*<Route path='login' element={<Login></Login>}></Route>*/}
             <Route path='sign-up' element={<Signup></Signup>}></Route>
             <Route path='lich-trinh' element={<LichTrinh></LichTrinh>}></Route>
             <Route path='tuyen-xe' element={<TuyenXe></TuyenXe>}></Route>
@@ -68,6 +68,7 @@ function App() {
             <Route path='nha-xe-danh-gia/:id' element={<NhaXeDanhGia></NhaXeDanhGia>}></Route>
             <Route path="*" element={<Navigate to="/" replace />}></Route>
           </Route>
+          <Route path='/login' element={<Login></Login>}></Route>
         </Routes>
         {/*</BrowserRouter>*/}
       </MyContext.Provider>
@@ -131,7 +132,7 @@ function App() {
           <Routes>
             <Route path='/*' element={<LayoutWeb account={account}></LayoutWeb>}>
                 <Route path='' element={<Home></Home>}></Route>
-                <Route path='login' element={<Login></Login>}></Route>
+                {/*<Route path='login' element={<Login></Login>}></Route>*/}
                 <Route path='sign-up' element={<Signup></Signup>}></Route>
                 <Route path='lich-trinh' element={<LichTrinh></LichTrinh>}></Route>
                 <Route path='tuyen-xe' element={<TuyenXe></TuyenXe>}></Route>
@@ -145,6 +146,7 @@ function App() {
                 <Route path='giao-hang/:id' element={<GiaoHang></GiaoHang>}></Route>
                 <Route path="*" element={<Navigate to="/" replace />}></Route>
               </Route>
+            <Route path='/login' element={<Login></Login>}></Route>
           </Routes>
         {/*</BrowserRouter>*/}
         </MyContext.Provider>

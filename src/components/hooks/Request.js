@@ -1,4 +1,4 @@
-const API_URL = 'https://back-end-datvexe.onrender.com/api'
+const API_URL = 'http://localhost:8080/api'
 
 //BenXe
 async function httpGetBenXeAdmin(token){

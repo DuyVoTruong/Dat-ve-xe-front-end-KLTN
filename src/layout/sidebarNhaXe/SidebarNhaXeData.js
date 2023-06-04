@@ -6,73 +6,73 @@ import * as RiIcons from "react-icons/ri";
   
 export const SidebarNhaXeData = [
   {
-    title: "Home",
+    title: "trangchu",
     path: "/nha-xe/home",
     icon: <AiIcons.AiFillHome />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   },
   {
-    title:'Tuyến xe',
+    title:'tuyenxe',
     //path:'/nha-xe/home',
     icon:<FaIcons.FaRoute/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'Tuyến xe',
+            title: 'tuyenxe',
             path:'/nha-xe/tuyen-xe',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'Xe',
+    title:'xe',
     //path:'/admin/home',
     icon:<RiIcons.RiTrainLine/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'Xe',
+            title: 'xe',
             path:'/nha-xe/xe',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'Vé xe',
+    title:'vexe',
     //path:'/admin/home',
     icon:<FaIcons.FaTicketAlt/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'Vé xe',
+            title: 'vexe',
             path:'/nha-xe/ve-xe',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'Hàng hóa',
+    title:'hanghoa',
     //path:'/admin/home',
     icon:<FaIcons.FaTruck/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'Hàng hóa',
+            title: 'hanghoa',
             path:'/nha-xe/hang-hoa',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'Thống kê',
+    title:'thongke',
     //path:'/admin/home',
     icon:<FaIcons.FaChartBar/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'Thống kê',
+            title: 'thongke',
             path:'/nha-xe/thong-ke',
             icon:<IoIcons.IoIosPaper/>,
         },
