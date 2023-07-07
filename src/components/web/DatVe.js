@@ -1,19 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useFetcher, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MyContext } from "../../App";
-import { httpGetTuyenXeById, httpPostVeXe } from "../hooks/Request";
-import useBenXe from "../hooks/useBenXe";
+import { httpPostVeXe } from "../hooks/Request";
 import { getAllVeXeByTuyenXeId, getTuyenXeById } from "../hooks/useFunction";
-import useLoaiXe from "../hooks/useLoaiXe";
-import useNhaXe from "../hooks/useNhaXe";
-import useTuyenXe from "../hooks/useTuyenXe";
-import useUser from "../hooks/useUser";
-import useVeXe from "../hooks/useVeXe";
-import useXe from "../hooks/useXe";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from "react-i18next";
+import "../../css/dat-ve.css"
 
 function DatVe(){
 
@@ -236,8 +230,10 @@ function DatVe(){
                             </Form.Label>
                             
                             </Form.Group>
+
+                            <label><input type="checkbox"></input><span class="label">Check me <img class="seat" src="https://i7.uihere.com/icons/572/337/91/seat-border-1bec7cb26b10f7ff80b54393d015d762.svg"></img></span></label>
                             
-                            {
+                            {/*
                                 new Array(sucChua).fill(0).map((_,index)=>{
                                     let flag = 0;
                                     veXeDaDat.map(vx=>{
@@ -304,7 +300,7 @@ function DatVe(){
                                         )
                                     }
                                 })
-                            }
+                            */}
                             
 
                             <div className="d-grid">

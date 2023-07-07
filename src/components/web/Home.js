@@ -7,10 +7,12 @@ import useTuyenXe from '../hooks/useTuyenXe';
 import {getAllBenXeUser, getNhaXeUserAll, getSaoTrungBinhNhaXe} from '../hooks/useFunction'
 import "../../css/rating.css"
 import { MyContext } from '../../App';
-import image from '../../assets/img/picture1.png';
+import image from '../../assets/img/anh-trang-chu.jpg';
 import imageXe from '../../assets/img/xe.png';
 import imageDiemDen from '../../assets/img/diemDen.png';
 import { useTranslation } from 'react-i18next';
+import {VscArrowSwap} from "react-icons/vsc"
+
 
 function Home(){
   
@@ -25,7 +27,7 @@ function Home(){
     const [date, setDate] = useState("");
     const [diemDi, setDiemDi] = useState("");
     const [diemDen, setDiemDen] = useState("");
-    const tinhThanh = [];
+    const [tinhThanh, setTinhThanh] = useState([]);
     let d = new Date();
     const [sao, setSao] = useState([]);
 
@@ -77,11 +79,25 @@ function Home(){
       )
     }
 
+    const onClickSwap =(event)=>{
+      event.preventDefault();
+      const temp = diemDi;
+      setDiemDi(diemDen);
+      setDiemDen(temp);
+    }
+
 
     useEffect(()=>{
       getAllBenXeUser().then(data=>{
         if(data){
           setBenXe(data)
+          const tempt = [];
+          for(let i=0; i<data.length; i++){
+            if(tempt.indexOf(data[i].tinhThanh)<0){
+              tempt.push(data[i].tinhThanh);
+            }
+          }
+          setTinhThanh(tempt)
         }
       })
       getNhaXeUserAll().then(data=>{
@@ -104,7 +120,7 @@ function Home(){
         },
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
-          items: 3
+          items: 4
         },
         tablet: {
           breakpoint: { max: 1024, min: 464 },
@@ -120,65 +136,67 @@ function Home(){
 
     return(
         <>
-        <img src={image} style={{maxHeight: "700px", height:"80%", width:"100%", display: "inline-block",}}/>
-        <Container>
-          <div id="booking" class="section">
-            <div class="section-center">
-              <div class="container">
-                <div>
-                  <div class="booking-form shadow">
-                    <form>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <span class="form-label">{t("diemdi")}</span>
-                            <input class="form-control" type="text" placeholder={t("chondiemdi")} list="DiemDi" onChange={e=>setDiemDi(e.target.value)}/>
-                            <datalist id="DiemDi">
-                            {benXe.map(bx=>{
-                                return(<option value={bx.tinhThanh}></option>);
-                            })}
-                            </datalist>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <span class="form-label">{t("diemden")}</span>
-                            <input class="form-control" type="text" placeholder={t("chondiemden")} list="DiemDen" onChange={e=>setDiemDen(e.target.value)}/>
-                            <datalist id="DiemDen">
-                            {benXe.map(bx=>{
-                              if(tinhThanh.indexOf(bx.tinhThanh)<0){
-                                tinhThanh.push(bx.tinhThanh);
-                                return(<option value={bx.tinhThanh}></option>);
-                              }
-                            })}
-                            </datalist>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <span class="form-label">{t("ngaydi")}</span>
-                            <input class="form-control" type="date" required onChange={e=>setDate(e.target.value)} min={new Date().toISOString().split('T')[0]}/>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-btn">
-                          <button class="submit-btn" type='button' onClick={timKiem}><i class="text-white px-2 fa fa-search">{t("timkiem")}</i></button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+        <img src={image} style={{height: "400px",width:"100%", display: "inline-block", objectFit: "cover"}}/>
+        
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center", position: 'relative', top:"-375px", width:"100%", height: "350px",}}>
+          <div className='search-form-container shadow'>
+          <Row>
+            <Col md={10}>
+            <div className='search-form-border'>
+              <div style={{margin:"0px 10px"}}>
+              <Row>
+                <Col md={4}>
+                <div className='search-form-label'>{t("diemdi")}</div>
+                <select className='search-form-select' id="DiemDi" onChange={e=>setDiemDi(e.target.value)}>
+                  {
+                    tinhThanh.map(t=>{
+                      if(t!==diemDi){
+                        return(<option key={`ttdi${t}`} value={t}>{t}</option>)
+                      }else{
+                        return(<option selected key={`ttdi${t}`} value={t}>{t}</option>)
+                      }
+                    })
+                  }
+                  <option hidden>{t("chondiemdi")}</option>
+                </select>
+                </Col>
+                <Col md={1}>
+                <div className='search-form-line'><div className='search-form-line-icon' onClick={onClickSwap}><VscArrowSwap></VscArrowSwap></div></div>
+                </Col>
+                <Col md={4}>
+                <div className='search-form-label'>{t("diemden")}</div>
+                <select className='search-form-select' id="DiemDen" onChange={e=>setDiemDen(e.target.value)}>
+                  {
+                    tinhThanh.map(t=>{
+                      if(t!==diemDen){
+                        return(<option key={`ttden${t}`} value={t}>{t}</option>)
+                      }else{
+                        return(<option selected key={`ttden${t}`} value={t}>{t}</option>)
+                      }
+                    })
+                  }
+                  <option hidden>{t("chondiemden")}</option>
+                </select>
+                </Col>
+                <Col md={3}>
+                  <input style={{margin:"20px 0px"}} class="form-control" type="date" required defaultValue={date||convertNgay(d)} onChange={e=>setDate(e.target.value)} min={new Date().toISOString().split('T')[0]}/>
+                </Col>
+                </Row>
                 </div>
-              </div>
             </div>
+            </Col>
+            <Col md={2}>
+              <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+                <button className='search-form-button' onClick={timKiem}>{t('timkiem')}</button>
+              </div>
+            </Col>
+          </Row>
           </div>
-        </Container>
+        </div>
 
-        <Container>
+        <Container style={{ position: "relative", top: "-300px", marginBottom: "-350px"}}>
 
-          <h1 style={{marginTop:"50px", marginLeft: "30px"}}>{t("cactuyenxetrongngay")}</h1>
+          <h2 style={{marginLeft: "30px"}}>{t("cactuyenxetrongngay")}</h2>
           <Carousel infinite={true} autoPlay={false} autoPlaySpeed={2000} responsive={responsive}>
             {tuyenXe.map(tx =>{
               if(tx.ngayDi.indexOf(toDay)>=0){
@@ -215,12 +233,12 @@ function Home(){
             })}
           </Carousel>
 
-        <h1 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacdiemden")}</h1>
+        <h2 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacdiemden")}</h2>
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {benXe.map(bx =>{
             return(
-                <Card onClick={()=>danhSachTuyenXe(bx.tinhThanh)} style={{ margin: "2rem" }} className="shadow card-transform">
-                  <Card.Img height={"200px"} variant="top" src={imageDiemDen} />
+                <Card onClick={()=>danhSachTuyenXe(bx.tinhThanh)} style={{ margin: "1rem" }} className="shadow card-transform">
+                  <Card.Img height={"100vh"} variant="top" src={imageDiemDen} />
                   <Card.Body>
                       <Card.Title>{bx.tenBenXe}</Card.Title>
                       <Card.Text>
@@ -232,15 +250,15 @@ function Home(){
           })}
         </Carousel>
 
-        <h1 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacnhaxe")}</h1>
+        <h2 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacnhaxe")}</h2>
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {nhaXe.map(nx =>{
             return(
-                <Card style={{ margin: "2rem" }} className="shadow card-transform">
-                  <Card.Img height={"150px"} variant="top" src={imageXe} />
+                <Card style={{ margin: "1rem" }} className="shadow card-transform">
+                  <Card.Img height={"100vh"} variant="top" src={imageXe} />
                   <Card.Body>
-                      <Card.Title>{nx.tenNhaXe}
-                      <span style={{marginLeft: "20px"}}>
+                      <Card.Title>{nx.tenNhaXe}</Card.Title>
+                      <span style={{fontSize: "14px"}}>
                       {
                         [1,2,3,4,5].map((i, index)=>{
                           let soSao;
@@ -253,12 +271,17 @@ function Home(){
                         })
                       }
                       </span>
-                      </Card.Title>
                       <Card.Text>
                       {t('sdt')}: {nx.sdt}
                       </Card.Text>
-                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">{t("chitiet")}</Button>
-                        <Button style={{marginLeft: "3px", marginBottom:"2px"}} onClick={()=>{if(!account){window.alert(t("banphaidangnhapdedanhgia"))}else{danhGiaNhaXe(nx.id)}}} variant="primary">{t("danhgia")}</Button>
+                      <Row>
+                        <Col xs={6} sm={12} md={6}>
+                          <Button style={{marginBottom:"8px", backgroundColor: "#0000CD", border: "none"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">{t("chitiet")}</Button>
+                        </Col>
+                        <Col xs={6} sm={12} md={6}>
+                          <Button style={{marginBottom:"8px", backgroundColor: "#20B2AA", border: "none"}} onClick={()=>{if(!account){window.alert(t("banphaidangnhapdedanhgia"))}else{danhGiaNhaXe(nx.id)}}} variant="primary">{t("danhgia")}</Button>
+                        </Col>
+                      </Row>
                   </Card.Body>
                 </Card>
             );

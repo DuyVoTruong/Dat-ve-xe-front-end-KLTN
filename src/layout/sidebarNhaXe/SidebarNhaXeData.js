@@ -77,6 +77,19 @@ export const SidebarNhaXeData = [
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
+  },{
+    title:'goidichvu',
+    //path:'/admin/home',
+    icon:<FaIcons.FaCreditCard/>,
+    iconClosed:<RiIcons.RiArrowDownSFill/>,
+    iconOpened:<RiIcons.RiArrowUpSFill/>,
+    subNav:[
+        {
+            title: 'goidichvu',
+            path:'/nha-xe/gia-han-dich-vu',
+            icon:<IoIcons.IoIosPaper/>,
+        },
+    ]
   },
 ];
 

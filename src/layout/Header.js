@@ -35,19 +35,19 @@ function Header(){
     return(
         <>
             {/* Topbar Start */}
-            <div class="container-fluid bg-dark">
-                <div class="row py-2 px-lg-5">
-                    <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-                        <div class="d-inline-flex align-items-center text-white">
-                            <small><i class="fa fa-phone-alt mr-2"></i>0366441943</small>
-                            <small class="px-3">|</small>
-                            <small><i class="fa fa-envelope mr-2"></i>voduy89123@gmail.com</small>
+            <div className="container-fluid bg-dark">
+                <div className="row py-2 px-lg-5">
+                    <div className="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                        <div className="d-inline-flex align-items-center text-white">
+                            <small><i className="fa fa-phone-alt mr-2"></i>0366441943</small>
+                            <small className="px-3">|</small>
+                            <small><i className="fa fa-envelope mr-2"></i>voduy89123@gmail.com</small>
                         </div>
                     </div>
-                    <div class="col-lg-6 text-center text-lg-right">
-                        <div class="d-inline-flex align-items-center">
-                            <a class="text-white px-2" href="https://www.facebook.com/truongduy.vo.5011/">
-                                <i class="fab fa-facebook-f"></i>
+                    <div className="col-lg-6 text-center text-lg-right">
+                        <div className="d-inline-flex align-items-center">
+                            <a className="text-white px-2" href="https://www.facebook.com/truongduy.vo.5011/">
+                                <i className="fab fa-facebook-f"></i>
                             </a>{/*
                             <a class="text-white px-2" href="">
                                 <i class="fab fa-twitter"></i>
@@ -58,8 +58,8 @@ function Header(){
                             <a class="text-white px-2" href="">
                                 <i class="fab fa-instagram"></i>
                             </a>*/}
-                            <a class="text-white pl-2" href="https://www.youtube.com/channel/UCOoIQP5-UvPBetU6-UO3zaw">
-                                <i class="fab fa-youtube"></i>
+                            <a className="text-white pl-2" href="https://www.youtube.com/channel/UCOoIQP5-UvPBetU6-UO3zaw">
+                                <i className="fab fa-youtube"></i>
                             </a>
                         </div>
                     </div>
@@ -102,17 +102,17 @@ function Header(){
                                             <img src={flagEN} height={30} width={60} style={{margin: "10px", cursor: "pointer"}} onClick={()=>handleChangeLanguage("en")}></img>
                                         </div>
                                         <div style={{margin:"10px"}}>
-                                            <a class="text-white pl-2">
-                                                <i class="fa fa-user"></i>
+                                            <a className="text-white pl-2">
+                                                <i className="fa fa-user"></i>
                                             </a>
                                             <a href="#/thong-tin-tai-khoan" style={{marginLeft: "10px"}}>{account.username}</a>
                                         </div>
 
                                         <div style={{margin:"10px"}}>
-                                            <a class="text-white pl-2">
-                                                <i class="fas fa-sign-out-alt"></i>
+                                            <a className="text-white pl-2">
+                                                <i className="fas fa-sign-out-alt"></i>
                                             </a>
-                                            <a onClick={logout} class="text-blue pl-2" style={{marginLeft: "10px", cursor: "pointer"}} >{t('logout')}</a>
+                                            <a onClick={logout} className="text-blue pl-2" style={{marginLeft: "10px", cursor: "pointer"}} >{t('logout')}</a>
                                         </div>
                                     </Navbar.Collapse>
                                 </>
@@ -126,15 +126,15 @@ function Header(){
                                             <img src={flagEN} height={30} width={60} style={{margin: "10px", cursor: "pointer"}} onClick={()=>handleChangeLanguage("en")}></img>
                                         </div>
                                         <div style={{margin:"10px"}}>
-                                            <a class="text-white pl-2" href="">
-                                                <i class="fa fa-user"></i>
+                                            <a className="text-white pl-2" href="">
+                                                <i className="fa fa-user"></i>
                                             </a>
                                             <a href="#/login" style={{marginLeft: "10px"}}>{t('login')}</a>
                                         </div>
 
                                         <div style={{margin:"10px", margin:"10px"}}>
-                                            <a class="text-white pl-2" href="">
-                                                <i class="fa fa-user-plus"></i>
+                                            <a className="text-white pl-2" href="">
+                                                <i className="fa fa-user-plus"></i>
                                             </a>
                                             <a href="#/sign-up" style={{marginLeft: "10px"}}>{t('signup')}</a>
                                         </div>

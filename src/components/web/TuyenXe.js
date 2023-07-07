@@ -1,42 +1,32 @@
 import './../../css/tuyenXe.css';
 import { useContext, useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row, Table, ToastBody } from "react-bootstrap";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {GrDescend, GrAscend} from "react-icons/gr"
-import { getAllBenXeUser, getAllVeXeByTuyenXeId, getTuyenXeFindByAddressDate } from "../hooks/useFunction";
-import useNhaXe from "../hooks/useNhaXe";
+import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getAllBenXeUser, getTuyenXeFindByAddressDate } from "../hooks/useFunction";
 import { MyContext } from "../../App";
-import imageDatVe from '../../assets/img/ticket-icon.png';
-import imageChuyenHang from '../../assets/img/chuyen-hang.png'
-import {ImRadioUnchecked} from "react-icons/im"
-import {FaMapMarkerAlt, FaRegClock} from "react-icons/fa"
+import {ImLocation} from "react-icons/im"
 import {VscArrowSwap} from "react-icons/vsc"
 import imageDiemDen from '../../assets/img/diemDen.png';
-import LazyLoad from 'react-lazy-load';
 import { useTranslation } from 'react-i18next';
-
-const Loading = () => (
-  <div className="post loading">
-    <h5>Loading...</h5>
-  </div>
-)
+import { FiCircle } from 'react-icons/fi';
 
 function TuyenXe(){
 
-    const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
-    const [benXe, setBenXe] = useState([]);
     const [tuyenXe, setTuyenXe] = useState([]);
-    const {nhaXe} = useNhaXe();
+    const [sao, setSao] = useState([]);
     const [tinhThanh, setTinhThanh] = useState([]);
     let d = new Date();
-    const toDay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 
     const [q] = useSearchParams();
     const [diemDi, setDiemDi] = useState(q.get("diemDi"));
     const [diemDen, setDiemDen] = useState(q.get("diemDen"));
-    const [Ascending, SetAscending] = useState(true);
-    let soGheDaDat = 0;
+
+    function formatCash(str) {
+      return str.split('').reverse().reduce((prev, next, index) => {
+        return ((index % 3) ? next : (next + '.')) + prev
+      })
+   }
 
     const convertNgay=(d)=>{
       let ngay;
@@ -58,11 +48,6 @@ function TuyenXe(){
 
   const [date, setDate] = useState(q.get("date")||convertNgay(d));
 
-
-    const onClickAscending = () =>{
-        SetAscending(!Ascending);
-    }
-
     const onClickSwap =(event)=>{
       event.preventDefault();
       const temp = diemDi;
@@ -73,7 +58,6 @@ function TuyenXe(){
     useEffect(()=>{
       getAllBenXeUser().then(data=>{
         if(data){
-          setBenXe(data)
           const tempt = [];
           for(let i=0; i<data.length; i++){
             if(tempt.indexOf(data[i].tinhThanh)<0){
@@ -102,6 +86,13 @@ function TuyenXe(){
           }
         })
       }
+
+      fetch("http://localhost:8080/api/thongke/nguoidung/sao-trung-binh/all").then(res=>res.json()).then(data=>{
+      if(data.object){
+          setSao(data.object);
+        }
+      })
+
     },[diemDi,diemDen,date])
 
     useEffect(()=>{
@@ -121,107 +112,8 @@ function TuyenXe(){
 
     return(
         <>
-        {/*
-        <Container>
-          <div id="booking" class="section" style={{marginBottom: "100px"}}>
-            <div class="section-center">
-              <div class="container">
-                <div>
-                  <div class="booking-form shadow">
-                    <form>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <span class="form-label">Điểm đi</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đi" list="DiemDi" defaultValue={diemDi} onChange={e=>setDiemDi(e.target.value)}/>
-                            <select className='form-control' id="DiemDi" onChange={e=>setDiemDi(e.target.value)}>
-                            {
-                              tinhThanh.map(t=>{
-                                if(t!==diemDi){
-                                  return(<option key={`ttdi${t}`} value={t}>{t}</option>)
-                                }else{
-                                  return(<option selected key={`ttdi${t}`} value={t}>{t}</option>)
-                                }
-                              })
-                            }
-                            <option hidden>Chọn điểm đi</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                          <span class="form-label">Điểm đến</span>
-                            <input class="form-control" type="text" placeholder="Chọn điểm đến" list="DiemDen" defaultValue={diemDen} onChange={e=>setDiemDen(e.target.value)}/>
-                            <select className='form-control' id="DiemDen" onChange={e=>setDiemDen(e.target.value)}>
-                              {
-                                tinhThanh.map(t=>{
-                                  if(t!==diemDen){
-                                    return(<option key={`ttden${t}`} value={t}>{t}</option>)
-                                  }else{
-                                    return(<option selected key={`ttden${t}`} value={t}>{t}</option>)
-                                  }
-                                })
-                              }
-                              <option hidden>Chọn điểm đến</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <span class="form-label">Ngày đi</span>
-                            <input class="form-control" type="date" required defaultValue={date||convertNgay(d)} onChange={e=>setDate(e.target.value)}/>
-                          </div>
-                            </div>
-                        {
-                            (()=>{
-                                if(Ascending === true){
-                                    return(
-                                        <div class="col-md-3">
-                                        <div class="form-group">
-                                            <span class="form-label">Sắp xếp giá</span>
-                                            <p class="form-control center" onClick={onClickAscending} style={{display: "flex", justifyContent: "center"}}>
-                                                <div style={{position: "absolute", top: "50%", transform: "inherit"}}>
-                                                    <GrAscend></GrAscend>Tăng dần
-                                                </div>
-                                            </p>
-                                        </div>
-                                        </div>
-                                    );
-                                }
-                                else{
-                                    return(
-                                        <div class="col-md-3">
-                                        <div class="form-group">
-                                            <span class="form-label">Sắp xếp giá</span>
-                                            <p class="form-control center" onClick={onClickAscending} style={{display: "flex", justifyContent: "center"}}>
-                                                <div style={{position: "absolute", top: "50%", transform: "inherit"}}>
-                                                    <GrDescend></GrDescend>Giảm dần
-                                                </div>
-                                            </p>
-                                        </div>
-                                        </div>
-                                    );
-                                }
-                            })()
-                        }
-                        
-                        <div class="col-md-3">
-                          <div class="form-btn">
-                          <button class="submit-btn"><i class="text-white px-2 fa fa-search">TÌM KIẾM</i></button>
-                          </div>https://galaxylands.com.vn/wp-content/uploads/2022/12/tieu-su-ca-si-rose-blackpink-12.jpg
-                      </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>*/}
 
-        <Container>
+        <Container style={{marginTop: "50px", marginBottom: "50px"}}>
           <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
           <div className='search-form-container shadow'>
           <Row>
@@ -280,119 +172,68 @@ function TuyenXe(){
         </Container>
 
         <h1 style={{textAlign:"center", marginBottom: "50px"}}>{t("tatcatuyenxetrongngay")} {new Date(date).toLocaleDateString('vi')}</h1>
-        {
-          tuyenXe.map(tx=>{
-            return(
-              <>
-              <LazyLoad key={tx.id} height={350}>
-              <div className='tuyen-xe-container'>
-                <Container>
-                <Row>
-                  <Col md={4} sm={12}>
-                    <img className='img-fluid' style={{width: "250px", margin: "10px", paddingRight:"10px", marginLeft: "auto", marginRight:"auto", display: "block"}} src={imageDiemDen} />
-                  </Col>
-                  <Col md={8} sm={12}>
-                    <Row>
-                        <Col md={6} ms={12}>
-                          <div className='tuyen-xe-title' style={{marginTop: "10px"}}>{tx.xe.nhaXe.tenNhaXe}</div>
-                        </Col>
-                        <Col md={6} ms={12}>
-                          <div style={{marginTop: "10px", }}>
-                            <div className='tuyen-xe-gia'>{tx.giaVe}000đ</div>
-                          </div>
-                        </Col>
-                    </Row>
-                    <Row>
-                      <div style={{margin:"0px 0px 20px"}}>
-                        <div className='tuyen-xe-infor-container'>
-                          <div className='tuyen-xe-infor-title'>{t("diemdi")}</div>
-                          <div className='tuyen-xe-infor-text'>{tx.benXeDi.tenBenXe} ({tx.benXeDi.tinhThanh})</div>
-                        </div>
-                        <div className='tuyen-xe-infor-container'>
-                          <div className='tuyen-xe-infor-title'>{t("diemden")}</div>
-                          <div className='tuyen-xe-infor-text'>{tx.benXeDen.tenBenXe} ({tx.benXeDen.tinhThanh})</div>
-                        </div>
-                        <div className='tuyen-xe-infor-container'>
-                          <div className='tuyen-xe-infor-title'>{t("thoigianhanhtrinh")}</div>
-                          <div className='tuyen-xe-infor-text'>{tx.thoiGianHanhTrinh}</div>
-                        </div>
-                        <div className='tuyen-xe-infor-container'>
-                          <div className='tuyen-xe-infor-title'>{t("ngaydi")}</div>
-                          <div className='tuyen-xe-infor-text'>{tx.ngayDi}</div>
-                        </div>
-                        <div className='tuyen-xe-infor-container'>
-                          <div className='tuyen-xe-infor-title'>{t("giokhoihanh")}</div>
-                          <div className='tuyen-xe-infor-text'>{tx.gioDi}</div>
-                        </div>
+
+        <Container style={{maxWidth: "1100px" ,width: "85%"}}>
+          <Row>
+            { tuyenXe.map(tx => {
+              return(
+                <>
+                <Card className='tuyen-xe-card'>
+                  <Row>
+                    <Col xs={12} md={3} lg={3} style={{display: "flex", justifyContent: "center", }}>
+                      <div style={{margin: "10px"}}>
+                        <Image src={imageDiemDen} style={{ height: "100%", width: "100%", objectFit: "cover"}}></Image>
                       </div>
-                      <Col sm={6}>
-                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{backgroundColor: "green", margin: "0px 0px 20px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDatVe}></img>{t("datve")}</Button>
-                      </Col>
-                      <Col sm={6}>
-                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{backgroundColor: "blue", margin: "0px 0px 20px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageChuyenHang}></img>{t("giaohang")}</Button>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-                </Container>
-              </div>
-              </LazyLoad>
-              </>
-            )
-          })
-        }
-
-        {/*
-        <Container>
-        <div style={{marginTop:"30px", height:"500px", backgroundColor:"white", borderRadius: "3px", overflow: "auto"}} className="shadow">
-        <div style={{padding: "20px"}}>
-        <Table striped bordered hover style={{backgroundColor:"white"}}>
-        <thead>
-            <tr>
-            <th>Tuyến xe</th>
-            <th>Nhà xe</th>
-            <th>Loại xe</th>
-            <th>Sức chứa</th>
-            <th>Ngày đi</th>
-            <th>Giờ khởi hành</th>
-            <th>Thời gian hành trình</th>
-            <th>Giá vé</th>
-            <th></th>
-            </tr>
-        </thead>
-        <tbody>
-          
-            {tuyenXe.map(tx=>{
-                return(
-                    <>
-                    <tr>
-                    <td>{tx.benXeDi.tenBenXe} ({tx.benXeDi.tinhThanh}){" => "}{tx.benXeDen.tenBenXe} ({tx.benXeDen.tinhThanh})</td>
-                    <td>{tx.xe.nhaXe.tenNhaXe}</td>
-                    <td>{tx.xe.loaiXe.tenLoaiXe}</td>
-                    <td>{tx.xe.loaiXe.sucChua}</td>
-                    <td>{tx.ngayDi}</td>
-                    <td>{tx.gioDi}</td>
-                    <td>{tx.thoiGianHanhTrinh}</td>
-                    <td>{tx.giaVe}</td>
-                    <td style={{textAlign: "center"}}>
-                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDatVe}></img><span style={{marginRight: "10px"}}>Đặt vé xe</span></button>
-                      <button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{margin:"10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageChuyenHang}></img><span style={{marginRight: "10px"}}>Giao hàng</span></button>
-                    </td>
-                    </tr>
-                    </>
-                )
+                    </Col>
+                    <Col xs={6} md={5} lg={5}>
+                      <div style={{margin: "10px"}}>
+                        <Row>
+                          {
+                            sao.map(s=>{
+                              if(s.id==tx.xe.nhaXe.id){
+                                return(
+                                  <h5>{tx.xe.nhaXe.tenNhaXe} <span className='so-sao-tuyen-xe-span'><i className='fa fa-star'></i> {s.saoTrungBinh} sao</span></h5>
+                                );
+                              }
+                            })
+                          }
+                        </Row>
+                        <Row>
+                          <label style={{color: "gray"}}>{tx.xe.loaiXe.tenLoaiXe}</label>
+                        </Row>
+                        <Row>
+                          <span><FiCircle></FiCircle><span style={{ margin: "0px 10px"}}>{tx.benXeDi.tenBenXe} ({tx.benXeDi.tinhThanh})</span></span>
+                        </Row>
+                        <div className='duong-dut-net-div'>
+                          <span className='thoi-gian-hanh-trinh-tuyen-xe-span'>{tx.thoiGianHanhTrinh}</span>
+                        </div>
+                        <Row>
+                          <span><ImLocation></ImLocation><span style={{ margin: "0px 10px"}}>{tx.benXeDen.tenBenXe} ({tx.benXeDen.tinhThanh})</span></span>
+                        </Row>
+                        <Row>
+                          <span className='gio-khoi-hanh-tuyen-xe-span'>{t("giokhoihanh")} {tx.gioDi}</span>
+                        </Row>
+                      </div>
+                    </Col>
+                    <Col xs={6} md={4} lg={4}>
+                      <Row style={{ margin: "10px", textAlign: "right"}}>
+                        <label className='gia-tuyen-xe-span'>{formatCash(tx.giaVe.toString())}.000đ</label>
+                      </Row>
+                      <Row style={{ margin: "20px 10px 10px 10px", textAlign: "right"}}>
+                        <label className='so-ghe-trong-tuyen-xe-span'>Còn 2 ghế</label>
+                      </Row>
+                      <Row>
+                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{backgroundColor: "green", margin: "10px 0", border: "none", width: "90%"}}>{t("datve")}</Button>  
+                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{backgroundColor: "blue", margin: "10px 0", border: "none", width: "90%"}}>{t("giaohang")}</Button>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Card>
+                </>
+              );
             })}
-            {
-                (()=>{
-                    soGheDaDat=0;
-                })()
-            }
-
-        </tbody>
-        </Table>
-        </div>
-        </div>
-          </Container> */}
+          </Row>
+        </Container>
         </>
     )
 }

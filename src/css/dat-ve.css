@@ -1,0 +1,21 @@
+input[type=checkbox] {
+    display: none;
+}
+
+.label {
+    display: inline-block;
+    padding: 3px;
+    text-align: center;
+}
+
+.seat{
+    background-color: white;
+}
+
+input[type=checkbox]:checked + .label {
+    color: red;
+}
+
+input[type=checkbox]:checked + .seat {
+    color: red;
+}

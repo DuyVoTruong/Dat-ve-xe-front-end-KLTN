@@ -1,48 +1,49 @@
 import './App.css';
 import './css/searchForm.css';
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import LayoutAdmin from './layout/LayoutAdmin';
-import AdminHome from './components/admin/AdminHome';
-import NhaXeAdmin from './components/admin/NhaXe/NhaXeAdmin';
-import NhaXeAdminUpdate from './components/admin/NhaXe/NhaXeAdminUpdate';
-import NhaXeAdminAdd from './components/admin/NhaXe/NhaXeAdminAdd';
-import TuyenXeAdmin from './components/admin/TuyenXe/TuyenXeAdmin';
-import TuyenXeAdminUpdate from './components/admin/TuyenXe/TuyenXeAdminUpdate';
-import TuyenXeAdminAdd from './components/admin/TuyenXe/TuyenXeAdminAdd';
-import BenXeAdmin from './components/admin/BenXe/BenXeAdmin';
-import TaiKhoanAdmin from './components/admin/TaiKhoan/TaiKhoanAdmin';
-import LayoutNhaXe from './layout/LayoutNhaXe';
-import NhaXeHome from './components/nhaXe/NhaXeHome';
-import TuyenXeNhaXe from './components/nhaXe/TuyenXe/TuyenXeNhaXe';
-import LayoutWeb from './layout/LayoutWeb';
-import Home from './components/web/Home';
-import Login from './components/web/Login';
-import Signup from './components/web/Signup';
-import LichTrinh from './components/web/LichTrinh';
-import TuyenXe from './components/web/TuyenXe';
-import DatVe from './components/web/DatVe';
-import ThongTinTaiKhoan from './components/web/ThongTinTaiKhoan';
-import NhaXeChiTiet from './components/web/NhaXeChiTiet';
-import NhaXeDanhGia from './components/web/NhaXeDanhGia';
-import LichSuDatVe from './components/web/LichSuDatVe';
-import TaiKhoanAddAdmin from './components/admin/TaiKhoan/TaiKhoanAddAdmin';
-import TaiKhoanUser from './components/admin/TaiKhoan/TaiKhoanUser';
-import TaiKhoanNhaXe from './components/admin/TaiKhoan/TaiKhoanNhaXe';
-import LoaiXeAdmin from './components/admin/LoaiXe/LoaiXeAdmin';
-import XeAdmin from './components/admin/Xe/XeAdmin';
-import XeAdminAdd from './components/admin/Xe/XeAdminAdd';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import useToken from './components/hooks/useToken';
-import { createContext } from 'react';
-import LichSuGuiHang from './components/web/LichSuGuiHang';
-import XeNhaXe from './components/nhaXe/Xe/XeNhaXe';
-import VeXeChiTiet from './components/web/VeXeChiTiet';
-import VeXe from './components/nhaXe/VeXe/VeXe';
-import HangHoa from './components/nhaXe/HangHoa/HangHoa';
-import QuanLyVeXe from './components/nhaXe/VeXe/QuanLyVeXe';
-import GiaoHang from './components/web/GiaoHang';
-import QuanLyHangHoa from './components/nhaXe/HangHoa/QuanLyHangHoa';
-import ThongKeNhaXe from './components/nhaXe/ThongKe/ThongKeNhaXe';
-import ThongKeAdmin from './components/admin/ThongKe/ThongKeAdmin';
+import React, { Suspense, createContext } from 'react';
+import GoiGiaHan from './components/nhaXe/GoiGiaHan/GoiGiaHan';
+const LayoutAdmin = React.lazy(() => import ('./layout/LayoutAdmin'));
+const AdminHome = React.lazy(() => import ('./components/admin/AdminHome'));
+const NhaXeAdmin = React.lazy(() => import ('./components/admin/NhaXe/NhaXeAdmin'));
+const NhaXeAdminUpdate = React.lazy(() => import ('./components/admin/NhaXe/NhaXeAdminUpdate'));
+const NhaXeAdminAdd = React.lazy(() => import ('./components/admin/NhaXe/NhaXeAdminAdd'));
+const TuyenXeAdmin = React.lazy(() => import ('./components/admin/TuyenXe/TuyenXeAdmin'));
+const TuyenXeAdminUpdate = React.lazy(() => import ('./components/admin/TuyenXe/TuyenXeAdminUpdate'));
+const TuyenXeAdminAdd = React.lazy(() => import ('./components/admin/TuyenXe/TuyenXeAdminAdd'));
+const BenXeAdmin = React.lazy(() => import ('./components/admin/BenXe/BenXeAdmin'));
+const TaiKhoanAdmin = React.lazy(() => import ('./components/admin/TaiKhoan/TaiKhoanAdmin'));
+const LayoutNhaXe = React.lazy(() => import ('./layout/LayoutNhaXe'));
+const NhaXeHome = React.lazy(() => import ('./components/nhaXe/NhaXeHome'));
+const TuyenXeNhaXe = React.lazy(() => import ('./components/nhaXe/TuyenXe/TuyenXeNhaXe'));
+const LayoutWeb = React.lazy(() => import ('./layout/LayoutWeb'));
+const Home = React.lazy(() => import ('./components/web/Home'));
+const Login = React.lazy(() => import ('./components/web/Login'));
+const Signup = React.lazy(() => import ('./components/web/Signup'));
+const LichTrinh = React.lazy(() => import ('./components/web/LichTrinh'));
+const TuyenXe = React.lazy(() => import ('./components/web/TuyenXe'));
+const DatVe = React.lazy(() => import ('./components/web/DatVe'));
+const ThongTinTaiKhoan = React.lazy(() => import ('./components/web/ThongTinTaiKhoan'));
+const NhaXeChiTiet = React.lazy(() => import ('./components/web/NhaXeChiTiet'));
+const NhaXeDanhGia = React.lazy(() => import ('./components/web/NhaXeDanhGia'));
+const LichSuDatVe = React.lazy(() => import ('./components/web/LichSuDatVe'));
+const TaiKhoanAddAdmin = React.lazy(() => import ('./components/admin/TaiKhoan/TaiKhoanAddAdmin'));
+const TaiKhoanUser = React.lazy(() => import ('./components/admin/TaiKhoan/TaiKhoanUser'));
+const TaiKhoanNhaXe = React.lazy(() => import ('./components/admin/TaiKhoan/TaiKhoanNhaXe'));
+const LoaiXeAdmin = React.lazy(() => import ('./components/admin/LoaiXe/LoaiXeAdmin'));
+const XeAdmin = React.lazy(() => import ('./components/admin/Xe/XeAdmin'));
+const XeAdminAdd = React.lazy(() => import ('./components/admin/Xe/XeAdminAdd'));
+const LichSuGuiHang = React.lazy(() => import ('./components/web/LichSuGuiHang'));
+const XeNhaXe = React.lazy(() => import ('./components/nhaXe/Xe/XeNhaXe'));
+const VeXeChiTiet = React.lazy(() => import ('./components/web/VeXeChiTiet'));
+const VeXe = React.lazy(() => import ('./components/nhaXe/VeXe/VeXe'));
+const HangHoa = React.lazy(() => import ('./components/nhaXe/HangHoa/HangHoa'));
+const QuanLyVeXe = React.lazy(() => import ('./components/nhaXe/VeXe/QuanLyVeXe'));
+const GiaoHang = React.lazy(() => import ('./components/web/GiaoHang'));
+const QuanLyHangHoa = React.lazy(() => import ('./components/nhaXe/HangHoa/QuanLyHangHoa'));
+const ThongKeNhaXe = React.lazy(() => import ('./components/nhaXe/ThongKe/ThongKeNhaXe'));
+const ThongKeAdmin = React.lazy(() => import ('./components/admin/ThongKe/ThongKeAdmin'));
 
 export const MyContext = createContext();
 
@@ -55,8 +56,9 @@ function App() {
       return(
         <MyContext.Provider value={{token, setToken, account, setAccount}}>
         {/*<BrowserRouter>*/}
+        <Suspense fallback={<h1>Loading ...</h1>}>
         <Routes>
-        <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
+          <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
             <Route path='' element={<Home></Home>}></Route>
             {/*<Route path='login' element={<Login></Login>}></Route>*/}
             <Route path='sign-up' element={<Signup></Signup>}></Route>
@@ -70,6 +72,7 @@ function App() {
           </Route>
           <Route path='/login' element={<Login></Login>}></Route>
         </Routes>
+        </Suspense>
         {/*</BrowserRouter>*/}
       </MyContext.Provider>
     )
@@ -78,6 +81,7 @@ function App() {
       return(
         <MyContext.Provider value={{token, setToken, account, setAccount}}>
         {/*<BrowserRouter>*/}
+          <Suspense fallback={<h1>Loading ...</h1>}>
           <Routes>
             <Route path='/*' element={<Navigate to="/admin/home" replace />}></Route>
             <Route path="/admin/*" element={<LayoutAdmin account={account}></LayoutAdmin>}>
@@ -101,12 +105,14 @@ function App() {
               {/*<Route path="*" element={<Navigate to="home" replace />}></Route>*/}
             </Route>
           </Routes>
+          </Suspense>
         {/*</BrowserRouter>*/}
         </MyContext.Provider>)
       }else if(account.role==="NHAXE"){
         return(
           <MyContext.Provider value={{token, setToken, account, setAccount}}>
           {/*<BrowserRouter>*/}
+          <Suspense fallback={<h1>Loading ...</h1>}>
           <Routes>
             <Route path='/*' element={<Navigate to="/nha-xe/home" replace />}></Route>
             <Route path='/nha-xe/*' element={<LayoutNhaXe account={account}></LayoutNhaXe>}>
@@ -119,9 +125,11 @@ function App() {
                 <Route path="hang-hoa" element={<HangHoa></HangHoa>} />
                 <Route path="hang-hoa/quan-ly/:id" element={<QuanLyHangHoa></QuanLyHangHoa>} />
                 <Route path="thong-ke" element={<ThongKeNhaXe></ThongKeNhaXe>} />
+                <Route path="gia-han-dich-vu" element={<GoiGiaHan></GoiGiaHan>} />
                 <Route path="*" element={<Navigate to="home" replace />}></Route>
             </Route>
           </Routes>
+          </Suspense>
           {/*</BrowserRouter>*/}
           </MyContext.Provider>
         )
@@ -129,25 +137,27 @@ function App() {
         return(
           <MyContext.Provider value={{token, setToken, account, setAccount}}>
           {/*<BrowserRouter>*/}
+          <Suspense fallback={<h1>Loading ...</h1>}>
           <Routes>
             <Route path='/*' element={<LayoutWeb account={account}></LayoutWeb>}>
-                <Route path='' element={<Home></Home>}></Route>
-                {/*<Route path='login' element={<Login></Login>}></Route>*/}
-                <Route path='sign-up' element={<Signup></Signup>}></Route>
-                <Route path='lich-trinh' element={<LichTrinh></LichTrinh>}></Route>
-                <Route path='tuyen-xe' element={<TuyenXe></TuyenXe>}></Route>
-                <Route path='dat-ve-xe/:id' element={<DatVe></DatVe>}></Route>
-                <Route path='thong-tin-tai-khoan' element={<ThongTinTaiKhoan></ThongTinTaiKhoan>}></Route>
-                <Route path='nha-xe-chi-tiet/:id' element={<NhaXeChiTiet></NhaXeChiTiet>}></Route>
-                <Route path='nha-xe-danh-gia/:id' element={<NhaXeDanhGia></NhaXeDanhGia>}></Route>
-                <Route path='lich-su-dat-ve' element={<LichSuDatVe></LichSuDatVe>}></Route>
-                <Route path='lich-su-gui-hang' element={<LichSuGuiHang></LichSuGuiHang>}></Route>
-                <Route path='ve-xe-chi-tiet' element={<VeXeChiTiet></VeXeChiTiet>}></Route>
-                <Route path='giao-hang/:id' element={<GiaoHang></GiaoHang>}></Route>
-                <Route path="*" element={<Navigate to="/" replace />}></Route>
-              </Route>
+              <Route path='' element={<Home></Home>}></Route>
+              {/*<Route path='login' element={<Login></Login>}></Route>*/}
+              <Route path='sign-up' element={<Signup></Signup>}></Route>
+              <Route path='lich-trinh' element={<LichTrinh></LichTrinh>}></Route>
+              <Route path='tuyen-xe' element={<TuyenXe></TuyenXe>}></Route>
+              <Route path='dat-ve-xe/:id' element={<DatVe></DatVe>}></Route>
+              <Route path='thong-tin-tai-khoan' element={<ThongTinTaiKhoan></ThongTinTaiKhoan>}></Route>
+              <Route path='nha-xe-chi-tiet/:id' element={<NhaXeChiTiet></NhaXeChiTiet>}></Route>
+              <Route path='nha-xe-danh-gia/:id' element={<NhaXeDanhGia></NhaXeDanhGia>}></Route>
+              <Route path='lich-su-dat-ve' element={<LichSuDatVe></LichSuDatVe>}></Route>
+              <Route path='lich-su-gui-hang' element={<LichSuGuiHang></LichSuGuiHang>}></Route>
+              <Route path='ve-xe-chi-tiet' element={<VeXeChiTiet></VeXeChiTiet>}></Route>
+              <Route path='giao-hang/:id' element={<GiaoHang></GiaoHang>}></Route>
+              <Route path="*" element={<Navigate to="/" replace />}></Route>
+            </Route>
             <Route path='/login' element={<Login></Login>}></Route>
           </Routes>
+          </Suspense>
         {/*</BrowserRouter>*/}
         </MyContext.Provider>
       )

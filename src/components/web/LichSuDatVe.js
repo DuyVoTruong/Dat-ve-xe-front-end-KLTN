@@ -9,6 +9,8 @@ import useVeXe from "../hooks/useVeXe";
 import { FiDelete } from "react-icons/fi"
 import imageDetail from '../../assets/img/view-details.png'
 import { useTranslation } from "react-i18next";
+import { tableCustomStyles } from "../../css/data-table-style";
+import DataTable from "react-data-table-component";
 
 const LichSuDatVe=()=>{
 
@@ -57,65 +59,92 @@ const LichSuDatVe=()=>{
 
     const { t } = useTranslation();
 
-    return (
-        <>
-        <Container>
-        <div style={{marginTop:"30px", height:"500px", borderRadius: "3px", backgroundColor:"white", overflow: "auto"}} className="shadow">
-        <div style={{padding: "20px"}}>
-        <Table striped bordered hover>
-        <thead>
-            <tr>
-            <th>STT</th>
-            <th>{t("soghe")}</th>
-            <th>{t("ngaydat")}</th>
-            <th>{t("ngaynhan")}</th>
-            <th>{t("benxedi")}</th>
-            <th>{t("benxeden")}</th>
-            <th>{t("nhaxe")}</th>
-            <th>{t("trangthai")}</th>
-            <th>{t("chitiet")} / {t("huydon")}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {veXe.map(vx=>{
-                stt=stt+1;
+    const columns = [
+        {
+            name: <div>{t("soghe")}</div>,
+            selector: row => row.soGhe,
+            wrap: true,
+            maxWidth: "20px"
+        },
+        {
+            name: <div>{t("ngaydat")}</div>,
+            selector: row => row.ngayDat,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("ngaynhan")}</div>,
+            selector: row => row.ngayNhan,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("benxedi")}</div>,
+            selector: row => row.tuyenXe.benXeDi.tenBenXe,
+            wrap: true,
+        },
+        {
+            name: <div>{t("benxeden")}</div>,
+            selector: row => row.tuyenXe.benXeDen.tenBenXe,
+            wrap: true,
+        },
+        {
+            name: <div>{t("nhaxe")}</div>,
+            selector: row => row.tuyenXe.xe.nhaXe.tenNhaXe,
+            wrap: true,
+        },
+        {
+            name: <div>{t("trangthai")}</div>,
+            selector: row => row.trangThai,
+            wrap: true,
+        },
+        {
+            name: <div>{t("chitiet")} / {t("huydon")}</div>,
+            selector: (row, index)=>{
                 return(
                     <>
-                    <tr>
-                    <td>{stt}</td>
-                    <td>{vx.soGhe}</td>
-                    <td>{vx.ngayDat}</td>
-                    <td>{vx.ngayNhan}</td>
-                    <td>{vx.tuyenXe.benXeDi.tenBenXe}</td>
-                    <td>{vx.tuyenXe.benXeDen.tenBenXe}</td>
-                    <td>{vx.tuyenXe.xe.nhaXe.tenNhaXe}</td>
-                    <td>{vx.trangThai}</td>
-                    <td style={{textAlign: "center"}}>
-                        <button onClick={()=>redirectVeXeChiTiet(vx)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("chitiet")}</span></button>
+                    <div style={{margin: "10px"}}>
+                    <button onClick={()=>redirectVeXeChiTiet(row)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("chitiet")}</span></button>
                         {
                             (()=>{
-                                if(vx.trangThai==="INACTIVE"){
+                                if(row.trangThai==="INACTIVE"){
                                     return(
                                         <>
-                                            <button onClick={()=>deleteVeXe(vx.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
+                                            <button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
                                         </>
                                     );
                                 }
                             })()
                         }
-                    </td>
-                    </tr>
+                    </div>
                     </>
-                )
-            })}
-            {
+                );
+            },
+            wrap: true,
+            minWidth: "300px",
+        },
+    ];
 
-            }
-        </tbody>
-        </Table>
+    return (
+        <>
+
+        <Container>
+        <div style={{margin: "20px 0px", backgroundColor:"white", borderRadius: "5px", minHeight:"80vh"}} className="shadow">
+        <div style={{padding: "20px"}}>
+        <DataTable
+            columns={columns}
+            data={veXe}
+            pagination
+            highlightOnHover
+		    pointerOnHover
+            striped
+            responsive
+            customStyles={tableCustomStyles}
+        />
         </div>
         </div>
         </Container>
+
         </>
     );
 }

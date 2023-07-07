@@ -4,6 +4,8 @@ import { FiDelete } from "react-icons/fi";
 import { MyContext } from "../../App";
 import { getHangHoaByUserId } from "../hooks/useFunction";
 import { useTranslation } from "react-i18next";
+import { tableCustomStyles } from "../../css/data-table-style";
+import DataTable from "react-data-table-component";
 
 const LichSuGuiHang=()=>{
 
@@ -45,61 +47,87 @@ const LichSuGuiHang=()=>{
 
     const { t } = useTranslation();
 
-    return (
-        <>
-        <Container>
-        <div style={{marginTop:"30px", height:"500px", backgroundColor: "white", overflow: "auto"}} className="shadow">
-        <div style={{padding: "20px"}}>
-        <Table striped bordered hover style={{backgroundColor:"white"}}>
-        <thead>
-            <tr>
-            <th>STT</th>
-            <th>{t("cannang")}</th>
-            <th>{t("gia")}</th>
-            <th>{t("tennguoinhan")}</th>
-            <th>{t("sodienthoainguoinhan")}</th>
-            <th>Email</th>
-            <th>{t("ngaydat")}</th>
-            <th>{t("trangthai")}</th>
-            <th>{t("huydon")}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {hangHoa.map(h=>{
-                stt=stt+1;
+    const columns = [
+        {
+            name: <div>{t("cannang")}</div>,
+            selector: row => row.canNang,
+            wrap: true,
+            maxWidth: "20px"
+        },
+        {
+            name: <div>{t("gia")}</div>,
+            selector: row => row.gia,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("tennguoinhan")}</div>,
+            selector: row => row.tenNguoNhan,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: <div>{t("sodienthoainguoinhan")}</div>,
+            selector: row => row.sdtNguoiNhan,
+            wrap: true,
+        },
+        {
+            name: <div>Email</div>,
+            selector: row => row.email,
+            wrap: true,
+        },
+        {
+            name: <div>{t("ngaydat")}</div>,
+            selector: row => row.ngayDat,
+            wrap: true,
+        },
+        {
+            name: <div>{t("trangthai")}</div>,
+            selector: row => row.trangThai,
+            wrap: true,
+        },
+        {
+            name: <div>{t("huydon")}</div>,
+            selector: (row, index)=>{
                 return(
                     <>
-                    <tr>
-                    <td>{stt}</td>
-                    <td>{h.canNang}</td>
-                    <td>{h.gia}</td>
-                    <td>{h.tenNguoNhan}</td>
-                    <td>{h.sdtNguoiNhan}</td>
-                    <td>{h.email}</td>
-                    <td>{h.ngayDat}</td>
-                    <td>{h.trangThai}</td>
-                    <td style={{textAlign: "center"}}>
-                        {
-                            (()=>{
-                                if(h.trangThai==="INACTIVE"){
-                                    return(
-                                        <>
-                                            <button onClick={()=>huyDon(h.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
-                                        </>
-                                    );
-                                }
-                            })()
-                        }
-                    </td>
-                    </tr>
+                    <div style={{margin: "10px"}}>
+                    {
+                        (()=>{
+                            if(row.trangThai==="INACTIVE"){
+                                return(
+                                    <>
+                                        <button onClick={()=>huyDon(row.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
+                                    </>
+                                );
+                            }
+                        })()
+                    }
+                    </div>
                     </>
-                )
-            })}
-            {
+                );
+            },
+            wrap: true,
+            minWidth: "300px",
+        },
+    ];
 
-            }
-        </tbody>
-        </Table>
+    return (
+        <>
+        
+        <Container>
+        <div style={{margin: "20px 0px", backgroundColor:"white", borderRadius: "5px", minHeight: "80vh"}} className="shadow">
+        <div style={{padding: "20px"}}>
+        <DataTable
+            columns={columns}
+            data={hangHoa}
+            pagination
+            highlightOnHover
+		    pointerOnHover
+            striped
+            responsive
+            customStyles={tableCustomStyles}
+        />
         </div>
         </div>
         </Container>

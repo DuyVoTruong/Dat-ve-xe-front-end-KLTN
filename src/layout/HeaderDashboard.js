@@ -1,6 +1,6 @@
 import { memo, useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { MyContext } from "../App";
 import flagEN from "../assets/img/flagEN.jpg";
 import flagVN from "../assets/img/flagVN.png";
@@ -51,7 +51,7 @@ function HeaderDashboard(){
                                             <i class="fa fa-user"></i>
                                         </a>
                                     </div>
-                                        <a href="thong-tin-tai-khoan">{account.username}</a>
+                                    <Link to={"thong-tin-tai-khoan"}>{account.username}</Link>
 
                                     <div style={{marginRight:"10px", marginLeft:"20px"}}>
                                         <a class="text-white pl-2" href="">

@@ -53,3 +53,65 @@
         float: none;
     }
 }
+
+.so-sao-tuyen-xe-span{
+    background-color: blue; 
+    padding: 5px;
+    color: white; 
+    font-size: 13px; 
+    white-space: nowrap;
+}
+
+.duong-dut-net-div{
+    border-left: 3px dotted gray; 
+    height: 40px; 
+    margin: 0 6px; 
+    display: flex; 
+    align-items: center;
+}
+
+.gio-khoi-hanh-tuyen-xe-span{
+    font-size: 20px;
+    margin: 20px 0px;
+}
+
+.gia-tuyen-xe-span{
+    color: blue; 
+    font-size: 20px; 
+    font-weight: 700;
+}
+
+.so-ghe-trong-tuyen-xe-span{
+    color: red; 
+    font-size: 16px; 
+    font-weight: 500;
+}
+
+.thoi-gian-hanh-trinh-tuyen-xe-span{
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+.tuyen-xe-card{
+    margin-bottom: 20px;
+}
+
+.tuyen-xe-card:hover{
+    box-shadow: 5px 10px 20px 0px #808080;
+}
+
+@media screen and (max-width:850px) {
+    .gio-khoi-hanh-tuyen-xe-span{
+        font-size: 16px;
+    }
+    
+    .gia-tuyen-xe-span{
+        font-size: 16px;
+        white-space: nowrap;
+    }
+    
+    .so-ghe-trong-tuyen-xe-span{
+        font-size: 14px;
+        white-space: nowrap;
+    }
+}

@@ -39,10 +39,10 @@ const NhaXeChiTiet =()=>{
 
     const Rating=(nStar, i)=>{
         if(i<=nStar){
-            return <span class="fa fa-star checkedStar"></span>
+            return <span className="fa fa-star checkedStar"></span>
         }
         else{
-            return <span class="fa fa-star"></span>
+            return <span className="fa fa-star"></span>
         }
     }
 
@@ -277,7 +277,7 @@ const NhaXeChiTiet =()=>{
                                                         return(
                                                             <div style={{marginTop:"-10px", marginLeft: "10px"}}>
                                                                 <Link onClick={()=>deleteDanhGia(dg.id)} style={{margin: "3px"}}>{t("xoa")}</Link>
-                                                                <Link to={"/nha-xe-danh-gia/"+nhaXeId} style={{margin: "3px"}}>{t("sửa")}</Link>
+                                                                <Link to={"/nha-xe-danh-gia/"+nhaXeId} style={{margin: "3px"}}>{t("sua")}</Link>
                                                             </div>
                                                         );
                                                     }

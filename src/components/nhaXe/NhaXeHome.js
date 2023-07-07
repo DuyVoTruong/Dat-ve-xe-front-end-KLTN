@@ -9,7 +9,7 @@ function NhaXeHome(){
 
     return(
         <div className="d-flex justify-content-center align-items-center" style={{height:"90vh"}}>
-            <h1>{t('chaomung', {nhaxe: account.username})}</h1>
+            <h1>{t('chaomung', {account: account.username})}</h1>
         </div>
     );
 }
