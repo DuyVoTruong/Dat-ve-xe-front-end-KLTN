@@ -1,0 +1,2 @@
+input[type=checkbox]{display:none}.label{cursor:pointer;display:inline-block;margin:10px;padding:3px;text-align:center}.label-so-ghe{font-size:16px;margin-top:10px;position:absolute;width:50px}.seat{background-color:#fff;font-size:50px}input[type=checkbox]:checked+.label{color:red}input[type=checkbox]:checked+.seat{font-size:30px}
+/*# sourceMappingURL=1742.63a19a1e.chunk.css.map*/
