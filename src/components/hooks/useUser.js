@@ -1,6 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
 import { httpDeleteUser, httpGetUser, httpPostSignUp, httpPostUser, httpPutTaiKhoan, httpPutUser } from "./Request";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useUser(){
     const [user, setUser] = useState([]);
@@ -23,20 +27,20 @@ function useUser(){
 
     const addUser = useCallback(async(data) => {
         if (!data.tenBenXe||!data.diaChiChiTiet||!data.tinhThanh){
-            alert("Missing data");
+            InfoMessage();
         }
         else{
             try {
                 await httpPostUser(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getUser();
@@ -44,20 +48,20 @@ function useUser(){
 
     const updateUser = useCallback(async(id, data) => {
         if (!data.username||data.trangThaiHoatDong===null){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPutUser(id, data,token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getUser();
@@ -67,14 +71,14 @@ function useUser(){
         try {
             await httpDeleteUser(idUser,token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getUser();
     },[getUser])
@@ -84,14 +88,14 @@ function useUser(){
             try {
                 await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         
         getUser();
@@ -99,20 +103,20 @@ function useUser(){
 
     const signUp = useCallback(async(data) => {
         if (!data.username||!data.password){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getUser();

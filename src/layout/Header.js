@@ -2,7 +2,7 @@ import { memo, useContext, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import useToken from "../components/hooks/useToken";
 import {MyContext} from "../App"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import flagEN from "../assets/img/flagEN.jpg";
 import flagVN from "../assets/img/flagVN.png";
@@ -13,10 +13,11 @@ function Header(){
     const account = useContext(MyContext).account;
     const setAccount = useContext(MyContext).setAccount;
     const nav = useNavigate();
+    const location = useLocation();
     const logout =()=>{
         localStorage.clear();
         setAccount();
-        window.location.replace(window.location.origin+"/"+window.location.pathname);
+        window.location.replace(window.location.origin + window.location.pathname);
     }
 
     const { t } = useTranslation();
@@ -73,17 +74,17 @@ function Header(){
                 <Navbar.Brand href="#/">WEBTOUR</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="me-auto">
-                    <Nav.Link href="#/" style={{textTransform: "uppercase"}}>{t('trangchu')}</Nav.Link>
-                    <Nav.Link href="#/lich-trinh" style={{textTransform: "uppercase"}}>{t('lichtrinh')}</Nav.Link>
-                    <Nav.Link href="#/tuyen-xe" style={{textTransform: "uppercase"}}>{t('tuyenxe')}</Nav.Link>
+                <Nav activeKey={location.pathname} className="me-auto">
+                    <Nav.Link href="#/" style={{textTransform: "uppercase"}}>{t('Trang chủ')}</Nav.Link>
+                    <Nav.Link href="#/lich-trinh" style={{textTransform: "uppercase"}}>{t('Lịch trình')}</Nav.Link>
+                    <Nav.Link href="#/tuyen-xe" style={{textTransform: "uppercase"}}>{t('Tuyến xe')}</Nav.Link>
                     {
                         (()=>{
                             if(account){
                                return(
                                 <>
-                                    <Nav.Link href="#/lich-su-dat-ve" style={{textTransform: "uppercase"}}>{t('lichsudatve')}</Nav.Link>
-                                    <Nav.Link href="#/lich-su-gui-hang" style={{textTransform: "uppercase"}}>{t('lichsuguihang')}</Nav.Link>
+                                    <Nav.Link href="#/lich-su-dat-ve" style={{textTransform: "uppercase"}}>{t('Lịch sử đặt vé')}</Nav.Link>
+                                    <Nav.Link href="#/lich-su-gui-hang" style={{textTransform: "uppercase"}}>{t('Lịch sử gửi hàng')}</Nav.Link>
                                 </>
                                ) 
                             }
@@ -112,7 +113,7 @@ function Header(){
                                             <a className="text-white pl-2">
                                                 <i className="fas fa-sign-out-alt"></i>
                                             </a>
-                                            <a onClick={logout} className="text-blue pl-2" style={{marginLeft: "10px", cursor: "pointer"}} >{t('logout')}</a>
+                                            <a onClick={logout} className="text-blue pl-2" style={{marginLeft: "10px", cursor: "pointer"}} >{t('Đăng xuất')}</a>
                                         </div>
                                     </Navbar.Collapse>
                                 </>
@@ -129,14 +130,14 @@ function Header(){
                                             <a className="text-white pl-2" href="">
                                                 <i className="fa fa-user"></i>
                                             </a>
-                                            <a href="#/login" style={{marginLeft: "10px"}}>{t('login')}</a>
+                                            <a href="#/login" style={{marginLeft: "10px"}}>{t('Đăng nhập')}</a>
                                         </div>
 
                                         <div style={{margin:"10px", margin:"10px"}}>
                                             <a className="text-white pl-2" href="">
                                                 <i className="fa fa-user-plus"></i>
                                             </a>
-                                            <a href="#/sign-up" style={{marginLeft: "10px"}}>{t('signup')}</a>
+                                            <a href="#/sign-up" style={{marginLeft: "10px"}}>{t('Đăng ký')}</a>
                                         </div>
 
                                     </Navbar.Collapse>

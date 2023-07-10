@@ -4,6 +4,7 @@ import { MyContext } from "../../../App";
 import useLoaiXe from "../../hooks/useLoaiXe";
 import useNhaXe from "../../hooks/useNhaXe";
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function XeAdminAdd({showForm, setShowForm, add}){
 
@@ -30,7 +31,7 @@ function XeAdminAdd({showForm, setShowForm, add}){
         let bienSoXe = document.getElementById("formBienSoXe").value;
         let tenLoaiXe = document.getElementById("formSelectTenLoaiXe").value;
         if(!bienSoXe||!tenLoaiXe||!tenNhaXe){
-            window.alert("Bạn phải điền đầy đủ thông tin!!!")
+            InfoMessage();
         }else{
             let data = {
                 bienSoXe,tenLoaiXe,tenNhaXe,
@@ -43,15 +44,15 @@ function XeAdminAdd({showForm, setShowForm, add}){
         <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>{t("themxe")}</Modal.Title>
+              <Modal.Title>{t("Thêm xe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="formBienSoXe">
                     <Form.Label className="text-center">
-                    {t("biensoxe")}
+                    {t("Biển số xe")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapbiensoxe")} />
+                    <Form.Control type="text" placeholder={t("Nhập biển số xe")} />
                 </Form.Group>
                 
                 {
@@ -60,7 +61,7 @@ function XeAdminAdd({showForm, setShowForm, add}){
                             return(
                                 <Form.Group className="mb-3" controlId="formTenNhaXe">
                                     <Form.Label className="text-center">
-                                    {t("nhaxe")}
+                                    {t("Nhà xe")}
                                     </Form.Label>
                                     <Form.Select id="formSelectTenNhaXe">
                                         {
@@ -81,7 +82,7 @@ function XeAdminAdd({showForm, setShowForm, add}){
 
                 <Form.Group className="mb-3" controlId="formTenLoaiXe">
                     <Form.Label className="text-center">
-                    {t("loaixe")}
+                    {t("Loại xe")}
                     </Form.Label>
                     <Form.Select id="formSelectTenLoaiXe">
                         {
@@ -100,10 +101,10 @@ function XeAdminAdd({showForm, setShowForm, add}){
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
               </Button>
               <Button variant="primary" type="button" onClick={AddXe}>
-                {t("them")}
+                {t("Thêm")}
               </Button>
             </Modal.Footer>
           </Modal>

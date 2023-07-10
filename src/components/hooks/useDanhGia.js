@@ -2,6 +2,9 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpDeleteDanhGia, httpGetDanhGia, httpPostDanhGia, httpPutDanhGia } from "./Request";
+import FailMessage from "../alert message/FailMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
 
 function useDanhGia(){
     const [danhGia, setDanhGia] = useState([]);
@@ -32,15 +35,15 @@ function useDanhGia(){
             try {
                 await httpPostDanhGia(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                         nav("/nha-xe-chi-tiet/"+nhaXeId)
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert(err);
+                FailMessage();
             }
         //}
         getDanhGia();
@@ -54,14 +57,14 @@ function useDanhGia(){
             try {
                 await httpPutDanhGia(idDanhGia, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         //}
         getDanhGia();
@@ -71,14 +74,14 @@ function useDanhGia(){
         try {
             await httpDeleteDanhGia(idDanhGia, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getDanhGia();
     },[getDanhGia])

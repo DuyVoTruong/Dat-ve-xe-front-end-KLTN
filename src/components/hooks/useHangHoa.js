@@ -2,6 +2,9 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpDeleteHangHoa, httpGetHangHoa, httpPostHangHoa, httpPutHangHoa } from "./Request";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useHangHoa(){
     const [hangHoa, setHangHoa] = useState([]);
@@ -32,15 +35,15 @@ function useHangHoa(){
             try {
                 await httpPostHangHoa(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                         nav("/lich-su-gui-hang/")
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert(err);
+                FailMessage();
             }
         //}
         getHangHoa();
@@ -54,14 +57,14 @@ function useHangHoa(){
             try {
                 await httpPutHangHoa(idHangHoa, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         //}
         getHangHoa();
@@ -71,14 +74,14 @@ function useHangHoa(){
         try {
             await httpDeleteHangHoa(idHangHoa, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getHangHoa();
     },[getHangHoa])

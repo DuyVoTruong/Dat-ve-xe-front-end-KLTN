@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { getTinhThanhPho } from "../../hooks/useFunction";
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function BenXeAddForm({showFormAdd, setShowFormAdd, addBenXe}){
 
@@ -27,8 +28,8 @@ function BenXeAddForm({showFormAdd, setShowFormAdd, addBenXe}){
                 trangThai=groupTrangThai[i].value
             }
         }
-        if(!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"||!trangThai){
-            window.alert("Bạn phải điền đầy đủ thông tin!!!")
+        if(!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")||!trangThai){
+            InfoMessage();
         }else{
             let data = {
                 tenBenXe:tenBenXe,
@@ -46,37 +47,37 @@ function BenXeAddForm({showFormAdd, setShowFormAdd, addBenXe}){
       <>
         <Modal show={showFormAdd} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>{t("thembenxe")}</Modal.Title>
+            <Modal.Title>{t("Thêm bến xe")}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="formTenBenXe">
                         <Form.Label className="text-center">
-                        {t("tenbenxe")}
+                        {t("Tên bến xe")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaptenbenxe")} />
+                        <Form.Control type="text" placeholder={t("Nhập tên bến xe")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
-                        <Form.Label>{t("diachi")}</Form.Label>
+                        <Form.Label>{t("Địa chỉ")}</Form.Label>
                         <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
-                            <option>{t("chontinhthanh")}</option>
+                            <option>{t("Chọn tỉnh thành")}</option>
                         </Form.Select>
                         
                         <Form.Select className="mb-3" id="district" aria-label="Chọn quận huyện">
-                            <option>{t("chonquanhuyen")}</option>
+                            <option>{t("Chọn quận huyện")}</option>
                         </Form.Select>
                                 
                         <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
-                            <option>{t("chonphuongxa")}</option>
+                            <option>{t("Chọn phường xã")}</option>
                         </Form.Select>
 
-                        <Form.Control type="text" placeholder={t("nhapsonha")} />
+                        <Form.Control type="text" placeholder={t("Nhập số nhà")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                    {t("trangthai")}
+                    {t("Trạng thái")}
                     </Form.Label>
                     <br></br>
                         <Form.Check
@@ -102,10 +103,10 @@ function BenXeAddForm({showFormAdd, setShowFormAdd, addBenXe}){
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              {t("dong")}
+              {t("Đóng")}
             </Button>
             <Button variant="primary" type="button" onClick={AddBenXe}>
-              {t("them")}
+              {t("Thêm")}
             </Button>
           </Modal.Footer>
         </Modal>

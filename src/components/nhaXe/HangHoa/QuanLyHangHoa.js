@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Modal, Table } from "react-bootstrap";
+import { Button, Form, Modal, Table, Toast } from "react-bootstrap";
 import { BsPlusSquareFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { MyContext } from "../../../App";
@@ -8,6 +8,7 @@ import useHangHoa from "../../hooks/useHangHoa";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -145,25 +146,25 @@ const QuanLyHangHoa =()=>{
 
     const columns = [
         {
-            name: <div>{t("cannang")}</div>,
+            name: <div>{t("Cân nặng")}</div>,
             selector: row => row.canNang,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("gia")}</div>,
+            name: <div>{t("Giá")}</div>,
             selector: row => row.gia,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("tennguoinhan")}</div>,
+            name: <div>{t("Tên người nhận")}</div>,
             selector: row => row.tenNguoNhan,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("sodienthoainguoinhan")}</div>,
+            name: <div>{t("Số điện thoại của người nhận")}</div>,
             selector: row => row.sdtNguoiNhan,
             sortable: true,
             wrap: true,
@@ -175,7 +176,7 @@ const QuanLyHangHoa =()=>{
             wrap: true,
         },
         {
-            name: <div>{t("trangthai")}</div>,
+            name: <div>{t("Trạng thái")}</div>,
             selector: row => row.trangThai,
             sortable: true,
             wrap: true,
@@ -187,16 +188,16 @@ const QuanLyHangHoa =()=>{
                     if(row.trangThai==="INACTIVE"){
                         return(
                             <>
-                            <Button onClick={()=>{setH(row);setShowUpdate(true)}} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("xacnhan")}</Button>
-                            <Button onClick={()=>huyDon(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("huy")}</Button>
+                            <Button onClick={()=>{setH(row);setShowUpdate(true)}} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("Xác nhận")}</Button>
+                            <Button onClick={()=>huyDon(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("Hủy")}</Button>
                             </>
                         )
                     }
                     else if(row.trangThai==="ACTIVE"){
                         return(
                             <>
-                            <Button onClick={()=>xacNhanHoanThanh(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("xacnhanhoanthanh")}</Button>
-                            <Button onClick={()=>huyDon(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("huy")}</Button>
+                            <Button onClick={()=>xacNhanHoanThanh(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("Hoàn thành")}</Button>
+                            <Button onClick={()=>huyDon(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("Hủy")}</Button>
                             </>
                         )
                     }
@@ -261,6 +262,7 @@ const QuanLyHangHoa =()=>{
 
     return(
         <>
+        <ToastContainer/>
         {
             (()=>{
                 if(h)
@@ -271,8 +273,8 @@ const QuanLyHangHoa =()=>{
         }
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
-            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder="Tìm kiếm theo tên bến xe đi..."></input>
-            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch> Tìm kiếm</Button></div>
+            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo tên bến xe đi")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("Tìm kiếm")}</Button></div>
             <BsPlusSquareFill style={{marginTop: "25px"}} onClick={0} className="add-btn"></BsPlusSquareFill>
         </div>
         <div style={{padding:"20px", overflow: "auto"}}>
@@ -282,14 +284,14 @@ const QuanLyHangHoa =()=>{
                     if(tuyenXe.benXeDi&&tuyenXe.benXeDen&&tuyenXe.xe)
                     return(
                         <>
-                        <div>{t("quanlyhanghoacuatuyenxe")}:</div>
-                        <div><b>{t("benxedi")}:</b> {tuyenXe.benXeDi.tenBenXe} - <b>{t("benxeden")}:</b> {tuyenXe.benXeDen.tenBenXe} - <b>{t("biensoxe")}:</b> {tuyenXe.xe.bienSoXe} - <b>{t("ngaydi")}:</b> {tuyenXe.ngayDi} - <b>{t("giokhoihanh")}:</b> {tuyenXe.gioDi}</div>
+                        <div>{t("Quản lý hàng hóa của tuyến xe")}:</div>
+                        <div><b>{t("Bến xe đi")}:</b> {tuyenXe.benXeDi.tenBenXe} - <b>{t("Bến xe đến")}:</b> {tuyenXe.benXeDen.tenBenXe} - <b>{t("Biển số xe")}:</b> {tuyenXe.xe.bienSoXe} - <b>{t("Ngày đi")}:</b> {tuyenXe.ngayDi} - <b>{t("Giờ khởi hành")}:</b> {tuyenXe.gioDi}</div>
                         </>
                     )
                 }
             })()
         }
-        <h1 style={{textAlign: "center"}}>{t("danhsachcachanghoa")}</h1>
+        <h1 style={{textAlign: "center"}}>{t("Danh sách các hàng hóa")}</h1>
         <DataTable
             columns={columns}
             data={hangHoa.filter(item=>convert_vi_to_en(item.tenNguoNhan.toLowerCase()).indexOf(convert_vi_to_en(search.toLowerCase()))>=0)}

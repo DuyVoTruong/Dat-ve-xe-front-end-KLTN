@@ -2,6 +2,10 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpDeleteLoaiXe, httpGetLoaiXe, httpPostLoaiXe, httpPutLoaiXe } from "./Request";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useLoaiXe(){
     const [loaiXe, setLoaiXe] = useState([]);
@@ -23,20 +27,20 @@ function useLoaiXe(){
 
     const addLoaiXe = useCallback(async(data) => {
         if (!data.tenLoaiXe||!data.sucChua){
-            alert("Missing data");
+            InfoMessage();
         }
         else{
             try {
                 await httpPostLoaiXe(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getLoaiXe();
@@ -44,20 +48,20 @@ function useLoaiXe(){
 
     const updateLoaiXe = useCallback(async(idLoaiXe, data) => {
         if (!data.tenLoaiXe||!data.sucChua){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPutLoaiXe(idLoaiXe, data,token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getLoaiXe();
@@ -67,14 +71,14 @@ function useLoaiXe(){
         try {
             await httpDeleteLoaiXe(idLoaiXe,token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getLoaiXe();
     },[getLoaiXe])

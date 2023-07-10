@@ -8,6 +8,7 @@ import DataTable, { defaultThemes } from "react-data-table-component";
 import { GrSearch } from "react-icons/gr";
 import { convert_vi_to_en } from "../../hooks/useFunction";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 const HangHoa =()=>{
     const account = useContext(MyContext).account;
@@ -27,31 +28,31 @@ const HangHoa =()=>{
 
     const columns = [
         {
-            name: <div>{t("benxedi")}</div>,
+            name: <div>{t("Bến xe đi")}</div>,
             selector: row => row.benXeDi.tenBenXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("benxeden")}</div>,
+            name: <div>{t("Bến xe đến")}</div>,
             selector: row => row.benXeDen.tenBenXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("biensoxe")}</div>,
+            name: <div>{t("Biển số xe")}</div>,
             selector: row => row.xe.bienSoXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("ngaydi")}</div>,
+            name: <div>{t("Ngày đi")}</div>,
             selector: row => row.ngayDi,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("giokhoihanh")}</div>,
+            name: <div>{t("Giờ khởi hành")}</div>,
             selector: row => row.gioDi,
             sortable: true,
             wrap: true,
@@ -62,7 +63,7 @@ const HangHoa =()=>{
                 return(
                     <>
                     <div style={{margin: "10px"}}>
-                    <Button onClick={()=>redirect(row)} style={{margin:"10px", backgroundColor:"#00FF99", color: "black"}}>{t("quanlyhanghoa")}</Button>
+                    <Button onClick={()=>redirect(row)} style={{margin:"10px", backgroundColor:"#00FF99", color: "black"}}>{t("Quản lý hàng hóa")}</Button>
                     </div>
                     </>
                 );
@@ -126,11 +127,12 @@ const HangHoa =()=>{
 
     return(
         <>
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("quanlyhanghoa")}</h2></div>
+        <ToastContainer/>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("Quản lý hàng hóa")}</h2></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
-            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheotenbenxedi")}></input>
-            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("timkiem")}</Button></div>
+            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo tên bến xe đi")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("Tìm kiếm")}</Button></div>
         </div>
         <div style={{padding:"20px", overflow: "auto"}}>
         <DataTable

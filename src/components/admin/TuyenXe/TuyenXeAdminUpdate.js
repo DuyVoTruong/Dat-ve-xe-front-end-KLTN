@@ -5,6 +5,7 @@ import useBenXe from "../../hooks/useBenXe";
 import useNhaXe from "../../hooks/useNhaXe";
 import useXe from "../../hooks/useXe";
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
     const {xe} = useXe();
@@ -30,11 +31,11 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
             }
         }
         if(!tenBenXeDi||!tenBenXeDen||!ngayDi||!gioDi||!thoiGianHanhTrinh||!giaVe||!trangThai||!bienSoXe){
-            window.alert("Bạn phải điền đầy đủ thông tin!!!")
+            InfoMessage();
         }else if(tenBenXeDen===tenBenXeDi){
-            window.alert("Tên bến xe đi và tên bến xe đến bị trùng nhau!!! Vui lòng chọn lại!!!")
+            InfoMessage(t("Tên bến xe đi và tên bến xe đến bị trùng nhau!!! Vui lòng chọn lại!!!"))
         }else if(giaVe<0) {
-            window.alert("Giá vé phải lớn hơn hơn 0!!!")
+            InfoMessage(t("Giá vé phải lớn hơn hơn 0!!!"))
         }else {
             let data = {
                 tenBenXeDi, tenBenXeDen, ngayDi, gioDi,xe,thoiGianHanhTrinh, giaVe, trangThai, bienSoXe
@@ -50,13 +51,13 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
         <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>{t("capnhattuyenxe")}</Modal.Title>
+              <Modal.Title>{t("Cập nhật tuyến xe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("benxedi")}
+                        {t("Bến xe đi")}
                     </Form.Label>
                     <Form.Select id="benXeDi">
                         {benXe.map(bx=>{
@@ -76,7 +77,7 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("benxeden")}
+                        {t("Bến xe đến")}
                     </Form.Label>
                     <Form.Select id="benXeDen">
                         {benXe.map(bx=>{
@@ -96,7 +97,7 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("xe")}
+                        {t("Xe")}
                     </Form.Label>
                     <Form.Select id="xe">
                         {xe.map(x=>{
@@ -105,12 +106,12 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
                                     if(tx.xe){
                                         if(tx.xe.bienSoXe===x.bienSoXe){
                                             return(
-                                                <option selected key={`xe${x.id}`} value={x.bienSoXe}>Biển số xe: {x.bienSoXe} - Nhà xe {tx.xe.nhaXe.tenNhaXe}</option>
+                                                <option selected key={`xe${x.id}`} value={x.bienSoXe}>{t("Biển số xe")}: {x.bienSoXe} - {t("Nhà xe")}: {tx.xe.nhaXe.tenNhaXe}</option>
                                             )
                                         }
                                     }
                                     return(
-                                        <option key={`xe${x.id}`} value={x.bienSoXe}>Biển số xe: {x.bienSoXe} - Nhà xe {x.nhaXe.tenNhaXe}</option>
+                                        <option key={`xe${x.id}`} value={x.bienSoXe}>{t("Biển số xe")}: {x.bienSoXe} - {t("Nhà xe")}: {x.nhaXe.tenNhaXe}</option>
                                     )
                                 }
                             }
@@ -132,35 +133,35 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("giokhoihanh")}
+                        {t("Giờ khởi hành")}
                     </Form.Label>
                     <Form.Control id="gioDi" type="time" defaultValue={tx.gioDi}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("ngaydi")} (yy-mm-dd)
+                        {t("Ngày đi")} (yy-mm-dd)
                     </Form.Label>
                     <Form.Control id="ngayDi" type="date" defaultValue={tx.ngayDi}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("thoigianhanhtrinh")}
+                        {t("Thời gian hành trình")}
                     </Form.Label>
                     <Form.Control id="thoiGianHanhTrinh" type="text" defaultValue={tx.thoiGianHanhTrinh}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                        {t("gia")} {t("donvi")}
+                        {t("Giá (đơn vị: đồng)")}
                     </Form.Label>
                     <Form.Control id="giaVe" type="number" min={1} defaultValue={tx.giaVe}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                     <Form.Label className="text-center">
-                    {t("trangthai")}
+                    {t("Trạng thái")}
                     </Form.Label>
                     <br></br>
                         <Form.Check
@@ -186,10 +187,10 @@ function TuyenXeAdminUpdate({showForm, setShowForm, update, tx, role}){
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
               </Button>
               <Button variant="primary" type="button" onClick={UpdateTuyenXe}>
-                {t("capnhat")}
+                {t("Cập nhật")}
               </Button>
             </Modal.Footer>
           </Modal>

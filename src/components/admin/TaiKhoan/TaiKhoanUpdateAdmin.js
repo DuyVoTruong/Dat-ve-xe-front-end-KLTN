@@ -3,6 +3,7 @@ import { Col, Button, Row, Container, Card, Form, Modal } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom";
 import {getTinhThanhPho} from "../../hooks/useFunction"
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
 
@@ -21,7 +22,7 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             let diaChi = document.getElementById("formDiaChi").value;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
             if(!role||!username||!hoTen||!cmnd||!sdt||!email||!diaChi){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+                InfoMessage();
             }
             else{
                 let data = {
@@ -47,8 +48,8 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
-            if(!role||!username||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+            if(!role||!username||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
+                InfoMessage();
             }
             else{
                 let data = {
@@ -69,7 +70,7 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             let email = document.getElementById("formEmail").value;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
             if(!role||!username||!name||!cmnd||!sdt||!email){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+                InfoMessage();
             }
             else{
                 let data = {
@@ -97,53 +98,53 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             <>
               <Modal show={showForm} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>{t("capnhattaikhoanuser")}</Modal.Title>
+                  <Modal.Title>{t("Cập nhật tài khoản người dùng")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={UpdateHandler}>
                     <Form.Group className="mb-3" controlId="formHoTen">
                         <Form.Label className="text-center">
-                        {t("hoten")}
+                        {t("Họ tên")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaphotenuser")} defaultValue={tk.hoTen}/>
+                        <Form.Control type="text" placeholder={t("Nhập họ tên của người dùng")} defaultValue={tk.hoTen}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formCMND">
                         <Form.Label className="text-center">
-                        {t("cmnd")}
+                        {t("CMND")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder="Nhập CMND" defaultValue={tk.cmnd}/>
+                        <Form.Control type="text" placeholder={t("Nhập CMND")} defaultValue={tk.cmnd}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
-                        {t("sodienthoai")}
+                        {t("Số điện thoại")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapsdtuser")} defaultValue={tk.sdt}/>
+                        <Form.Control type="text" placeholder={t("Nhập số điện thoại của người dùng")} defaultValue={tk.sdt}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label className="text-center">
                         Email
                         </Form.Label>
-                        <Form.Control type="email" placeholder={t("nhapemail")} defaultValue={tk.email}/>
+                        <Form.Control type="email" placeholder={t("Nhập Email")} defaultValue={tk.email}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
                         <Form.Label className="text-center">
-                        {t("diachi")}
+                        {t("Địa chỉ")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapdiachiuser")} defaultValue={tk.diaChi}/>
+                        <Form.Control type="text" placeholder={t("Nhập địa chỉ của người dùng")} defaultValue={tk.diaChi}/>
                     </Form.Group>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                   </Button>
                   <Button variant="primary" type="button" onClick={UpdateHandler}>
-                    {t("capnhat")}
+                    {t("Cập nhật")}
                   </Button>
                 </Modal.Footer>
               </Modal>
@@ -157,49 +158,49 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             <>
               <Modal show={showForm} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>{t("capnhattaikhoannhaxe")}</Modal.Title>
+                  <Modal.Title>{t("Cập nhật tài khoản nhà xe")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={UpdateHandler}>
                     <Form.Group className="mb-3" controlId="formTenNhaXe">
                         <Form.Label className="text-center">
-                        {t("tennhaxe")}
+                        {t("Tên nhà xe")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaptennhaxe")} defaultValue={tk.tenNhaXe}/>
+                        <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} defaultValue={tk.tenNhaXe}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
-                        {t("sodienthoai")}
+                        {t("Số điện thoại")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapsodienthoai")} defaultValue={tk.sdt}/>
+                        <Form.Control type="text" placeholder={t("Nhập số điện thoại của nhà xe")} defaultValue={tk.sdt}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formMoTaNgan">
                         <Form.Label className="text-center">
-                        {t("motangan")}
+                        {t("Mô tả ngắn")}
                         </Form.Label>
-                        <Form.Control  as="textarea" rows={3} placeholder={t("nhapmotangan")} defaultValue={tk.moTaNgan}/>
+                        <Form.Control  as="textarea" rows={3} placeholder={t("Nhập mô tả ngắn")} defaultValue={tk.moTaNgan}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
                         <Form.Label>{t("diachi")}</Form.Label>
                         <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
-                            <option>{t("chontinhthanh")}</option>
+                            <option>{t("Chọn tỉnh thành")}</option>
                         </Form.Select>
                         
                         <Form.Select className="mb-3" id="district" aria-label="Chọn quận huyện">
-                            <option>{t("chonquanhuyen")}</option>
+                            <option>{t("Chọn quận huyện")}</option>
                         </Form.Select>
                                 
                         <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
-                            <option>{t("chonphuongxa")}</option>
+                            <option>{t("Chọn phường xã")}</option>
                         </Form.Select>
                         {
                             (()=>{
                                 if(tk.diaChi){
                                     return(
-                                        <Form.Control type="text" placeholder="Nhập số nhà" defaultValue={tk.diaChi.split(", ")[0]}/>
+                                        <Form.Control type="text" placeholder={t("Nhập số nhà")} defaultValue={tk.diaChi.split(", ")[0]}/>
                                     )
                                 }
                             })()
@@ -210,10 +211,10 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                   </Button>
                   <Button variant="primary" type="button" onClick={UpdateHandler}>
-                    {t("capnhat")}
+                    {t("Cập nhật")}
                   </Button>
                 </Modal.Footer>
               </Modal>
@@ -226,47 +227,47 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             <>
               <Modal show={showForm} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>{t("capnhattaikhoanadmin")}</Modal.Title>
+                  <Modal.Title>{t("Cập nhật tài khoản quản trị viên")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={UpdateHandler}>
 
                     <Form.Group className="mb-3" controlId="formTenAdmin">
                         <Form.Label className="text-center">
-                        {t("hoten")}
+                        {t("Họ tên")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaphotenadmin")} defaultValue={tk.name}/>
+                        <Form.Control type="text" placeholder={t("Nhập họ tên cuả quản trị viên")} defaultValue={tk.name}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formCMND">
                         <Form.Label className="text-center">
-                        {t("cmnd")}
+                        {t("CMND")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapcmnd")} defaultValue={tk.cmnd}/>
+                        <Form.Control type="text" placeholder={t("Nhập CMND")} defaultValue={tk.cmnd}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
-                        {t("sodienthoai")}
+                        {t("Số điện thoại")}
                         </Form.Label>
-                        <Form.Control  type="text" placeholder={t("nhapsdtadmin")} defaultValue={tk.sdt}/>
+                        <Form.Control  type="text" placeholder={t("Nhập số điện thoại của quản trị viên")} defaultValue={tk.sdt}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label className="text-center">
                         Email
                         </Form.Label>
-                        <Form.Control  type="email" placeholder={t("nhapemail")} defaultValue={tk.email}/>
+                        <Form.Control  type="email" placeholder={t("Nhập Email")} defaultValue={tk.email}/>
                     </Form.Group>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                   </Button>
                   <Button variant="primary" type="button" onClick={UpdateHandler}>
-                    {t("capnhat")}
+                    {t("Cập nhật")}
                   </Button>
                 </Modal.Footer>
               </Modal>

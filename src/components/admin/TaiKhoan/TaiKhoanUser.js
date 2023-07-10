@@ -13,6 +13,7 @@ import DataTable, { defaultThemes } from "react-data-table-component";
 import { GrSearch } from "react-icons/gr";
 import { convert_vi_to_en } from "../../hooks/useFunction";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 function TaiKhoanUser(){
 
@@ -83,25 +84,25 @@ function TaiKhoanUser(){
             wrap: true,
         },
         {
-            name: <div>{t("vaitro")}</div>,
+            name: <div>{t("Vai trò")}</div>,
             selector: row => row.taiKhoan.role,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("hoten")}</div>,
+            name: <div>{t("Họ tên")}</div>,
             selector: row => row.hoTen,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("cmnd")}</div>,
+            name: <div>{t("CMND")}</div>,
             selector: row => row.cmnd,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("sodienthoai")}</div>,
+            name: <div>{t("Số điện thoại")}</div>,
             selector: row => row.sdt,
             sortable: true,
             wrap: true,
@@ -113,13 +114,13 @@ function TaiKhoanUser(){
             wrap: true,
         },
         {
-            name: <div>{t("diachi")}</div>,
+            name: <div>{t("Địa chỉ")}</div>,
             selector: row => row.diaChi,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("trangthai")}</div>,
+            name: <div>{t("Trạng thái")}</div>,
             selector: (row, index) => {
                 return (()=>{
                     if(row.taiKhoan.trangThaiHoatDong==="ACTIVE"){
@@ -237,11 +238,12 @@ function TaiKhoanUser(){
                 }
             })()
         }
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("quanlytaikhoanuser")}</h2></div>
+        <ToastContainer/>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("Quản lý tài khoản người dùng")}</h2></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
-            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheousername")}></input>
-            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("timkiem")}</Button></div>
+            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo username")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("Tìm kiếm")}</Button></div>
             <BsPlusSquareFill style={{marginTop: "25px"}} onClick={()=>setShowFormAdd(true)} className="add-btn"></BsPlusSquareFill>
         </div>
         <div style={{padding:"20px", overflow: "auto"}}>

@@ -2,6 +2,9 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpGetTaiKhoan, httpPutTaiKhoan } from "./Request";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useTaiKhoan(){
     const [taiKhoan, setTaiKhoan] = useState([]);
@@ -48,14 +51,14 @@ function useTaiKhoan(){
         try {
             await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
                 if (data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else {
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getTaiKhoan();
     },[getTaiKhoan])

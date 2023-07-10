@@ -11,6 +11,7 @@ import DataTable, { defaultThemes } from "react-data-table-component";
 import { convert_vi_to_en } from "../../hooks/useFunction";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 function TuyenXeAdmin(){
 
@@ -71,49 +72,49 @@ function TuyenXeAdmin(){
 
     const columns = [
         {
-            name: <div>{t("benxedi")}</div>,
+            name: <div>{t("Bến xe đi")}</div>,
             selector: row => row.benXeDi.tenBenXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("benxeden")}</div>,
+            name: <div>{t("Bến xe đến")}</div>,
             selector: row => row.benXeDen.tenBenXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("biensoxe")}</div>,
+            name: <div>{t("Biển số xe")}</div>,
             selector: row => row.xe.bienSoXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("ngaydi")}</div>,
+            name: <div>{t("Ngày đi")}</div>,
             selector: row => row.ngayDi,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("giokhoihanh")}</div>,
+            name: <div>{t("Giờ khởi hành")}</div>,
             selector: row => row.gioDi,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("thoigianhanhtrinh")}</div>,
+            name: <div>{t("Thời gian hành trình")}</div>,
             selector: row => row.thoiGianHanhTrinh,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("gia")} {t("donvi")}</div>,
+            name: <div>{t("Giá (đơn vị: đồng)")}</div>,
             selector: row => row.giaVe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("trangthai")}</div>,
+            name: <div>{t("Trạng thái")}</div>,
             selector: (row, index) => {
                 return(
                     (()=>{
@@ -222,13 +223,14 @@ function TuyenXeAdmin(){
 
     return(
         <>
+        <ToastContainer/>
         <TuyenXeAdminAdd showFormAdd={showFormAdd} setShowFormAdd={setShowFormAdd} add={addTuyenXe}></TuyenXeAdminAdd>
         <TuyenXeAdminUpdate key={tx.id}showForm={showFormUpdate} setShowForm={setShowFormUpdate} update={updateTuyenXe} tx={tx}></TuyenXeAdminUpdate>
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("quanlytuyenxe")}</h2></div>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("Quản lý tuyến xe")}</h2></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
-            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheotenbenxedi")}></input>
-            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("timkiem")}</Button></div>
+            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo tên bến xe đi")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("Tìm kiếm")}</Button></div>
             <BsPlusSquareFill style={{marginTop: "25px"}} onClick={handleShowFormAdd} className="add-btn"></BsPlusSquareFill>
         </div>
         <div style={{padding:"30px", overflow: "auto"}}>

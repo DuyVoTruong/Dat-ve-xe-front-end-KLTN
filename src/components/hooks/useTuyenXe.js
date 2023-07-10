@@ -2,6 +2,9 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpDeleteTuyenXe, httpGetTuyenXe, httpPostTuyenXe, httpPutTuyenXe } from "./Request";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useTuyenXe(){
     const [tuyenXe, setTuyenXe] = useState([]);
@@ -29,14 +32,14 @@ function useTuyenXe(){
             try {
                 await httpPostTuyenXe(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         //}
         getTuyenXe();
@@ -50,14 +53,14 @@ function useTuyenXe(){
             try {
                 await httpPutTuyenXe(idTuyenXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         //}
         getTuyenXe();
@@ -67,14 +70,14 @@ function useTuyenXe(){
         try {
             await httpDeleteTuyenXe(idTuyenXe,token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert(data.message);
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getTuyenXe();
     },[getTuyenXe])

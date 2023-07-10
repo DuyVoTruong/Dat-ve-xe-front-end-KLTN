@@ -10,6 +10,7 @@ import DataTable, { defaultThemes } from "react-data-table-component";
 import { convert_vi_to_en } from "../../hooks/useFunction";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 const XeNhaXe =()=>{
     const account = useContext(MyContext).account;
@@ -38,19 +39,19 @@ const XeNhaXe =()=>{
 
     const columns = [
         {
-            name: <div>{t("loaixe")}</div>,
+            name: <div>{t("Loại xe")}</div>,
             selector: row => row.loaiXe.tenLoaiXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("nhaxe")}</div>,
+            name: <div>{t("Nhà xe")}</div>,
             selector: row => row.nhaXe.tenNhaXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("biensoxe")}</div>,
+            name: <div>{t("Biển số xe")}</div>,
             selector: row => row.bienSoXe,
             sortable: true,
             wrap: true,
@@ -126,13 +127,14 @@ const XeNhaXe =()=>{
 
     return(
         <>
+        <ToastContainer/>
         <XeAdminAdd showForm={showFormAdd} setShowForm={setShowFormAdd} add={addXe} role={"NHAXE"}></XeAdminAdd>
 
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("quanlyxe")}</h2></div>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("Quản lý xe")}</h2></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
-            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheobiensoxe")}></input>
-            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("timkiem")}</Button></div>
+            <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo biển số xe")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("Tìm kiếm")}</Button></div>
             <BsPlusSquareFill style={{marginTop: "25px"}} onClick={handleShowFormAdd} className="add-btn"></BsPlusSquareFill>
         </div>
         <div style={{padding:"20px", overflow: "auto"}}>

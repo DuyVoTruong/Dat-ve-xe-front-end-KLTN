@@ -2,6 +2,10 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpDeleteBenXe, httpGetBenXe, httpGetBenXeAdmin, httpGetBenXeById, httpGetBenXeUser, httpPostBenXe, httpPutBenXe } from "./Request";
+import SuccessMessage from "../alert message/SuccessMessage";
+import FailMessage from "../alert message/FailMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import InfoMessage from "../alert message/InfoMessage";
 
 function useBenXe(){
     const [benXe, setBenXe] = useState([]);
@@ -40,20 +44,20 @@ function useBenXe(){
 
     const addBenXe = useCallback(async(data) => {
         if (!data.tenBenXe||!data.diaChiChiTiet||!data.tinhThanh){
-            alert("Missing data");
+            InfoMessage();
         }
         else{
             try {
                 await httpPostBenXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getAllBenXeAdmin();
@@ -61,20 +65,20 @@ function useBenXe(){
 
     const updateBenXe = useCallback(async(idBenXe, data) => {
         if (!data.tenBenXe||!data.diaChiChiTiet||!data.tinhThanh){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPutBenXe(idBenXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getAllBenXeAdmin();
@@ -84,14 +88,14 @@ function useBenXe(){
         try {
             await httpDeleteBenXe(idBenXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getAllBenXeAdmin();
     },[getAllBenXeAdmin])

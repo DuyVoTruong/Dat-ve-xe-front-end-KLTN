@@ -6,86 +6,86 @@ import * as RiIcons from "react-icons/ri";
   
 export const SidebarNhaXeData = [
   {
-    title: "trangchu",
+    title: "Trang chủ",
     path: "/nha-xe/home",
     icon: <AiIcons.AiFillHome />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   },
   {
-    title:'tuyenxe',
+    title:'Tuyến xe',
     //path:'/nha-xe/home',
     icon:<FaIcons.FaRoute/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'tuyenxe',
+            title: 'Tuyến xe',
             path:'/nha-xe/tuyen-xe',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'xe',
+    title:'Xe',
     //path:'/admin/home',
     icon:<RiIcons.RiTrainLine/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'xe',
+            title: 'Xe',
             path:'/nha-xe/xe',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'vexe',
+    title:'Vé xe',
     //path:'/admin/home',
     icon:<FaIcons.FaTicketAlt/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'vexe',
+            title: 'Vé xe',
             path:'/nha-xe/ve-xe',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'hanghoa',
+    title:'Hàng hóa',
     //path:'/admin/home',
     icon:<FaIcons.FaTruck/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'hanghoa',
+            title: 'Hàng hóa',
             path:'/nha-xe/hang-hoa',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'thongke',
+    title:'Thống kê',
     //path:'/admin/home',
     icon:<FaIcons.FaChartBar/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'thongke',
+            title: 'Thống kê',
             path:'/nha-xe/thong-ke',
             icon:<IoIcons.IoIosPaper/>,
         },
     ]
   },{
-    title:'goidichvu',
+    title:'Gói dịch vụ',
     //path:'/admin/home',
     icon:<FaIcons.FaCreditCard/>,
     iconClosed:<RiIcons.RiArrowDownSFill/>,
     iconOpened:<RiIcons.RiArrowUpSFill/>,
     subNav:[
         {
-            title: 'goidichvu',
+            title: 'Gói dịch vụ',
             path:'/nha-xe/gia-han-dich-vu',
             icon:<IoIcons.IoIosPaper/>,
         },

@@ -6,10 +6,20 @@ input[type=checkbox] {
     display: inline-block;
     padding: 3px;
     text-align: center;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.label-so-ghe{
+    position: absolute; 
+    width: 50px;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 .seat{
     background-color: white;
+    font-size: 50px;
 }
 
 input[type=checkbox]:checked + .label {
@@ -17,5 +27,5 @@ input[type=checkbox]:checked + .label {
 }
 
 input[type=checkbox]:checked + .seat {
-    color: red;
+    font-size: 30px;
 }

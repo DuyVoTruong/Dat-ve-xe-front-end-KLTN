@@ -3,6 +3,7 @@ import { Col, Button, Row, Container, Card, Form, Modal } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom";
 import {getTinhThanhPho} from "../../hooks/useFunction"
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
 
@@ -21,7 +22,7 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             let email = document.getElementById("formEmail").value;
             let diaChi = document.getElementById("formDiaChi").value;
             if(!role||!username||!password||!hoTen||!cmnd||!sdt||!email||!diaChi){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+                InfoMessage();
             }
             else{
                 let data = {
@@ -47,8 +48,8 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             let sdt = document.getElementById("formSDT").value;
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
-            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
+                InfoMessage();
             }
             else{
                 let data = {
@@ -69,7 +70,7 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             let sdt = document.getElementById("formSDT").value;
             let email = document.getElementById("formEmail").value;
             if(!role||!username||!password||!name||!cmnd||!sdt||!email){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+                InfoMessage();
             }
             else{
                 let data = {
@@ -97,7 +98,7 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             <>
               <Modal show={showForm} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>{t("themtaikhoanuser")}</Modal.Title>
+                  <Modal.Title>{t("Thêm tài khoản người dùng")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={signUpHandler}>
@@ -105,57 +106,57 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
                         <Form.Label className="text-center">
                         Username
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapusername")} />
+                        <Form.Control type="text" placeholder={t("Nhập username")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder={t("nhappassword")} />
+                        <Form.Control type="password" placeholder={t("Nhập password")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formHoTen">
                         <Form.Label className="text-center">
-                        {t("hoten")}
+                        {t("Họ tên")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaphotenuser")} />
+                        <Form.Control type="text" placeholder={t("Nhập họ tên của người dùng")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formCMND">
                         <Form.Label className="text-center">
-                        {t("cmnd")}
+                        {t("CMND")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapcmnd")} />
+                        <Form.Control type="text" placeholder={t("Nhập CMND")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
-                        {t("sodienthoai")}
+                        {t("Số điện thoại")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapsdtuser")} />
+                        <Form.Control type="text" placeholder={t("Nhập số điện thoại của người dùng")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label className="text-center">
                         Email
                         </Form.Label>
-                        <Form.Control type="email" placeholder={t("nhapemail")} />
+                        <Form.Control type="email" placeholder={t("Nhập Email")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
                         <Form.Label className="text-center">
-                        {t("diachi")}
+                        {t("Địa chỉ")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapdiachiuser")} />
+                        <Form.Control type="text" placeholder={t("Nhập địa chỉ của người dùng")} />
                     </Form.Group>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                   </Button>
                   <Button variant="primary" type="button" onClick={signUpHandler}>
-                    {t("them")}
+                    {t("Thêm")}
                   </Button>
                 </Modal.Footer>
               </Modal>
@@ -272,7 +273,7 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             <>
               <Modal show={showForm} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>{t("themtaikhoannhaxe")}</Modal.Title>
+                  <Modal.Title>{t("Thêm tài khoản nhà xe")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={signUpHandler}>
@@ -280,60 +281,60 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
                         <Form.Label className="text-center">
                         Username
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapusername")} />
+                        <Form.Control type="text" placeholder={t("Nhập username")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder={t("nhappassword")} />
+                        <Form.Control type="password" placeholder={t("Nhập password")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formTenNhaXe">
                         <Form.Label className="text-center">
-                        {t("tennhaxe")}
+                        {t("Tên nhà xe")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaptennhaxe")} />
+                        <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
-                        {t("sodienthoai")}
+                        {t("Số điện thoại")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapsodienthoai")} />
+                        <Form.Control type="text" placeholder={t("Nhập số điện thoại của nhà xe")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formMoTaNgan">
                         <Form.Label className="text-center">
-                        {t("motangan")}
+                        {t("Mô tả ngắn")}
                         </Form.Label>
-                        <Form.Control  as="textarea" rows={3} placeholder={t("nhapmotangan")} />
+                        <Form.Control  as="textarea" rows={3} placeholder={t("Nhập mô tả ngắn")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
-                        <Form.Label>{t("diachi")}</Form.Label>
+                        <Form.Label>{t("Địa chỉ")}</Form.Label>
                         <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
-                            <option>{t("chontinhthanh")}</option>
+                            <option>{t("Chọn tỉnh thành")}</option>
                         </Form.Select>
                         
                         <Form.Select className="mb-3" id="district" aria-label="Chọn quận huyện">
-                            <option>{t("chonquanhuyen")}</option>
+                            <option>{t("Chọn quận huyện")}</option>
                         </Form.Select>
                                 
                         <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
-                            <option>{t("chonphuongxa")}</option>
+                            <option>{t("Chọn phường xã")}</option>
                         </Form.Select>
 
-                        <Form.Control type="text" placeholder={t("nhapsonha")} />
+                        <Form.Control type="text" placeholder={t("Nhập số nhà")} />
                     </Form.Group>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                   </Button>
                   <Button variant="primary" type="button" onClick={signUpHandler}>
-                    {t("them")}
+                    {t("Thêm")}
                   </Button>
                 </Modal.Footer>
               </Modal>
@@ -452,7 +453,7 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             <>
               <Modal show={showForm} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>{t("themtaikhoanadmin")}</Modal.Title>
+                  <Modal.Title>{t("Thêm tài khoản quản trị viên")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form onSubmit={signUpHandler}>
@@ -460,50 +461,50 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
                         <Form.Label className="text-center">
                         Username
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapusername")} />
+                        <Form.Control type="text" placeholder={t("Nhập username")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder={t("nhappassword")} />
+                        <Form.Control type="password" placeholder={t("Nhập password")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formTenAdmin">
                         <Form.Label className="text-center">
-                        {t("hoten")}
+                        {t("Họ tên")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaphotenadmin")} />
+                        <Form.Control type="text" placeholder={t("Nhập họ tên của quản trị viên")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formCMND">
                         <Form.Label className="text-center">
-                        {t("cmnd")}
+                        {t("CMND")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhapcmnd")} />
+                        <Form.Control type="text" placeholder={t("Nhập CMND")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
-                        {t("sodienthoai")}
+                        {t("Số điện thoại")}
                         </Form.Label>
-                        <Form.Control  type="text" placeholder={t("nhapsdtadmin")} />
+                        <Form.Control  type="text" placeholder={t("Nhập số điện thoại của quản trị viên")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label className="text-center">
                         Email
                         </Form.Label>
-                        <Form.Control  type="email" placeholder={t("nhapemail")} />
+                        <Form.Control  type="email" placeholder={t("Nhập Email")} />
                     </Form.Group>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                   </Button>
                   <Button variant="primary" type="button" onClick={signUpHandler}>
-                    {t("them")}
+                    {t("Thêm")}
                   </Button>
                 </Modal.Footer>
               </Modal>

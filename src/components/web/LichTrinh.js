@@ -47,13 +47,13 @@ function LichTrinh(){
 
     const columns = [
         {
-            name: <div>{t("diemdi")}</div>,
+            name: <div>{t("Điểm đi")}</div>,
             selector: row => row.benXeDi.tenBenXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("diemden")}</div>,
+            name: <div>{t("Điểm đến")}</div>,
             selector: row => row.benXeDen.tenBenXe,
             sortable: true,
             wrap: true,
@@ -64,7 +64,7 @@ function LichTrinh(){
                 return(
                     <>
                     <div style={{margin: "10px"}}>
-                        <button onClick={()=>redirect(row.benXeDi.tinhThanh,row.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("chitiet")}</span></button>
+                        <button onClick={()=>redirect(row.benXeDi.tinhThanh,row.benXeDen.tinhThanh)} style={{border:"1px solid #c0c6cc", borderRadius:"15px"}}><img style={{margin:"10px",maxHeight:"80%",height:"30px",width:"30px",maxWidth:"80%"}} src={imageDetail}></img><span style={{marginRight: "10px"}}>{t("Chi tiết")}</span></button>
                     </div>
                     </>
                 );
@@ -81,14 +81,14 @@ function LichTrinh(){
 
         <Container>
             <div class="row" style={{margin:"20px"}}>
-                <div class="col-md-6">
+                <div class="col-md-6 mt-3">
                     <div class="form-group">
-                    <input onChange={evt=>setDiemDi(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder={t("chondiemdi")} list="DiemDi" defaultValue={diemDi}/>
+                    <input onChange={evt=>setDiemDi(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder={t("Chọn điểm đi")} list="DiemDi" defaultValue={diemDi}/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mt-3">
                     <div class="form-group">
-                    <input onChange={evt=>setDiemDen(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder={t("chondiemden")} list="DiemDen" defaultValue={diemDen}/>
+                    <input onChange={evt=>setDiemDen(evt.target.value)} style={{borderRadius:"20px"}} class="form-control" type="text" placeholder={t("Chọn điểm đến")} list="DiemDen" defaultValue={diemDen}/>
                     </div>
                 </div>
             </div>

@@ -87,7 +87,7 @@ function TuyenXe(){
         })
       }
 
-      fetch("http://localhost:8080/api/thongke/nguoidung/sao-trung-binh/all").then(res=>res.json()).then(data=>{
+      fetch("http://localhost:8081/api/thongke/nguoidung/sao-trung-binh/all").then(res=>res.json()).then(data=>{
       if(data.object){
           setSao(data.object);
         }
@@ -122,7 +122,7 @@ function TuyenXe(){
               <div style={{margin:"0px 10px"}}>
               <Row>
                 <Col md={4}>
-                <div className='search-form-label'>{t("diemdi")}</div>
+                <div className='search-form-label'>{t("Điểm đi")}</div>
                 <select className='search-form-select' id="DiemDi" onChange={e=>setDiemDi(e.target.value)}>
                 {
                   tinhThanh.map(t=>{
@@ -133,14 +133,14 @@ function TuyenXe(){
                     }
                   })
                 }
-                <option hidden>{t("chondiemdi")}</option>
+                <option hidden>{t("Chọn điểm đi")}</option>
                   </select>
                 </Col>
                 <Col md={1}>
                 <div className='search-form-line'><div className='search-form-line-icon' onClick={onClickSwap}><VscArrowSwap></VscArrowSwap></div></div>
                 </Col>
                 <Col md={4}>
-                <div className='search-form-label'>{t("diemden")}</div>
+                <div className='search-form-label'>{t("Điểm đến")}</div>
                 <select className='search-form-select' id="DiemDen" onChange={e=>setDiemDen(e.target.value)}>
                   {
                     tinhThanh.map(t=>{
@@ -151,7 +151,7 @@ function TuyenXe(){
                       }
                     })
                   }
-                  <option hidden>{t("chondiemden")}</option>
+                  <option hidden>{t("Chọn điểm đến")}</option>
                   </select>
                 </Col>
                 <Col md={3}>
@@ -163,7 +163,7 @@ function TuyenXe(){
             </Col>
             <Col md={2}>
               <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
-                <button className='search-form-button'>{t('timkiem')}</button>
+                <button className='search-form-button'>{t('Tìm kiếm')}</button>
               </div>
             </Col>
           </Row>
@@ -171,7 +171,7 @@ function TuyenXe(){
           </div>
         </Container>
 
-        <h1 style={{textAlign:"center", marginBottom: "50px"}}>{t("tatcatuyenxetrongngay")} {new Date(date).toLocaleDateString('vi')}</h1>
+        <h1 style={{textAlign:"center", marginBottom: "50px"}}>{t("Tất cả các tuyến xe trong ngày")} {new Date(date).toLocaleDateString('vi')}</h1>
 
         <Container style={{maxWidth: "1100px" ,width: "85%"}}>
           <Row>
@@ -192,7 +192,7 @@ function TuyenXe(){
                             sao.map(s=>{
                               if(s.id==tx.xe.nhaXe.id){
                                 return(
-                                  <h5>{tx.xe.nhaXe.tenNhaXe} <span className='so-sao-tuyen-xe-span'><i className='fa fa-star'></i> {s.saoTrungBinh} sao</span></h5>
+                                  <h5>{tx.xe.nhaXe.tenNhaXe} <span className='so-sao-tuyen-xe-span'><i className='fa fa-star'></i> {t(`${s.saoTrungBinh} sao`)}</span></h5>
                                 );
                               }
                             })
@@ -211,20 +211,20 @@ function TuyenXe(){
                           <span><ImLocation></ImLocation><span style={{ margin: "0px 10px"}}>{tx.benXeDen.tenBenXe} ({tx.benXeDen.tinhThanh})</span></span>
                         </Row>
                         <Row>
-                          <span className='gio-khoi-hanh-tuyen-xe-span'>{t("giokhoihanh")} {tx.gioDi}</span>
+                          <span className='gio-khoi-hanh-tuyen-xe-span'>{t("Giờ khởi hành")} {tx.gioDi}</span>
                         </Row>
                       </div>
                     </Col>
                     <Col xs={6} md={4} lg={4}>
                       <Row style={{ margin: "10px", textAlign: "right"}}>
-                        <label className='gia-tuyen-xe-span'>{formatCash(tx.giaVe.toString())}.000đ</label>
+                        <label className='gia-tuyen-xe-span'>{formatCash(tx.giaVe.toString())}đ</label>
                       </Row>
                       <Row style={{ margin: "20px 10px 10px 10px", textAlign: "right"}}>
                         <label className='so-ghe-trong-tuyen-xe-span'>Còn 2 ghế</label>
                       </Row>
                       <Row>
-                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để đặt vé!!!")}else{datVe(tx)}}} style={{backgroundColor: "green", margin: "10px 0", border: "none", width: "90%"}}>{t("datve")}</Button>  
-                        <Button onClick={()=>{if(!account){window.alert("Bạn phải đăng nhập để nhờ giao hàng!!!")}else{giaoHang(tx)}}} style={{backgroundColor: "blue", margin: "10px 0", border: "none", width: "90%"}}>{t("giaohang")}</Button>
+                        <Button onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đặt vé!!!"))}else{datVe(tx)}}} style={{backgroundColor: "green", margin: "10px 0", border: "none", width: "90%"}}>{t("Đặt vé")}</Button>  
+                        <Button onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để nhờ giao hàng!!!"))}else{giaoHang(tx)}}} style={{backgroundColor: "blue", margin: "10px 0", border: "none", width: "90%"}}>{t("Giao hàng")}</Button>
                       </Row>
                     </Col>
                   </Row>

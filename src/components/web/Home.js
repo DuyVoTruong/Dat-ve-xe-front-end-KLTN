@@ -105,7 +105,7 @@ function Home(){
           setNhaXe(data)
         }
       })
-      fetch("http://localhost:8080/api/thongke/nguoidung/sao-trung-binh/all").then(res=>res.json()).then(data=>{
+      fetch("http://localhost:8081/api/thongke/nguoidung/sao-trung-binh/all").then(res=>res.json()).then(data=>{
       if(data.object){
           setSao(data.object);
         }
@@ -146,7 +146,7 @@ function Home(){
               <div style={{margin:"0px 10px"}}>
               <Row>
                 <Col md={4}>
-                <div className='search-form-label'>{t("diemdi")}</div>
+                <div className='search-form-label'>{t("Điểm đi")}</div>
                 <select className='search-form-select' id="DiemDi" onChange={e=>setDiemDi(e.target.value)}>
                   {
                     tinhThanh.map(t=>{
@@ -157,14 +157,14 @@ function Home(){
                       }
                     })
                   }
-                  <option hidden>{t("chondiemdi")}</option>
+                  <option hidden>{t("Chọn điểm đi")}</option>
                 </select>
                 </Col>
                 <Col md={1}>
                 <div className='search-form-line'><div className='search-form-line-icon' onClick={onClickSwap}><VscArrowSwap></VscArrowSwap></div></div>
                 </Col>
                 <Col md={4}>
-                <div className='search-form-label'>{t("diemden")}</div>
+                <div className='search-form-label'>{t("Điểm đến")}</div>
                 <select className='search-form-select' id="DiemDen" onChange={e=>setDiemDen(e.target.value)}>
                   {
                     tinhThanh.map(t=>{
@@ -175,7 +175,7 @@ function Home(){
                       }
                     })
                   }
-                  <option hidden>{t("chondiemden")}</option>
+                  <option hidden>{t("Chọn điểm đến")}</option>
                 </select>
                 </Col>
                 <Col md={3}>
@@ -187,7 +187,7 @@ function Home(){
             </Col>
             <Col md={2}>
               <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
-                <button className='search-form-button' onClick={timKiem}>{t('timkiem')}</button>
+                <button className='search-form-button' onClick={timKiem}>{t('Tìm kiếm')}</button>
               </div>
             </Col>
           </Row>
@@ -196,12 +196,12 @@ function Home(){
 
         <Container style={{ position: "relative", top: "-300px", marginBottom: "-350px"}}>
 
-          <h2 style={{marginLeft: "30px"}}>{t("cactuyenxetrongngay")}</h2>
+          <h2 style={{marginLeft: "30px"}}>{t("Các tuyến xe trong ngày")}</h2>
           <Carousel infinite={true} autoPlay={false} autoPlaySpeed={2000} responsive={responsive}>
             {tuyenXe.map(tx =>{
               if(tx.ngayDi.indexOf(toDay)>=0){
                 return(
-                  <Card onClick={()=>{if(!account){window.alert(t("banphaidangnhapdedatve"))}else{datVe(tx)}}} style={{ margin: "2rem" }} className="shadow card-transform">
+                  <Card onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đặt vé"))}else{datVe(tx)}}} style={{ margin: "2rem" }} className="shadow card-transform">
                     <Card.Body>
                       {
                         (()=>{
@@ -218,13 +218,13 @@ function Home(){
                         })()
                       }
                           <Card.Text>
-                          {t('ngaydi')}: {tx.ngayDi}
+                          {t('Ngày đi')}: {tx.ngayDi}
                           </Card.Text>
                           <Card.Text>
-                          {t("thoigianhanhtrinh")}: {tx.thoiGianHanhTrinh}
+                          {t("Thời gian hành trình")}: {tx.thoiGianHanhTrinh}
                           </Card.Text>
                           <Card.Text>
-                          {t("gia")}: {tx.giaVe}
+                          {t("Giá")}: {tx.giaVe}
                           </Card.Text>
                     </Card.Body>
                   </Card>
@@ -233,7 +233,7 @@ function Home(){
             })}
           </Carousel>
 
-        <h2 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacdiemden")}</h2>
+        <h2 style={{marginTop:"50px", marginLeft: "30px"}}>{t("Danh sách các điểm đến")}</h2>
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {benXe.map(bx =>{
             return(
@@ -250,7 +250,7 @@ function Home(){
           })}
         </Carousel>
 
-        <h2 style={{marginTop:"50px", marginLeft: "30px"}}>{t("danhsachcacnhaxe")}</h2>
+        <h2 style={{marginTop:"50px", marginLeft: "30px"}}>{t("Danh sách các nhà xe")}</h2>
         <Carousel responsive={responsive} infinite={true} autoPlaySpeed={1500} autoPlay={false}>
           {nhaXe.map(nx =>{
             return(
@@ -272,14 +272,14 @@ function Home(){
                       }
                       </span>
                       <Card.Text>
-                      {t('sdt')}: {nx.sdt}
+                      {t('SĐT')}: {nx.sdt}
                       </Card.Text>
                       <Row>
                         <Col xs={6} sm={12} md={6}>
-                          <Button style={{marginBottom:"8px", backgroundColor: "#0000CD", border: "none"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">{t("chitiet")}</Button>
+                          <Button style={{marginBottom:"8px", backgroundColor: "#0000CD", border: "none"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">{t("Chi tiết")}</Button>
                         </Col>
                         <Col xs={6} sm={12} md={6}>
-                          <Button style={{marginBottom:"8px", backgroundColor: "#20B2AA", border: "none"}} onClick={()=>{if(!account){window.alert(t("banphaidangnhapdedanhgia"))}else{danhGiaNhaXe(nx.id)}}} variant="primary">{t("danhgia")}</Button>
+                          <Button style={{marginBottom:"8px", backgroundColor: "#20B2AA", border: "none"}} onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đánh giá"))}else{danhGiaNhaXe(nx.id)}}} variant="primary">{t("Đánh giá")}</Button>
                         </Col>
                       </Row>
                   </Card.Body>

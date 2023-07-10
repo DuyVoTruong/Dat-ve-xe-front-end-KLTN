@@ -236,6 +236,7 @@
 
 .search-form-line-icon:hover{
 	background-color: #CCCCFF;
+	cursor: pointer;
 }
 
 .search-form-button{

@@ -6,6 +6,7 @@ import { httpLogin } from "../hooks/Request";
 import { FcGoogle } from "react-icons/fc";
 import backgroundLogin from "../../assets/img/background-login2.jpg";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 function Login() {
 
@@ -16,33 +17,41 @@ function Login() {
   const {t} = useTranslation();
 
   const nav = useNavigate();
+
+  const loginGoogle =()=>{
+    window.location.replace("https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:8081/api/login-google&response_type=code&client_id=632584279277-6ov8je5ek4p0p67ad1892832k4naihk3.apps.googleusercontent.com&approval_prompt=force");
+  }
+
   const login = async(e)=>{
     e.preventDefault();
     let accountLogin ={
       username,password
     }
+
     httpLogin(accountLogin).then(res=>res.json()).then(data=>{
-      if(data.jwtToken){
+      console.log(data);
+      if(data.object!=null){
         const userToken = {
-          jwtToken: data.jwtToken,
+          jwtToken: data.object.jwtToken,
           account: {
-            id: data.id,
-            username: data.username,
-            role: data.role
+            id: data.object.id,
+            username: data.object.username,
+            role: data.object.role,
+            email: data.object.email
           }
         }
         setToken(userToken);//lưu token
-        window.alert("Đăng nhập thành công!!!")
-        if(data.role==="USER"){
+        window.alert(t("Đăng nhập thành công!!!"))
+        if(data.object.role==="USER"){
           nav("/home")
-        }else if(data.role==="ADMIN"){
+        }else if(data.object.role==="ADMIN"){
           nav("/admin/home")
-        }else if(data.role==="NHAXE"){
+        }else if(data.object.role==="NHAXE"){
           nav("/nha-xe/home")
         }
       }
       else if(data.status==401){
-        window.alert("Username hoặc password không chính xác!!!")
+        window.alert(t("Username hoặc password không chính xác!!!"))
       }
       else{
         window.alert(data.message)
@@ -52,6 +61,7 @@ function Login() {
 
   return (
     <>
+      <ToastContainer/>
       <img src={backgroundLogin} style={{width: '100vw', height: '100vh', objectFit: "cover", filter: "brightness(60%)"}}></img>
       <div style={{position: "absolute", top: "0px", left: "0px", width: '100vw', height: '100vh'}}>
       <Container>
@@ -62,14 +72,14 @@ function Login() {
               <Card.Body>
                 <div className="mb-3 mt-md-4">
                   <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
-                  <p className=" mb-5">{t("vuilongnhapusernamevapasswordcuaban")}</p>
+                  <p className=" mb-5">{t("Vui lòng nhập username và password của bạn")}</p>
                   <div className="mb-3">
                     <Form onSubmit={login}>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-center">
                           Username
                         </Form.Label>
-                        <Form.Control onChange={(e)=>setUsername(e.target.value)} type="text" placeholder={t("nhapusername")}/>
+                        <Form.Control onChange={(e)=>setUsername(e.target.value)} type="text" placeholder={t("Nhập username")}/>
                       </Form.Group>
 
                       <Form.Group
@@ -77,7 +87,7 @@ function Login() {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder={t("nhappassword")} />
+                        <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" placeholder={t("Nhập password")} />
                       </Form.Group>
 
                       {/*<Form.Group
@@ -91,41 +101,43 @@ function Login() {
                         </Form.Select>
                       </Form.Group>*/}
 
-                      {/*
+                    
                       <Form.Group
+                        style={{marginTop: "20px"}}
                         className="mb-3"
                         controlId="formBasicCheckbox"
                       >
                         <p className="small">
-                          <a className="text-primary" href="#!">
+                          <a className="text-primary" href="#/request-forget-password">
                             Forgot password?
                           </a>
                         </p>
-                    </Form.Group>*/}
+                      </Form.Group>
+
                       <div className="d-grid">
                         <Button variant="primary" type="submit">
-                          {t("login")}
+                          {t("Đăng nhập")}
                         </Button>
                       </div>
                     </Form>
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                        {t("khongcotaikhoan")}{" "}
-                        <a href="/sign-up" className="text-primary fw-bold">
-                          <Link to="/sign-up">Sign Up</Link>
+                        {t("Không có tài khoản?")}{" "}
+                        <a className="text-primary fw-bold">
+                          <Link to="/sign-up">{t("Đăng ký")}</Link>
                         </a>
                       </p>
                       <p className="mb-2  text-center">
-                        {t("or")}
+                        {t("Hoặc")}
                       </p>
                       <p className="mb-0  text-center">
-                        <Button style={{backgroundColor: "white", borderColor: "red"}}><FcGoogle size={35}></FcGoogle><span style={{color:"black", marginLeft: "10px"}}>Login with google</span></Button>
+                        <Button onClick={loginGoogle} style={{backgroundColor: "white", borderColor: "red"}}><FcGoogle size={35}></FcGoogle><span style={{color:"black", marginLeft: "10px"}}>Login with google</span></Button>
                       </p>
                     </div>
                     <div className="mt-3">
                       <p className="mb-0  text-center">
                         <a lassName="text-primary fw-bold">
-                          <Link to="/">{t("dentrangchu")}</Link>
+                          <Link to="/">{t("Đến trang chủ")}</Link>
                         </a>
                       </p>
                     </div>

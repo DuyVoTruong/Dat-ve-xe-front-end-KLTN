@@ -21,7 +21,7 @@ function Footer(){
                     </div>
                     <div className="row">
                         <div className="col-md-4 mb-5">
-                            <h3 className="text-white mb-4">{t('lienlac')}</h3>
+                            <h3 className="text-white mb-4">{t('Liên lạc')}</h3>
                             <p><i className="fa fa-map-marker-alt mr-2"></i>Linh Chiểu, TP Thủ Đức, TP HCM</p>
                             <p><i className="fa fa-phone-alt mr-2"></i>0366441943</p>
                             <p><i className="fa fa-envelope mr-2"></i>voduy89123@gmail.com</p>

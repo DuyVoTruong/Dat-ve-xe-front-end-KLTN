@@ -14,6 +14,8 @@ import { useContext, useEffect, useState } from "react";
 import PieChart from "../../thongKe/PieChart";
 import { MyContext } from "../../../App";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
+import InfoMessage from "../../alert message/InfoMessage";
 
 ChartJS.register(
   CategoryScale,
@@ -72,16 +74,16 @@ const ThongKeNhaXe =()=>{
 
     const thongKeTheoLoaiXe =()=>{
       if(!Number(month)||!Number(year)){
-        window.alert(t("thangvanamphailaso"));
+        InfoMessage(t("Tháng và năm phải là số"));
       }else if(Number(month)>12||Number(month)<0){
-        window.alert(t("thangphainamtrongkhoangtu1den12"))
+        InfoMessage(t("Tháng phải nằm trong khoảng từ 1 đến 12"))
       }
       else{
         setDataBar({
           labels: loaiXe.map(lx=>lx.tenLoaiXe),
           datasets: [
             {
-              label: t("doanhthu"),
+              label: t("Doanh thu (đơn vị: đồng)"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -98,7 +100,7 @@ const ThongKeNhaXe =()=>{
           labels: loaiXe.map(lx=>lx.tenLoaiXe),
           datasets: [
             {
-              label: t("tyle"),
+              label: t("Tỷ lệ (đơn vị: %)"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -120,7 +122,7 @@ const ThongKeNhaXe =()=>{
             },
             title: {
               display: true,
-              text: t("doanhthutheoloaixe")
+              text: t("Doanh thu theo loại xe")
             }
           }
         });
@@ -134,7 +136,7 @@ const ThongKeNhaXe =()=>{
             },
             title: {
               display: true,
-              text: t("tylephantramdoanhthutheoloaixe")
+              text: t("Tỷ lệ phần trăm doanh thu theo loại xe")
             }
           }
         });
@@ -144,16 +146,16 @@ const ThongKeNhaXe =()=>{
 
     const thongKeTheoTuyenXe =()=>{
       if(!Number(month)||!Number(year)){
-        window.alert(t("thangvanamphailaso"));
+        InfoMessage(t("Tháng và năm phải là số"));
       }else if(Number(month)>12||Number(month)<0){
-        window.alert(t("thangphainamtrongkhoangtu1den12"))
+        InfoMessage(t("Tháng phải nằm trong khoảng từ 1 đến 12"))
       }
       else{
         setDataBar({
-          labels: tuyenXe.map(tx=>{return(tx.tinhThanhDi+" đến "+tx.tinhThanhDen)}),
+          labels: tuyenXe.map(tx=>{return(tx.tinhThanhDi+ " " + t("đến") + " " + tx.tinhThanhDen)}),
           datasets: [
             {
-              label: t("doanhthu"),
+              label: t("Doanh thu (đơn vị: đồng)"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -170,7 +172,7 @@ const ThongKeNhaXe =()=>{
           labels: tuyenXe.map(tx=>{return(tx.tinhThanhDi+" đến "+tx.tinhThanhDen)}),
           datasets: [
             {
-              label: t("tyle"),
+              label: t("Tỷ lệ (đơn vị: %)"),
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -192,7 +194,7 @@ const ThongKeNhaXe =()=>{
             },
             title: {
               display: true,
-              text: t("doanhthutheotuyenxe")
+              text: t("Doanh thu theo tuyến xe")
             }
           }
         });
@@ -206,7 +208,7 @@ const ThongKeNhaXe =()=>{
             },
             title: {
               display: true,
-              text: t("tylephantramdoanhthutheotuyenxe")
+              text: t("Tỷ lệ phần trăm doanh thu theo tuyến xe")
             }
           }
         });
@@ -216,17 +218,18 @@ const ThongKeNhaXe =()=>{
 
     return(
         <>
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h1>{t("thongke")}</h1></div>
+        <ToastContainer/>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h1>{t("Thống kê")}</h1></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display:"flex"}}>
           <Form.Label style={{margin:"15px"}}>{t("thang")}:</Form.Label>
-          <Form.Control onChange={e=>setMonth(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("nhapthangcanthongke")}></Form.Control>
+          <Form.Control onChange={e=>setMonth(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("Nhập tháng cần thống kê")}></Form.Control>
           <Form.Label style={{margin:"15px"}}>{t("nam")}:</Form.Label>
-          <Form.Control onChange={e=>setYear(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("nhapnamcanthongke")}></Form.Control>
+          <Form.Control onChange={e=>setYear(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("Nhập năm cần thống kê")}></Form.Control>
         </div>
         <div style={{display:"flex"}}>
-          <Button style={{margin: "10px"}} onClick={thongKeTheoLoaiXe}>{t("thongketheoloaixe")}</Button>
-          <Button style={{margin: "10px"}} onClick={thongKeTheoTuyenXe}>{t("thongketheotuyenxe")}</Button>
+          <Button style={{margin: "10px"}} onClick={thongKeTheoLoaiXe}>{t("Thống kê theo loại xe")}</Button>
+          <Button style={{margin: "10px"}} onClick={thongKeTheoTuyenXe}>{t("Thống kê theo tuyến xe")}</Button>
         </div>
           {
             (()=>{

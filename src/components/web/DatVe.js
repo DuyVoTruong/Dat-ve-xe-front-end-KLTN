@@ -5,9 +5,13 @@ import { MyContext } from "../../App";
 import { httpPostVeXe } from "../hooks/Request";
 import { getAllVeXeByTuyenXeId, getTuyenXeById } from "../hooks/useFunction";
 import { ToastContainer, toast } from 'react-toastify';
+import {ReactComponent as SeatIcon} from "../../assets/svg/seat-frame.svg"
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from "react-i18next";
 import "../../css/dat-ve.css"
+import ErrorMessage from "../alert message/ErrorMessage";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
 
 function DatVe(){
 
@@ -87,10 +91,10 @@ function DatVe(){
         ngayNhan=convertNgayNhan();
 
         if(!ngayDat||!ngayNhan||!hinhThucThanhToan||!tuyenXeId||soGhe.length==0){
-            toast.info(t("vuilongdiendayduthongtin"))
+            InfoMessage();
         }
         else if(userId===null){
-            toast.info(t("banphaidangnhapdedatve"))
+            InfoMessage(t("Bạn phải đăng nhập để đặt vé"))
         }
         else {
             let data = {
@@ -101,11 +105,11 @@ function DatVe(){
 
             httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    toast.success(t("bandadatvethanhcong"))
-                    setTimeout(()=>{nav("/lich-su-dat-ve")},3000);
+                    nav("/lich-su-dat-ve");
+                    setTimeout(()=>{SuccessMessage(t("Bạn đã đặt vé thành công"))}, 1000);
                 }
                 else{
-                    window.alert(data.message);
+                    ErrorMessage(data.message);
                 }
             });
 
@@ -138,12 +142,12 @@ function DatVe(){
                 <Card className="shadow">
                     <Card.Body>
                     <div className="mb-3 mt-md-4">
-                        <p className=" mb-5">{t("vuilongchonhinhthucthanhtoanvasoghebenduoi")}</p>
+                        <p className=" mb-5">{t("Vui lòng chọn hình thức thanh toán và số ghế bên dưới")}</p>
                         <div className="mb-3">
                         <Form>
                             <Form.Group className="mb-3" controlId="formUsername">
                             <Form.Label className="text-center">
-                                {t("tentaikhoan")}
+                                {t("Tên tài khoản")}
                             </Form.Label>
                             <Form.Control type="text" value={account.username} readOnly/>
                             </Form.Group>
@@ -169,7 +173,7 @@ function DatVe(){
                                             <>
                                             <Form.Group className="mb-3" controlId="formTuyenXe">
                                             <Form.Label className="text-center">
-                                                {t("tuyenxe")}
+                                                {t("Tuyến xe")}
                                             </Form.Label>
 
                                             <Form.Control type="text" value={tenBenXeDi+" => "+tenBenXeDen} readOnly/>
@@ -181,42 +185,42 @@ function DatVe(){
 
                             <Form.Group className="mb-3" controlId="formNhaXe">
                             <Form.Label className="text-center">
-                                {t("nhaxe")}
+                                {t("Nhà xe")}
                             </Form.Label>
                             <Form.Control type="text" value={tenNhaXe+" - SĐT: "+sdt} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGioDi">
                             <Form.Label className="text-center">
-                                {t("giokhoihanh")}
+                                {t("Giờ khởi hành")}
                             </Form.Label>
                             <Form.Control type="time" value={tuyenXeById.gioDi} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formNgayDi">
                             <Form.Label className="text-center">
-                                {t("ngaydi")} (yy-mm-dd)
+                                {t("Ngày đi")} (yy-mm-dd)
                             </Form.Label>
                             <Form.Control type="datetime" value={tuyenXeById.ngayDi} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formNgayDat">
                             <Form.Label className="text-center">
-                                {t("ngaydat")} (yy-mm-dd)
+                                {t("Ngày đặt")} (yy-mm-dd)
                             </Form.Label>
                             <Form.Control type="datetime" value={ngayDat} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formNgayNhan">
                             <Form.Label className="text-center">
-                                {t("ngaynhan")} (yy-mm-dd)
+                                {t("Ngày nhận")} (yy-mm-dd)
                             </Form.Label>
                             <Form.Control type="datetime" value={ngayNhan} readOnly/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formHinhThucThanhToan">
                             <Form.Label className="text-center">
-                                {t("hinhthucthanhtoan")}
+                                {t("Hình thức thanh toán")}
                             </Form.Label>
                             <Form.Select onChange={evt=>setHinhThucThanhToan(evt.target.value)}>
                                 <option key={"online"} defaultChecked value={"ONLINE"}>online</option>
@@ -226,12 +230,22 @@ function DatVe(){
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label className="text-center">
-                                {t("chonsoghe")}
+                                {t("Chọn số ghế")}
                             </Form.Label>
                             
                             </Form.Group>
 
-                            <label><input type="checkbox"></input><span class="label">Check me <img class="seat" src="https://i7.uihere.com/icons/572/337/91/seat-border-1bec7cb26b10f7ff80b54393d015d762.svg"></img></span></label>
+                            { new Array(sucChua).fill(0).map((_,index)=>{
+                                    return(
+                                        <label><input type="checkbox" value={index+1} name="Group1"></input>
+                                            <span className="label">
+                                                <span className="label-so-ghe">{index+1}</span>
+                                                <SeatIcon class="seat"></SeatIcon>
+                                            </span>
+                                        </label>
+                                    );
+                                })
+                            }
                             
                             {/*
                                 new Array(sucChua).fill(0).map((_,index)=>{
@@ -305,7 +319,7 @@ function DatVe(){
 
                             <div className="d-grid">
                             <Button variant="primary" type="button" onClick={DatVe}>
-                                {t("datve")}
+                                {t("Đặt vé")}
                             </Button>
                             </div>
                         </Form>

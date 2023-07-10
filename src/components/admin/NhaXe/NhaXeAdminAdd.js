@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useSignUp from "../../hooks/useSignUp";
 import {getTinhThanhPho} from "../../hooks/useFunction"
 import { useEffect } from "react";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function NhaXeAdminAdd(){
 
@@ -25,7 +26,7 @@ function NhaXeAdminAdd(){
         let moTaNgan = document.getElementById("formMoTaNgan").value;
         let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
         if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
-            window.alert("Vui lòng điền đầy đủ thông tin!!!")
+            InfoMessage();
         }
         else{
             let data = {

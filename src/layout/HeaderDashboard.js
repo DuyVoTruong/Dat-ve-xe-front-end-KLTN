@@ -58,7 +58,7 @@ function HeaderDashboard(){
                                             <i class="fas fa-sign-out-alt"></i>
                                         </a>
                                     </div>
-                                        <a style={{marginRight:"10px"}} onClick={logout} href="/Dat-ve-xe-front-end">{t("logout")}</a>
+                                        <a style={{marginRight:"10px"}} onClick={logout} href="/Dat-ve-xe-front-end">{t("Đăng xuất")}</a>
                                     </>
                                 )
                             }else{

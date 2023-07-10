@@ -110,9 +110,9 @@ const NhaXeDanhGia =()=>{
             <Card.Img style={{ width: "80%", height:"80%", maxHeight: "250px", maxWidth: "500px", marginLeft: "auto", marginRight:"auto", marginTop: "10px"}} variant="top" src={"https://nld.mediacdn.vn/k:2016/ben-xe-mt-1466755631165/thong-qua-dia-diem-xay-dung-ben-xe-mien-tay-moi.jpg"} />
             <Card.Body>
             <Card.Title>{nhaXe.tenNhaXe}</Card.Title>
-            <Card.Text>{t("sodienthoai")}: {nhaXe.sdt}</Card.Text>
-            <Card.Text>{t("motangan")}: {nhaXe.moTaNgan}</Card.Text>
-            <Card.Title>{t("danhgiacuaban")}</Card.Title>
+            <Card.Text>{t("Số điện thoại")}: {nhaXe.sdt}</Card.Text>
+            <Card.Text>{t("Mô tả ngắn")}: {nhaXe.moTaNgan}</Card.Text>
+            <Card.Title>{t("Đánh giá của bạn")}</Card.Title>
             <div class="rate">
                 <input type="radio" id="star5" name="rate" value="5" />
                 <label for="star5" title="text">5 stars</label>
@@ -127,11 +127,11 @@ const NhaXeDanhGia =()=>{
             </div>
             <div style={{marginTop: "60px"}}>
                 <Form.Group className="mb-3" controlId="comment">
-                    <Form.Label>{t("noidungdanhgia")}</Form.Label>
+                    <Form.Label>{t("Nội dung đánh giá")}</Form.Label>
                     <Form.Control as="textarea" rows={3} />
                 </Form.Group>
             </div>
-            <Button onClick={handleAddDanhGia}>{t("danhgia")}</Button>
+            <Button onClick={handleAddDanhGia}>{t("Đánh giá")}</Button>
             </Card.Body>
             </Card>
             </Col>

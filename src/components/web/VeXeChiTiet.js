@@ -4,10 +4,12 @@ import { useLocation, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { getTuyenXeById } from "../hooks/useFunction";
 import { MyContext } from "../../App";
+import { useTranslation } from "react-i18next";
 
 const VeXeChiTiet =()=>{
 
     const location = useLocation();
+    const {t} = useTranslation();
 
     useEffect(()=>{
         window.scrollTo(0,0);
@@ -26,18 +28,18 @@ const VeXeChiTiet =()=>{
                         {/*</svg>*/}
                         <div class="logo"><h3 style={{color: "white"}}>webtour</h3></div>
                         <div class="flight">
-                        <small>Tuyến xe</small>
+                        <small>{t("Tuyến xe")}</small>
                         <strong>{location.state.tuyenXe.id}</strong>
                         </div>
                     </header>
                     <section class="cities">
                         <div class="city">
-                        <small>Địa chỉ: {location.state.tuyenXe.benXeDi.diaChiChiTiet}</small>
+                        <small>{t("Địa chỉ")}: {location.state.tuyenXe.benXeDi.diaChiChiTiet}</small>
 
                         <strong>{location.state.tuyenXe.benXeDi.tenBenXe}</strong>
                         </div>
                         <div class="city">
-                        <small>Địa chỉ: {location.state.tuyenXe.benXeDen.diaChiChiTiet}</small>
+                        <small>{t("Địa chỉ")}: {location.state.tuyenXe.benXeDen.diaChiChiTiet}</small>
 
                         <strong>{location.state.tuyenXe.benXeDen.tenBenXe}</strong>
                         </div>
@@ -48,57 +50,57 @@ const VeXeChiTiet =()=>{
                     <section class="infos">
                         <div class="places">
                         <div class="box">
-                            <small>Bến xe đi:</small>
+                            <small>{t("Bến xe đi")}:</small>
                             <strong>{location.state.tuyenXe.benXeDi.tenBenXe}</strong>
                         </div>
                         <div class="box">
-                            <small>Ghế số:</small>
+                            <small>{t("Số ghế")}:</small>
                             <strong>{location.state.soGhe}</strong>
                         </div>
                         <div class="box">
-                            <small>Biển số xe:</small>
+                            <small>{t("Biển số xe")}:</small>
                             <strong>{location.state.tuyenXe.xe.bienSoXe}</strong>
                         </div>
                         <div class="box">
-                            <small>Loại xe:</small>
+                            <small>{t("Loại xe")}:</small>
                             <strong>{location.state.tuyenXe.xe.loaiXe.tenLoaiXe}</strong>
                         </div>
                         <div class="box">
-                            <small>Nhà xe:</small>
+                            <small>{t("Nhà xe")}:</small>
                             <strong>{location.state.tuyenXe.xe.nhaXe.tenNhaXe}</strong>
                         </div>
                         </div>
                         <div class="times">
                         <div class="box">
-                            <small>Ngày đi:</small>
+                            <small>{t("Ngày đi")}:</small>
                             <strong>{location.state.tuyenXe.ngayDi}</strong>
                         </div>
                         <div class="box">
-                            <small>Giờ khởi hành:</small>
+                            <small>{t("Giờ khởi hành")}:</small>
                             <strong>{location.state.tuyenXe.gioDi}</strong>
                         </div>
                         <div class="box">
-                            <small>Thời gian hành trình:</small>
+                            <small>{t("Thời gian hành trình")}:</small>
                             <strong>{location.state.tuyenXe.thoiGianHanhTrinh}</strong>
                         </div>
                         <div class="box">
-                            <small>Ngày đặt:</small>
+                            <small>{t("Ngày đặt")}:</small>
                             <strong>{location.state.ngayDat}</strong>
                         </div>
                         <div class="box">
-                            <small>Ngày nhận:</small>
+                            <small>{t("Ngày nhận")}:</small>
                             <strong>{location.state.ngayNhan}</strong>
                         </div>
                         <div class="box">
-                            <small>Giá vé:</small>
+                            <small>{t("Giá vé")}:</small>
                             <strong>{location.state.tuyenXe.giaVe}</strong>
                         </div>
                         <div class="box">
-                            <small>Hình thức thanh toán:</small>
+                            <small>{t("Hình thức thanh toán")}:</small>
                             <strong>{location.state.hinhThucThanhToan}</strong>
                         </div>
                         <div class="box">
-                            <small>Trạng thái:</small>
+                            <small>{t("Trạng thái")}:</small>
                             <strong>{location.state.trangThai}</strong>
                         </div>
                         </div>
@@ -106,11 +108,11 @@ const VeXeChiTiet =()=>{
                     <section class="strap">
                         <div class="box">
                         <div class="passenger">
-                            <small>Tên người đặt:</small>
+                            <small>{t("Tên người đặt")}:</small>
                             <strong>{location.state.user.hoTen}</strong>
                         </div>
                         <div class="date">
-                            <small>Địa chỉ:</small>
+                            <small>{t("Địa chỉ")}:</small>
                             <strong style={{fontSize: "20px"}}>{location.state.user.diaChi}</strong>
                         </div>
                         </div>

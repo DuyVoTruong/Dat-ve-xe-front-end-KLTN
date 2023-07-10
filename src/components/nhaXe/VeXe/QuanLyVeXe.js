@@ -11,6 +11,9 @@ import useVeXe from "../../hooks/useVeXe";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
+import SuccessMessage from "../../alert message/SuccessMessage";
+import ErrorMessage from "../../alert message/ErrorMessage";
 
 const QuanLyVeXe =()=>{
     const account = useContext(MyContext).account;
@@ -25,7 +28,7 @@ const QuanLyVeXe =()=>{
 
 
     const updateVeXe =(id,data)=>{
-        fetch(`http://localhost:8080/api/vexe/${id}`, {
+        fetch(`http://localhost:8081/api/vexe/${id}`, {
             method: "PUT",
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -65,7 +68,7 @@ const QuanLyVeXe =()=>{
         }
 
         if(!soGhe||!ngayNhan||!hinhThucThanhToan||!trangThai){
-            window.alert("Đã xảy ra lỗi!!! Vui lòng xác nhận lại!!!")
+            ErrorMessage(t("Đã xảy ra lỗi!!! Vui lòng xác nhận lại!!!"))
         } else{
             let data = {
                 soGhe,ngayNhan,hinhThucThanhToan,trangThai
@@ -86,7 +89,7 @@ const QuanLyVeXe =()=>{
         }
 
         if(!soGhe||!ngayNhan||!hinhThucThanhToan||!trangThai){
-            window.alert("Đã xảy ra lỗi!!! Vui lòng xác nhận lại!!!")
+            ErrorMessage(t("Đã xảy ra lỗi!!! Vui lòng xác nhận lại!!!"));
         } else{
             let data = {
                 soGhe,ngayNhan,hinhThucThanhToan,trangThai
@@ -97,8 +100,8 @@ const QuanLyVeXe =()=>{
     }
 
     const deleteVeXe =(id)=>{
-        if(window.confirm("Bạn muốn hủy vé xe này?")===true){
-            fetch("http://localhost:8080/api/vexe/"+id,{
+        if(window.confirm(t("Bạn muốn hủy vé xe này?"))===true){
+            fetch("http://localhost:8081/api/vexe/"+id,{
             method: "DELETE",
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -106,10 +109,10 @@ const QuanLyVeXe =()=>{
             },
             }).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    window.alert("Hủy vé xe thành công!!!");
+                    SuccessMessage(t("Hủy vé xe thành công!!!"));
                     setLoad(true);
                 }else{
-                    window.alert("Đã xảy ra lỗi!!!");
+                    window.alert(t("Đã xảy ra lỗi!!!"));
                 }
             })
         }
@@ -117,44 +120,44 @@ const QuanLyVeXe =()=>{
 
     const columns = [
         {
-            name: <div>{t("nguoidat")}</div>,
+            name: <div>{t("Người đặt")}</div>,
             selector: row => row.user.hoTen,
             sortable: true,
             wrap: true,
             width: "15%",
         },
         {
-            name: <div>{t("sodienthoai")}</div>,
+            name: <div>{t("Số điện thoại")}</div>,
             selector: row => row.user.sdt,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("ngaydat")}</div>,
+            name: <div>{t("Ngày đặt")}</div>,
             selector: row => row.ngayDat,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("ngaynhan")}</div>,
+            name: <div>{t("Ngày nhận")}</div>,
             selector: row => row.ngayNhan,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("soghe")}</div>,
+            name: <div>{t("Số ghế")}</div>,
             selector: row => row.soGhe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("loaighe")}</div>,
+            name: <div>{t("Loại ghế")}</div>,
             selector: row => row.tuyenXe.xe.loaiXe.tenLoaiXe,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("trangthai")}</div>,
+            name: <div>{t("Trạng thái")}</div>,
             selector: row => row.trangThai,
             sortable: true,
             wrap: true,
@@ -167,8 +170,8 @@ const QuanLyVeXe =()=>{
                         return(
                             <>
                             <div>
-                                <Button onClick={()=>xacNhan(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("xacnhan")}</Button>
-                                <Button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("huy")}</Button>
+                                <Button onClick={()=>xacNhan(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("Xác nhận")}</Button>
+                                <Button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("Hủy")}</Button>
                             </div>
                             </>
                         )
@@ -177,8 +180,8 @@ const QuanLyVeXe =()=>{
                         return(
                             <>
                             <div>
-                                <Button onClick={()=>xacNhanHoanThanh(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("xacnhanhoanthanh")}</Button>
-                                <Button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("huy")}</Button>
+                                <Button onClick={()=>xacNhanHoanThanh(row)} style={{margin: "10px", backgroundColor:"#33FF99", color:"black"}}>{t("Hoàn thành")}</Button>
+                                <Button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", backgroundColor:"#FF6600", color:"black"}}>{t("Hủy")}</Button>
                             </div>
                             </>
                         )
@@ -245,6 +248,7 @@ const QuanLyVeXe =()=>{
 
     return(
         <>
+        <ToastContainer/>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
         <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheotennguoidat")}></input>
@@ -258,14 +262,14 @@ const QuanLyVeXe =()=>{
                     if(tuyenXe.benXeDi&&tuyenXe.benXeDen&&tuyenXe.xe)
                     return(
                         <>
-                        <div>{t("quanlyvexecuatuyenxe")}:</div>
-                        <div><b>{t("benxedi")}:</b> {tuyenXe.benXeDi.tenBenXe} - <b>{t("benxeden")}:</b> {tuyenXe.benXeDen.tenBenXe} - <b>{t("biensoxe")}:</b> {tuyenXe.xe.bienSoXe} - <b>{t("ngaydi")}:</b> {tuyenXe.ngayDi} - <b>{t("giokhoihanh")}:</b> {tuyenXe.gioDi}</div>
+                        <div>{t("Quản lý vé xe của tuyến xe")}:</div>
+                        <div><b>{t("Bến xe đi")}:</b> {tuyenXe.benXeDi.tenBenXe} - <b>{t("Bến xe đến")}:</b> {tuyenXe.benXeDen.tenBenXe} - <b>{t("Biển số xe")}:</b> {tuyenXe.xe.bienSoXe} - <b>{t("Ngày đi")}:</b> {tuyenXe.ngayDi} - <b>{t("Giờ khởi hành")}:</b> {tuyenXe.gioDi}</div>
                         </>
                     )
                 }
             })()
         }
-        <h1 style={{textAlign: "center"}}>{t("danhsachcacvexe")}</h1>
+        <h1 style={{textAlign: "center"}}>{t("Danh sách các vé xe")}</h1>
         <DataTable
             columns={columns}
             data={veXe.filter(item=>convert_vi_to_en(item.user.hoTen.toLowerCase()).indexOf(convert_vi_to_en(search.toLowerCase()))>=0)}

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api'
+const API_URL = 'http://localhost:8081/api'
 
 //BenXe
 async function httpGetBenXeAdmin(token){
@@ -790,6 +790,26 @@ function httpLogin(data){
     });
 }
 
+function httpRequestForgetPassword(data){
+    return fetch(`${API_URL}/request-forget-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+function httpForgetPassword(data){
+    return fetch(`${API_URL}/forget-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+}
+
 export {
     //BenXe
     httpGetBenXeAdmin,
@@ -893,4 +913,8 @@ export {
 
     //Login
     httpLogin,
+
+    //Forget Password
+    httpRequestForgetPassword,
+    httpForgetPassword,
 }

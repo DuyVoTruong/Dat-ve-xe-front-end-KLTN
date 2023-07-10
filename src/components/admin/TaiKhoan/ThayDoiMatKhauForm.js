@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { getTinhThanhPho } from "../../hooks/useFunction";
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
 
@@ -13,7 +14,7 @@ function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
         let confirmPassword = document.getElementById("formConfirmPassword").value;
         if(password===confirmPassword){
             if(!password){
-                window.alert("Vui lòng điền đầy đủ thông tin!!!")
+                InfoMessage();
             }
             else{
                 let data = {
@@ -27,7 +28,7 @@ function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
                 }
             }
         } else{
-            window.alert("Password và Confirm password không trùng nhau!!!")
+            InfoMessage(t("Password và Confirm password không trùng nhau!!!"));
         }
     }
   
@@ -37,7 +38,7 @@ function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
       <>
         <Modal show={showForm} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>{t("thaydoipassword")}</Modal.Title>
+            <Modal.Title>{t("Thay đổi password")}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
                 <Form onSubmit={HandleUpdate}>
@@ -45,23 +46,23 @@ function ThayDoiMatKhau({showForm, setShowForm, update, role, tk}){
                         <Form.Label className="text-center">
                         Password
                         </Form.Label>
-                        <Form.Control type="password" placeholder={t("nhappassword")} />
+                        <Form.Control type="password" placeholder={t("Nhập password")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formConfirmPassword">
                         <Form.Label className="text-center">
                         Confirm password
                         </Form.Label>
-                        <Form.Control type="password" placeholder={t("nhapconfirmpassword")} />
+                        <Form.Control type="password" placeholder={t("Nhập confirm password")} />
                     </Form.Group>
                 </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              {t("dong")}
+              {t("Đóng")}
             </Button>
             <Button variant="primary" type="button" onClick={HandleUpdate}>
-              {t("capnhat")}
+              {t("Cập nhật")}
             </Button>
           </Modal.Footer>
         </Modal>

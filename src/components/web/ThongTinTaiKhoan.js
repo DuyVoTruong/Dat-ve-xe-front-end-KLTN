@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpGetAdminById, httpGetNhaXeById, httpGetNhaXeUserById, httpGetUserById, httpPutAdmin, httpPutNhaXe, httpPutTaiKhoan, httpPutUser } from "../hooks/Request";
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
 
 function UpdateInForForm({thongTinTaiKhoan, setLoad}){
   const token = useContext(MyContext).token;
@@ -23,7 +26,7 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
         let trangThaiHoatDong = thongTinTaiKhoan.taiKhoan.trangThaiHoatDong;
         let role = "USER";
         if(!hoTen||!cmnd||!sdt||!diaChi||!email||!trangThaiHoatDong||!role){
-            window.alert(t("vuilongdiendayduthongtin"))
+            InfoMessage();
         }else{
 
             let data = {
@@ -33,12 +36,12 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
             try{
                 httpPutUser(thongTinTaiKhoan.id,data,token).then(res=>res.json()).then(data=>{
                     if(data.status==200){
-                        window.alert(t("capnhatthanhcong"));
+                        SuccessMessage(t("Cập nhật thành công"));
                         setLoad(true);
                     }
                     else{
                         if(data.status==403){
-                            window.alert(t("vuilongdangnhaplai"));
+                            InfoMessage(t("Vui lòng đăng nhập lại"));
                         }
                     }
                 })
@@ -54,7 +57,7 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
         let trangThaiHoatDong = thongTinTaiKhoan.taiKhoan.trangThaiHoatDong;
         let role = "NHAXE";
         if(!tenNhaXe||!sdt||!diaChi||!moTaNgan||!trangThaiHoatDong||!role){
-            window.alert(t("vuilongdiendayduthongtin"))
+            InfoMessage();
         }else{
 
             let data = {
@@ -64,17 +67,17 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
             try{
                 httpPutNhaXe(thongTinTaiKhoan.id,data,token).then(res=>res.json()).then(data=>{
                     if(data.status==200){
-                        window.alert(t("capnhatthanhcong"));
+                        SuccessMessage(t("Cập nhật thành cong"));
                         setLoad(true);
                     }
                     else{
                         if(data.status==403){
-                            window.alert(t("vuilongdangnhaplai"));
+                            InfoMessage(t("Vui lòng đăng nhập lại"));
                         }
                     }
                 })
             }catch(err){
-                window.alert(err.status);
+                ErrorMessage(err.status);
             }
         }
     }else if(account.role==="ADMIN"){
@@ -85,7 +88,7 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
         let trangThaiHoatDong = thongTinTaiKhoan.taiKhoan.trangThaiHoatDong;
         let role = "ADMIN";
         if(!name||!sdt||!email||!cmnd||!trangThaiHoatDong||!role){
-            window.alert(t("vuilongdiendayduthongtin"))
+            InfoMessage();
         }else{
 
             let data = {
@@ -95,18 +98,18 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
             try{
                 httpPutAdmin(thongTinTaiKhoan.id,data,token).then(res=>res.json()).then(data=>{
                     if(data.status==200){
-                        window.alert(t("capnhatthanhcong"));
+                        SuccessMessage(t("Cập nhật thành công"));
                         setLoad(true);
                     }
                     else{
                         if(data.status==403){
-                            window.alert(t("vuilongdangnhaplai"));
+                            InfoMessage(t("Vui lòng đăng nhập lại"));
                         }
                     }
                     console.log(data)
                 })
             }catch(err){
-                window.alert(err.status);
+                ErrorMessage(err.status);
             }
         }
     }
@@ -116,57 +119,57 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
     return (
         <>
         <Button className="m-3" variant="primary" onClick={handleShow}>
-            {t("capnhatthongtintaikhoan")}
+            {t("Cập nhật thông tin tài khoản")}
         </Button>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>{t("capnhatthongtintaikhoan")}</Modal.Title>
+            <Modal.Title>{t("Cập nhật thông tin tài khoản")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="HoTenForm">
                     <Form.Label className="text-center">
-                    {t("hoten")}
+                    {t("Họ tên")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhaphoten")} defaultValue={thongTinTaiKhoan.hoTen}/>
+                    <Form.Control type="text" placeholder={t("Nhập họ tên của người dùng")} defaultValue={thongTinTaiKhoan.hoTen}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="CMNDForm">
                     <Form.Label className="text-center">
-                    {t("cmnd")}
+                    {t("CMND")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapcmnd")} defaultValue={thongTinTaiKhoan.cmnd}/>
+                    <Form.Control type="text" placeholder={t("Nhập CMND")} defaultValue={thongTinTaiKhoan.cmnd}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="SDTForm">
                     <Form.Label className="text-center">
-                    {t("sodienthoai")}
+                    {t("Số điện thoại")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapsodienthoai")} defaultValue={thongTinTaiKhoan.sdt}/>
+                    <Form.Control type="text" placeholder={t("Nhập số điện thoại")} defaultValue={thongTinTaiKhoan.sdt}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="DiaChiForm">
                     <Form.Label className="text-center">
-                    {t("diachi")}
+                    {t("Địa chỉ")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder="Nhập địa chỉ" defaultValue={thongTinTaiKhoan.diaChi}/>
+                    <Form.Control type="text" placeholder={t("Nhập địa chỉ")} defaultValue={thongTinTaiKhoan.diaChi}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="EmailForm">
                     <Form.Label className="text-center">
                     Email
                     </Form.Label>
-                    <Form.Control type="email" placeholder={t("nhapemail")} defaultValue={thongTinTaiKhoan.email}/>
+                    <Form.Control type="email" placeholder={t("Nhập Email")} defaultValue={thongTinTaiKhoan.email}/>
                 </Form.Group>
             </Form>
             </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
             </Button>
             <Button variant="primary" onClick={update}>
-                {t("capnhat")}
+                {t("Cập nhật")}
             </Button>
             </Modal.Footer>
         </Modal>
@@ -176,50 +179,50 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
     return (
         <>
         <Button className="m-3" variant="primary" onClick={handleShow}>
-            {t("capnhatthongtintaikhoan")}
+            {t("Cập nhật thông tin tài khoản")}
         </Button>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>{t("capnhatthongtintaikhoan")}</Modal.Title>
+            <Modal.Title>{t("Cập nhật thông tin tài khoản")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="TenNhaXeForm">
                     <Form.Label className="text-center">
-                    {t("tennhaxe")}
+                    {t("Tên nhà xe")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhaptennhaxe")} defaultValue={thongTinTaiKhoan.tenNhaXe}/>
+                    <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} defaultValue={thongTinTaiKhoan.tenNhaXe}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="SDTForm">
                     <Form.Label className="text-center">
-                    {t("sodienthoai")}
+                    {t("Số điện thoại")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapsodienthoai")} defaultValue={thongTinTaiKhoan.sdt}/>
+                    <Form.Control type="text" placeholder={t("Nhập số điện thoại của nhà xe")} defaultValue={thongTinTaiKhoan.sdt}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="DiaChiForm">
                     <Form.Label className="text-center">
-                    {t("diachi")}
+                    {t("Địa chỉ")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapdiachi")} defaultValue={thongTinTaiKhoan.diaChi}/>
+                    <Form.Control type="text" placeholder={t("Nhập địa chỉ")} defaultValue={thongTinTaiKhoan.diaChi}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="MoTaNganForm">
                     <Form.Label className="text-center">
-                    {t("motangan")}
+                    {t("Mô tả ngắn")}
                     </Form.Label>
-                    <Form.Control type="email" placeholder={t("nhapmotangan")} defaultValue={thongTinTaiKhoan.moTaNgan}/>
+                    <Form.Control type="email" placeholder={t("Nhập mô tả ngắn")} defaultValue={thongTinTaiKhoan.moTaNgan}/>
                 </Form.Group>
             </Form>
             </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
             </Button>
             <Button variant="primary" onClick={update}>
-                {t("capnhat")}
+                {t("Cập nhật")}
             </Button>
             </Modal.Footer>
         </Modal>
@@ -229,50 +232,50 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
     return (
         <>
         <Button className="m-3" variant="primary" onClick={handleShow}>
-            {t("capnhatthongtintaikhoan")}
+            {t("Cập nhật thông tin tài khoản")}
         </Button>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>{t("capnhatthongtintaikhoan")}</Modal.Title>
+            <Modal.Title>{t("Cập nhật thông tin tài khoản")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="HoTenForm">
                     <Form.Label className="text-center">
-                    {t("hoten")}
+                    {t("Họ tên")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhaphoten")} defaultValue={thongTinTaiKhoan.name}/>
+                    <Form.Control type="text" placeholder={t("Nhập họ tên của quản trị viên")} defaultValue={thongTinTaiKhoan.name}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="SDTForm">
                     <Form.Label className="text-center">
-                    {t("sodienthoai")}
+                    {t("Số điện thoại")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapsodienthoai")} defaultValue={thongTinTaiKhoan.sdt}/>
+                    <Form.Control type="text" placeholder={t("Nhập số điện thoại của quản trị viên")} defaultValue={thongTinTaiKhoan.sdt}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="EmailForm">
                     <Form.Label className="text-center">
                     Email
                     </Form.Label>
-                    <Form.Control type="email" placeholder={t("nhapemail")} defaultValue={thongTinTaiKhoan.email}/>
+                    <Form.Control type="email" placeholder={t("Nhập Email")} defaultValue={thongTinTaiKhoan.email}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="CMNDForm">
                     <Form.Label className="text-center">
-                    {t("cmnd")}
+                    {t("CMND")}
                     </Form.Label>
-                    <Form.Control type="text" placeholder={t("nhapcmnd")} defaultValue={thongTinTaiKhoan.cmnd}/>
+                    <Form.Control type="text" placeholder={t("Nhập CMND")} defaultValue={thongTinTaiKhoan.cmnd}/>
                 </Form.Group>
             </Form>
             </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
             </Button>
             <Button variant="primary" onClick={update}>
-                {t("capnhat")}
+                {t("Cập nhật")}
             </Button>
             </Modal.Footer>
         </Modal>
@@ -297,22 +300,22 @@ function UpdateUserNamePassWordForm({thongTinTaiKhoan, setLoad}){
         let password = document.getElementById("passwordForm").value;
         let confirmPassword = document.getElementById("confirmPasswordForm").value;
         if(!password||!confirmPassword){
-            window.alert(t("vuilongdiendayduthongtin"))
+            InfoMessage();
         }
         else if(password!==confirmPassword){
-            window.alert(t("passwordkhongtrungnhau"))
+            InfoMessage(t("Mật khẩu mới và mật khẩu xác nhận không trùng nhau"))
         }
         else {
             try{
                 console.log("abc")
                 httpPutTaiKhoan(thongTinTaiKhoan.taiKhoan.id, {password}, token).then(res=>res.json()).then(data=>{
                     if(data.status==200){
-                        window.alert(t("thaydoipasswordthanhcong"));
+                        SuccessMessage(t("Thay đổi password thành công"));
                         localStorage.clear();
                         setAccount();
                         nav("/home");
                     }else if(data.status==403){
-                        window.alert(t("vuilongdangnhaplai"));
+                        InfoMessage(t("Vui lòng đăng nhập lại"));
                     }else{
                         window.alert(data.message)
                     }
@@ -327,12 +330,12 @@ function UpdateUserNamePassWordForm({thongTinTaiKhoan, setLoad}){
         return (
             <>
             <Button className="m-3" variant="primary" onClick={handleShow}>
-                {t("thaydoipassword")}
+                {t("Thay đổi password")}
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>{t("thaydoipassword")}</Modal.Title>
+                <Modal.Title>{t("Thay đổi password")}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form>
@@ -340,24 +343,24 @@ function UpdateUserNamePassWordForm({thongTinTaiKhoan, setLoad}){
                         <Form.Label className="text-center">
                         Password
                         </Form.Label>
-                        <Form.Control type="password" placeholder={t("nhappassword")}/>
+                        <Form.Control type="password" placeholder={t("Nhập password")}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="confirmPasswordForm">
                         <Form.Label className="text-center">
                         Confirm Password
                         </Form.Label>
-                        <Form.Control type="password" placeholder={t("nhapconfirmpassword")}/>
+                        <Form.Control type="password" placeholder={t("Nhập confirm password")}/>
                     </Form.Group>
 
                 </Form>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    {t("dong")}
+                    {t("Đóng")}
                 </Button>
                 <Button variant="primary" onClick={update}>
-                    {t("capnhat")}
+                    {t("Cập nhật")}
                 </Button>
                 </Modal.Footer>
             </Modal>
@@ -405,7 +408,7 @@ const ThongTinTaiKhoan =()=> {
             return (
                 <>
                 <div style={{margin: "20px"}}>
-                    <h3 style={{textAlign: "center"}}>{t("thongtintaikhoan")}</h3>
+                    <h3 style={{textAlign: "center"}}>{t("Thông tin tài khoản")}</h3>
                     <Row className="d-flex justify-content-center align-items-center">
                         <Col md="10" sm="10" >
                             <Card className="shadow">
@@ -423,19 +426,19 @@ const ThongTinTaiKhoan =()=> {
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("hoten")} className="m-3">
+                                <FloatingLabel label={t("Họ tên")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.hoTen}/>
                                 </FloatingLabel>
                                 </Col>
                                 <Col md="6">
-                                <FloatingLabel label={t("cmnd")} className="m-3">
+                                <FloatingLabel label={t("CMND")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.cmnd}/>
                                 </FloatingLabel>
                                 </Col>
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("sodienthoai")} className="m-3">
+                                <FloatingLabel label={t("Số điện thoại")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.sdt}/>
                                 </FloatingLabel>
                                 </Col>
@@ -447,13 +450,13 @@ const ThongTinTaiKhoan =()=> {
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("diachi")} className="m-3">
+                                <FloatingLabel label={t("Địa chỉ")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.diaChi}/>
                                 </FloatingLabel>
                                 </Col>
                                 <Col md="6">
                                 <Form.Group className="m-3">
-                                    <Form.Text className="mb-3">{t("trangthai")}</Form.Text>
+                                    <Form.Text className="mb-3">{t("Trạng thái")}</Form.Text>
                                     {
                                         (()=>{
                                             if(thongTinTaiKhoan.taiKhoan.trangThaiHoatDong === "ACTIVE"){
@@ -532,7 +535,7 @@ const ThongTinTaiKhoan =()=> {
             return (
                 <>
                 <div style={{margin: "20px"}}>
-                    <h3 style={{textAlign: "center"}}>{t("thongtintaikhoan")}</h3>
+                    <h3 style={{textAlign: "center"}}>{t("Thông tin tài khoản")}</h3>
                     <Row className="d-flex justify-content-center align-items-center">
                         <Col md="10" sm="10" >
                             <Card className="shadow">
@@ -550,24 +553,24 @@ const ThongTinTaiKhoan =()=> {
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("sodienthoai")} className="m-3">
+                                <FloatingLabel label={t("Số điện thoại")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.sdt}/>
                                 </FloatingLabel>
                                 </Col>
                                 <Col md="6">
-                                <FloatingLabel label={t("motangan")} className="m-3">
+                                <FloatingLabel label={t("Mô tả ngắn")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.moTaNgan}/>
                                 </FloatingLabel>
                                 </Col>
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("diachi")} className="m-3">
+                                <FloatingLabel label={t("Địa chỉ")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.diaChi}/>
                                 </FloatingLabel>
                                 </Col>
                                 <Col md="6">
-                                <FloatingLabel label={t("tennhaxe")} className="m-3">
+                                <FloatingLabel label={t("Tên nhà xe")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.tenNhaXe}/>
                                 </FloatingLabel>
                                 </Col>
@@ -575,7 +578,7 @@ const ThongTinTaiKhoan =()=> {
                             <Row>
                                 <Col md="6">
                                 <Form.Group className="m-3">
-                                    <Form.Text className="mb-3">{t("trangthai")}</Form.Text>
+                                    <Form.Text className="mb-3">{t("Trạng thái")}</Form.Text>
                                     {
                                         (()=>{
                                             if(thongTinTaiKhoan.taiKhoan.trangThaiHoatDong === "ACTIVE"){
@@ -654,7 +657,7 @@ const ThongTinTaiKhoan =()=> {
             return (
                 <>
                 <div style={{margin: "20px"}}>
-                    <h3 style={{textAlign: "center"}}>{t("thongtintaikhoan")}</h3>
+                    <h3 style={{textAlign: "center"}}>{t("Thông tin tài khoản")}</h3>
                     <Row className="d-flex justify-content-center align-items-center">
                         <Col md="10" sm="10" >
                             <Card className="shadow">
@@ -672,7 +675,7 @@ const ThongTinTaiKhoan =()=> {
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("sodienthoai")} className="m-3">
+                                <FloatingLabel label={t("Số điện thoại")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.sdt}/>
                                 </FloatingLabel>
                                 </Col>
@@ -684,12 +687,12 @@ const ThongTinTaiKhoan =()=> {
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
-                                <FloatingLabel label={t("hoten")} className="m-3">
+                                <FloatingLabel label={t("Họ tên")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.name}/>
                                 </FloatingLabel>
                                 </Col>
                                 <Col md="6">
-                                <FloatingLabel label={t("cmnd")} className="m-3">
+                                <FloatingLabel label={t("CMND")} className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.cmnd}/>
                                 </FloatingLabel>
                                 </Col>
@@ -697,7 +700,7 @@ const ThongTinTaiKhoan =()=> {
                             <Row>
                                 <Col md="6">
                                 <Form.Group className="m-3">
-                                    <Form.Text className="mb-3">{t("trangthai")}</Form.Text>
+                                    <Form.Text className="mb-3">{t("Trạng thái")}</Form.Text>
                                     {
                                         (()=>{
                                             if(thongTinTaiKhoan.taiKhoan.trangThaiHoatDong === "ACTIVE"){

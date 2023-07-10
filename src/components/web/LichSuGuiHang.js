@@ -30,7 +30,7 @@ const LichSuGuiHang=()=>{
 
     const huyDon =(id)=>{
         if(window.confirm(t("banmuonxoadongiaohangnay"))==true){
-            fetch(`http://localhost:8080/api/hanghoa/${id}`,{
+            fetch(`http://localhost:8081/api/hanghoa/${id}`,{
                 method: "DELETE",
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -49,25 +49,25 @@ const LichSuGuiHang=()=>{
 
     const columns = [
         {
-            name: <div>{t("cannang")}</div>,
+            name: <div>{t("Cân nặng")}</div>,
             selector: row => row.canNang,
             wrap: true,
             maxWidth: "20px"
         },
         {
-            name: <div>{t("gia")}</div>,
+            name: <div>{t("Giá")}</div>,
             selector: row => row.gia,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("tennguoinhan")}</div>,
+            name: <div>{t("Tên người nhận")}</div>,
             selector: row => row.tenNguoNhan,
             sortable: true,
             wrap: true,
         },
         {
-            name: <div>{t("sodienthoainguoinhan")}</div>,
+            name: <div>{t("Số điện thoại của người nhận")}</div>,
             selector: row => row.sdtNguoiNhan,
             wrap: true,
         },
@@ -77,17 +77,17 @@ const LichSuGuiHang=()=>{
             wrap: true,
         },
         {
-            name: <div>{t("ngaydat")}</div>,
+            name: <div>{t("Ngày đặt")}</div>,
             selector: row => row.ngayDat,
             wrap: true,
         },
         {
-            name: <div>{t("trangthai")}</div>,
+            name: <div>{t("Trạng thái")}</div>,
             selector: row => row.trangThai,
             wrap: true,
         },
         {
-            name: <div>{t("huydon")}</div>,
+            name: <div>{t("Hủy đơn")}</div>,
             selector: (row, index)=>{
                 return(
                     <>
@@ -97,7 +97,7 @@ const LichSuGuiHang=()=>{
                             if(row.trangThai==="INACTIVE"){
                                 return(
                                     <>
-                                        <button onClick={()=>huyDon(row.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("huy")}</span></button>
+                                        <button onClick={()=>huyDon(row.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("Hủy")}</span></button>
                                     </>
                                 );
                             }

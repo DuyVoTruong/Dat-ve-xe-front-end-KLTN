@@ -4,6 +4,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import useToken from './components/hooks/useToken';
 import React, { Suspense, createContext } from 'react';
 import GoiGiaHan from './components/nhaXe/GoiGiaHan/GoiGiaHan';
+import Loading from './components/web/Loading';
+import UploadFile from './components/UploadFile';
+import RequestForgetPassword from './components/web/RequestForgetPassword';
+import ForgetPassword from './components/web/ForgetPassword';
 const LayoutAdmin = React.lazy(() => import ('./layout/LayoutAdmin'));
 const AdminHome = React.lazy(() => import ('./components/admin/AdminHome'));
 const NhaXeAdmin = React.lazy(() => import ('./components/admin/NhaXe/NhaXeAdmin'));
@@ -56,9 +60,12 @@ function App() {
       return(
         <MyContext.Provider value={{token, setToken, account, setAccount}}>
         {/*<BrowserRouter>*/}
-        <Suspense fallback={<h1>Loading ...</h1>}>
+        <Suspense fallback={<Loading></Loading>}>
         <Routes>
           <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
+            <Route path='forget-password' element={<ForgetPassword></ForgetPassword>}></Route>
+            <Route path='request-forget-password' element={<RequestForgetPassword></RequestForgetPassword>}></Route>
+            <Route path='upload' element={<UploadFile></UploadFile>}></Route>
             <Route path='' element={<Home></Home>}></Route>
             {/*<Route path='login' element={<Login></Login>}></Route>*/}
             <Route path='sign-up' element={<Signup></Signup>}></Route>
@@ -81,7 +88,7 @@ function App() {
       return(
         <MyContext.Provider value={{token, setToken, account, setAccount}}>
         {/*<BrowserRouter>*/}
-          <Suspense fallback={<h1>Loading ...</h1>}>
+          <Suspense fallback={<Loading></Loading>}>
           <Routes>
             <Route path='/*' element={<Navigate to="/admin/home" replace />}></Route>
             <Route path="/admin/*" element={<LayoutAdmin account={account}></LayoutAdmin>}>
@@ -112,7 +119,7 @@ function App() {
         return(
           <MyContext.Provider value={{token, setToken, account, setAccount}}>
           {/*<BrowserRouter>*/}
-          <Suspense fallback={<h1>Loading ...</h1>}>
+          <Suspense fallback={<Loading></Loading>}>
           <Routes>
             <Route path='/*' element={<Navigate to="/nha-xe/home" replace />}></Route>
             <Route path='/nha-xe/*' element={<LayoutNhaXe account={account}></LayoutNhaXe>}>
@@ -137,7 +144,7 @@ function App() {
         return(
           <MyContext.Provider value={{token, setToken, account, setAccount}}>
           {/*<BrowserRouter>*/}
-          <Suspense fallback={<h1>Loading ...</h1>}>
+          <Suspense fallback={<Loading></Loading>}>
           <Routes>
             <Route path='/*' element={<LayoutWeb account={account}></LayoutWeb>}>
               <Route path='' element={<Home></Home>}></Route>

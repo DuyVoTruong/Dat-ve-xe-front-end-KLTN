@@ -1,5 +1,6 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
 import '../../../css/goi-dich-vu.css'
+import { useTranslation } from "react-i18next";
 
 const GoiGiaHan =()=>{
     const goiGiaHan = [{
@@ -18,6 +19,8 @@ const GoiGiaHan =()=>{
 
 const mau = ["#FFCCCC","#FFCC99","#FFCC66","#FFCC33"]
 
+    const {t} = useTranslation();
+
     return(
         <>
             <Container>
@@ -30,7 +33,7 @@ const mau = ["#FFCCCC","#FFCC99","#FFCC66","#FFCC33"]
                             <Card className="card" style={{margin:"15px", backgroundColor: mau[index]}}>
                             <Card.Body>
                                 <Card.Title>
-                                    {ggh.name}
+                                    {t(`${ggh.name}`)}
                                 </Card.Title>
                                     {ggh.value}
                             </Card.Body>

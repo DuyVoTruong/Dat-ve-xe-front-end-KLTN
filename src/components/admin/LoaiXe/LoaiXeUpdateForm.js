@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap"
 import { Link } from "react-router-dom";
 import {getLoaiXeById} from "../../hooks/useFunction"
 import { useTranslation } from "react-i18next";
+import InfoMessage from "../../alert message/InfoMessage";
 
 function LoaiXeUpdateForm({showForm, setShowForm, update, id, lx}){
 
@@ -14,10 +15,10 @@ function LoaiXeUpdateForm({showForm, setShowForm, update, id, lx}){
         let tenLoaiXe = document.getElementById("formTenLoaiXe").value;
         let sucChua = Number(document.getElementById("formSucChua").value);
         if(!tenLoaiXe||!sucChua){
-            window.alert("Bạn phải điền đầy đủ thông tin!!!")
+            InfoMessage();
         }else{
             if(sucChua<1){
-                window.alert("Sức chứa của xe phải lớn hơn 0")
+                InfoMessage(t("Sức chứa của xe phải lớn hơn 0"))
             }else{
                 let data = {
                     tenLoaiXe,sucChua
@@ -33,29 +34,29 @@ function LoaiXeUpdateForm({showForm, setShowForm, update, id, lx}){
         <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>{t("capnhatthongtinloaixe")}</Modal.Title>
+              <Modal.Title>{t("Cập nhật thông tin loại xe")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="formTenLoaiXe">
                         <Form.Label className="text-center">
-                        {t("tenloaixe")}
+                        {t("Tên loại xe")}
                         </Form.Label>
-                        <Form.Control type="text" placeholder={t("nhaptenloaixe")} defaultValue={lx.tenLoaiXe}/>
+                        <Form.Control type="text" placeholder={t("Nhập tên loại xe")} defaultValue={lx.tenLoaiXe}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSucChua">
-                        <Form.Label>{t("succhua")}</Form.Label>
-                        <Form.Control type="number" min={1} defaultValue={lx.sucChua} placeholder={t("nhapsucchuacuaxe")} />
+                        <Form.Label>{t("Sức chứa")}</Form.Label>
+                        <Form.Control type="number" min={1} defaultValue={lx.sucChua} placeholder={t("Nhập sức chứa của xe")} />
                     </Form.Group>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
               </Button>
               <Button variant="primary" type="button" onClick={UpdateLoaiXe}>
-                {t("capnhat")}
+                {t("Cập nhật")}
               </Button>
             </Modal.Footer>
           </Modal>

@@ -6,115 +6,115 @@ import * as RiIcons from 'react-icons/ri'
 
 export const SidebarAdminData =[
     {
-        title:'trangchu',
+        title:'Trang chủ',
         path:'/admin/home',
         icon:<AiIcons.AiFillHome/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
     },
     {
-        title:'benxe',
+        title:'Bến xe',
         //path:'/admin/ben-xe',
         icon:<RiIcons.RiTrainLine/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'benxe',
+                title: 'Bến xe',
                 path:'/admin/ben-xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
         ]
     },
     {
-        title:'nhaxe',
+        title:'Nhà xe',
         //path:'/admin/home',
         icon:<RiIcons.RiTrainLine/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'nhaxe',
+                title: 'Nhà xe',
                 path:'/admin/nha-xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
         ]
     },
     {
-        title:'loaixe',
+        title:'Loại xe',
         //path:'/admin/home',
         icon:<RiIcons.RiTrainLine/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'loaixe',
+                title: 'Loại xe',
                 path:'/admin/loai-xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
         ]
     },
     {
-        title:'xe',
+        title:'Xe',
         //path:'/admin/home',
         icon:<RiIcons.RiTrainLine/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'xe',
+                title: 'Xe',
                 path:'/admin/xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
         ]
     },
     {
-        title:'tuyenxe',
+        title:'Tuyến xe',
         //path:'/admin/home',
         icon:<FaIcons.FaRoute/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'tuyenxe',
+                title: 'Tuyến xe',
                 path:'/admin/tuyen-xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
         ]
     },
     {
-        title:'taikhoan',
+        title:'Tài khoản',
         //path:'/admin/home',
         icon:<FaIcons.FaUser/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'admin',
+                title: 'Quản trị viên',
                 path:'/admin/tai-khoan/admin',
                 icon:<IoIcons.IoIosPaper/>,
             },
             {
-                title: 'nhaxe',
+                title: 'Nhà xe',
                 path:'/admin/tai-khoan/nha-xe',
                 icon:<IoIcons.IoIosPaper/>,
             },
             {
-                title: 'user',
+                title: 'Người dùng',
                 path:'/admin/tai-khoan/user',
                 icon:<IoIcons.IoIosPaper/>,
             },
         ]
     },
     {
-        title:'thongke',
+        title:'Thống kê',
         //path:'/admin/home',
         icon:<FaIcons.FaChartBar/>,
         iconClosed:<RiIcons.RiArrowDownSFill/>,
         iconOpened:<RiIcons.RiArrowUpSFill/>,
         subNav:[
             {
-                title: 'thongke',
+                title: 'Thống kê',
                 path:'/admin/thong-ke',
                 icon:<IoIcons.IoIosPaper/>,
             },

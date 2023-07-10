@@ -1,6 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
 import { httpDeleteNhaXe, httpGetNhaXe, httpGetNhaXeUserAll, httpPostNhaXe, httpPostSignUp, httpPutNhaXe, httpPutTaiKhoan } from "./Request";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useNhaXe(){
     const [nhaXe, setNhaXe] = useState([]);
@@ -40,20 +44,20 @@ function useNhaXe(){
 
     const addNhaXe = useCallback(async(data) => {
         if (!data.tenNhaXe||!data.diaChi){
-            alert("Missing data");
+            InfoMessage();
         }
         else{
             try {
                 await httpPostNhaXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getNhaXeAdmin();
@@ -61,22 +65,22 @@ function useNhaXe(){
 
     const updateNhaXe = useCallback(async(idNhaXe, data) => {
         if (!data.tenNhaXe||!data.diaChi){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPutNhaXe(idNhaXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else if(!data.message){
                         alert("Bạn phải đăng nhập lại!!!");
                     }else{
-                        alert(data.message)
+                        ErrorMessage(data.message)
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getNhaXeAdmin();
@@ -86,14 +90,14 @@ function useNhaXe(){
         try {
             await httpDeleteNhaXe(idNhaXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getNhaXeAdmin();
     },[getNhaXeAdmin])
@@ -103,14 +107,14 @@ function useNhaXe(){
             try {
                 await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         
         getNhaXeAdmin();
@@ -118,20 +122,20 @@ function useNhaXe(){
 
     const signUp = useCallback(async(data) => {
         if (!data.username||!data.password){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
         getNhaXeAdmin();

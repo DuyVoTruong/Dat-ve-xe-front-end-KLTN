@@ -6,6 +6,7 @@ import {getTinhThanhPho} from "../hooks/useFunction"
 import { httpPostSignUp } from "../hooks/Request";
 import { MyContext } from "../../App";
 import { t } from "i18next";
+import InfoMessage from "../alert message/InfoMessage";
 
 function Signup(){
 
@@ -55,8 +56,8 @@ function Signup(){
             let sdt = document.getElementById("formSDT").value;
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
-            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("chontinhthanh")||huyen===t("chonquanhuyen")||xa===t("chonphuongxa")){
-                window.alert(t("vuilongdiendayduthongtin"))
+            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
+                InfoMessage();
             }
             else{
                 let data = {
@@ -65,7 +66,7 @@ function Signup(){
                 try {
                     httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                         if (data.status == 200){
-                            alert(t("tinnhankichhoatnhaxe"));
+                            alert(t("Thành công!!! Vui lòng liên hệ quản trị viên để được kích hoạt tài khoản qua số điện thoại: 0366441943!!!"));
                         }
                         else {
                             alert(data.message);
@@ -96,12 +97,12 @@ function Signup(){
                     <Card.Body>
                         <div className="mb-3 mt-md-4">
                         <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
-                        <p>Đăng ký với vai trò</p>
+                        <p>{t("Đăng ký với vai trò")}</p>
                         <div style={{marginBottom: "30px", marginTop:"20px"}}>
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label={t("nguoidung")}
+                            label={t("Người dùng")}
                             name="group"
                             type={"radio"}
                             defaultChecked
@@ -111,7 +112,7 @@ function Signup(){
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label={t("nhaxe")}
+                            label={t("Nhà xe")}
                             name="group"
                             type={"radio"}
                             value={"NHAXE"}
@@ -124,59 +125,59 @@ function Signup(){
                                 <Form.Label className="text-center">
                                 Username
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhapusername")} />
+                                <Form.Control type="text" placeholder={t("Nhập username")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formPassword">
                                 <Form.Label>Enter Password</Form.Label>
-                                <Form.Control type="password" placeholder={t("nhappassword")} />
+                                <Form.Control type="password" placeholder={t("Nhập password")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formHoTen">
                                 <Form.Label className="text-center">
-                                {t("hoten")}
+                                {t("Họ tên")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhaphoten")} />
+                                <Form.Control type="text" placeholder={t("Nhập họ tên của bạn")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formCMND">
                                 <Form.Label className="text-center">
-                                {t("cmnd")}
+                                {t("CMND")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhapcmnd")} />
+                                <Form.Control type="text" placeholder={t("Nhập CMND")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formSDT">
                                 <Form.Label className="text-center">
-                                {t("sodienthoai")}
+                                {t("Số điện thoại")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhapsodienthoai")} />
+                                <Form.Control type="text" placeholder={t("Nhập số điện thoại của bạn")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formEmail">
                                 <Form.Label className="text-center">
                                 Email
                                 </Form.Label>
-                                <Form.Control type="email" placeholder={t("nhapemail")} />
+                                <Form.Control type="email" placeholder={t("Nhập Email")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formDiaChi">
                                 <Form.Label className="text-center">
-                                {t("diachi")}
+                                {t("Địa chỉ")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhapdiachi")} />
+                                <Form.Control type="text" placeholder={t("Nhập địa chỉ")} />
                             </Form.Group>
     
                             <div className="d-grid">
                                 <Button variant="primary" type="submit">
-                                {t("signup")}
+                                {t("Đăng ký")}
                                 </Button>
                             </div>
                             </Form>
                             <div className="mt-3">
                             <p className="mb-0  text-center">
-                                {t("or")}{" "}
-                                <Link className="text-primary fw-bold" to={"/login"}>{t("login")}</Link>
+                                {t("Hoặc")}{" "}
+                                <Link className="text-primary fw-bold" to={"/login"}>{t("Đăng nhập")}</Link>
                             </p>
                             </div>
                         </div>
@@ -199,12 +200,12 @@ function Signup(){
                     <Card.Body>
                         <div className="mb-3 mt-md-4">
                         <h2 className="fw-bold mb-2 text-uppercase ">WebTour</h2>
-                        <p>{t("dangkyvoivaitro")}</p>
+                        <p>{t("Đăng ký với vai trò")}</p>
                         <div style={{marginBottom: "30px", marginTop:"20px"}}>
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label={t("nguoidung")}
+                            label={t("Người dùng")}
                             name="group"
                             type={"radio"}
                             value={"USER"}
@@ -213,7 +214,7 @@ function Signup(){
                         <Form.Check
                             onChange={(e)=>setRole(e.target.value)}
                             inline
-                            label={t("nhaxe")}
+                            label={t("Nhà xe")}
                             name="group"
                             type={"radio"}
                             defaultChecked
@@ -227,62 +228,62 @@ function Signup(){
                                 <Form.Label className="text-center">
                                 Username
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhapusername")} />
+                                <Form.Control type="text" placeholder={t("Nhập username")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder={t("nhappassword")} />
+                                <Form.Control type="password" placeholder={t("Nhập password")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formTenNhaXe">
                                 <Form.Label className="text-center">
                                 {t("tennhaxe")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhaptennhaxe")} />
+                                <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formSDT">
                                 <Form.Label className="text-center">
                                 {t("sodienthoai")}
                                 </Form.Label>
-                                <Form.Control type="text" placeholder={t("nhapsodienthoai")} />
+                                <Form.Control type="text" placeholder={t("Nhập số điện thoại của nhà xe")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formMoTaNgan">
                                 <Form.Label className="text-center">
                                 {t("motangan")}
                                 </Form.Label>
-                                <Form.Control  as="textarea" rows={3} placeholder={t("nhapnoidungmotangan")} />
+                                <Form.Control  as="textarea" rows={3} placeholder={t("Nhập nội dung mô tả ngắn")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formDiaChi">
                                 <Form.Label>Địa chỉ</Form.Label>
                                 <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
-                                    <option>{t("chontinhthanh")}</option>
+                                    <option>{t("Chọn tỉnh thành")}</option>
                                 </Form.Select>
                                 
                                 <Form.Select className="mb-3" id="district" aria-label="Chọn quận huyện">
-                                    <option>{t("chonquanhuyen")}</option>
+                                    <option>{t("Chọn quận huyện")}</option>
                                 </Form.Select>
                                         
                                 <Form.Select className="mb-3" id="ward" aria-label="Chọn phường xã">
-                                    <option>{t("chonphuongxa")}</option>
+                                    <option>{t("Chọn phường xã")}</option>
                                 </Form.Select>
     
-                                <Form.Control type="text" placeholder={t("nhapsonha")} />
+                                <Form.Control type="text" placeholder={t("Nhập số nhà")} />
                             </Form.Group>
     
                             <div className="d-grid">
                                 <Button variant="primary" type="submit">
-                                {t("signup")}
+                                {t("Đăng ký")}
                                 </Button>
                             </div>
                             </Form>
                             <div className="mt-3">
                             <p className="mb-0  text-center">
-                                {t("or")}{" "}
-                                <Link className="text-primary fw-bold" to={"/login"}>{t("login")}</Link>
+                                {t("Hoặc")}{" "}
+                                <Link className="text-primary fw-bold" to={"/login"}>{t("Đăng nhập")}</Link>
                             </p>
                             </div>
                         </div>

@@ -2,6 +2,10 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
 import { httpDeleteVeXe, httpGetVeXe, httpPostVeXe, httpPutVeXe } from "./Request";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useVeXe(){
     const [veXe, setVeXe] = useState([]);
@@ -24,20 +28,20 @@ function useVeXe(){
 
     const addVeXe = useCallback(async(data) => {
         if (!data.tenVeXe||!data.diaChi){
-            alert("Missing data");
+            InfoMessage();
         }
         else{
             try {
                 await httpPostVeXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                     }
                     else{
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             } catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
     }, [getVeXe]);
@@ -46,14 +50,14 @@ function useVeXe(){
             try {
                 await httpPutVeXe(idVeXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage(0);
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
     },[getVeXe])
 
@@ -61,14 +65,14 @@ function useVeXe(){
         try {
             await httpDeleteVeXe(idVeXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getVeXe();
     },[getVeXe])

@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { httpDeleteHinhThucThanhToan, httpGetHinhThucThanhToan, httpPostHinhThucThanhToan, httpPutHinhThucThanhToan } from "./Request";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
+import FailMessage from "../alert message/FailMessage";
 
 function useHinhThucThanhToan(){
     const [hinhThucThanhToan, setHinhThucThanhToan] = useState([]);
@@ -22,38 +26,42 @@ function useHinhThucThanhToan(){
 
     const addHinhThucThanhToan = useCallback(async(data) => {
         if (!data.tenHinhThucThanhToan){
-            alert("Missing data");
+            InfoMessage();
         }
         else{
-            await httpPostHinhThucThanhToan(data).then(res => res.json()).then(data => {
-                if (data.status == 200){
-                    alert("Success");
-                    nav("/admin/ben-xe");
-                }
-                else{
-                    alert(data.message);
-                }
-            })
+            try{
+                await httpPostHinhThucThanhToan(data).then(res => res.json()).then(data => {
+                    if (data.status == 200){
+                        SuccessMessage();
+                        nav("/admin/ben-xe");
+                    }
+                    else{
+                        ErrorMessage(data.message);
+                    }
+                })
+            } catch(err){
+                FailMessage();
+            }
         }
     }, [getHinhThucThanhToan]);
 
     const updateHinhThucThanhToan = useCallback(async(idHinhThucThanhToan, data) => {
         if (!data.tenHinhThucThanhToan||!data.diaChi){
-            alert("Missing data");
+            InfoMessage();
         }
         else {
             try {
                 await httpPutHinhThucThanhToan(idHinhThucThanhToan, data).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        alert("Success");
+                        SuccessMessage();
                         nav('/admin/ben-xe');
                     }
                     else {
-                        alert(data.message);
+                        ErrorMessage(data.message);
                     }
                 })
             }catch(err) {
-                alert("Fail");
+                FailMessage();
             }
         }
     },[getHinhThucThanhToan])
@@ -62,14 +70,14 @@ function useHinhThucThanhToan(){
         try {
             await httpDeleteHinhThucThanhToan(idHinhThucThanhToan).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    alert("Success");
+                    SuccessMessage();
                 }
                 else{
-                    alert(data.message);
+                    ErrorMessage(data.message);
                 }
             })
         }catch(err) {
-            alert("Fail");
+            FailMessage();
         }
         getHinhThucThanhToan();
     },[getHinhThucThanhToan])
