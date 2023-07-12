@@ -21,7 +21,7 @@ const RequestForgetPassword =()=>{
         httpRequestForgetPassword(data).then(res=>res.json()).then((data)=>{
             if(data.result == true){
                 setTimeout(()=>{InfoMessage(t("Vui lòng kiểm tra email để lấy mã otp"))}, 1000);
-                nav("/forget-password", {state: {email: email, idHash: data.data.idHash}});
+                nav("#/forget-password", {state: {email: email, idHash: data.data.idHash}});
             } else if(data.status == 404){
                 WarnMessage(t("Không tìm thấy tài khoản"));
             }
