@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkdat_ve_xe=self.webpackChunkdat_ve_xe||[]).push([[4301],{4301:function(e,t,n){n.r(t);var c=n(2791),a=n(4047),s=n(9230),u=n(184);t.default=function(){var e=(0,c.useContext)(a.I).account,t=(0,s.$G)().t;return(0,u.jsx)("div",{className:"d-flex justify-content-center align-items-center",style:{height:"90vh",textAlign:"center"},children:(0,u.jsx)("h1",{children:t("chaomung",{account:e.username})})})}}}]);
+//# sourceMappingURL=4301.d09034a0.chunk.js.map
