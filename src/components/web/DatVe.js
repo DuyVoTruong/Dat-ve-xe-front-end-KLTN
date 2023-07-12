@@ -25,6 +25,8 @@ function DatVe(){
     const [hinhThucThanhToan, setHinhThucThanhToan]=useState("ONLINE");
     var today = new Date();
     const {t} = useTranslation();
+    const [veDaChon, setVeDaChon] = useState([]);
+    const [tongTien, setTongTien] = useState(0);
 
     let ngayDat = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
     var tomorrow = new Date();
@@ -35,6 +37,12 @@ function DatVe(){
     let tenNhaXe = "";
     let sdt = "";
     const nav = useNavigate();
+
+    function formatCash(str) {
+        return str.split('').reverse().reduce((prev, next, index) => {
+          return ((index % 3) ? next : (next + '.')) + prev
+        })
+    }
 
     const convertNgayNhan=()=>{
         var tomorrow = new Date();
@@ -113,6 +121,22 @@ function DatVe(){
                 }
             });
 
+        }
+    }
+
+    const xuLyVeChon =(soGhe)=>{
+        let trung = 0;
+        for(let i=0;i < veDaChon.length; i++){
+            if(veDaChon[i]==soGhe){
+                trung = 1;
+            }
+        }
+        if(trung===0){
+            setTongTien((veDaChon.length+1)*tuyenXeById.giaVe);
+            veDaChon.push(soGhe);
+        } else {
+            setTongTien((veDaChon.length-1)*tuyenXeById.giaVe);
+            setVeDaChon(veDaChon.filter(vx=>vx!==soGhe));
         }
     }
 
@@ -236,16 +260,81 @@ function DatVe(){
                             </Form.Group>
 
                             { new Array(sucChua).fill(0).map((_,index)=>{
+                                    let flag=0;
+                                    veXeDaDat.map(vx=>{
+                                        if((index+1)===vx.soGhe){
+                                            flag=1;
+                                        }
+                                    })
+
+                                    if(flag===1){
+                                        return(
+                                            <label><input type="checkbox" value={index+1} name="Group1" disabled></input>
+                                                <span className="label" style={{backgroundColor: "gray", color: "gray", cursor:"not-allowed"}}>
+                                                    <span className="label-so-ghe">{index+1}</span>
+                                                    <SeatIcon class="seat"></SeatIcon>
+                                                </span>
+                                            </label>
+                                        );
+                                    }
+
                                     return(
-                                        <label><input type="checkbox" value={index+1} name="Group1"></input>
+                                        <label><input onClick={evt=>{xuLyVeChon(evt.target.value)}} type="checkbox" value={index+1} name="Group1" ></input>
                                             <span className="label">
                                                 <span className="label-so-ghe">{index+1}</span>
                                                 <SeatIcon class="seat"></SeatIcon>
                                             </span>
                                         </label>
                                     );
+
                                 })
                             }
+
+                            <div style={{marginTop: "10px"}}>
+                                {t("Ghi chú")}
+                            </div>
+
+                            <div>
+                                <label style={{margin:"10px"}}>
+                                    <span className="label">
+                                        <span className="label-so-ghe"></span>
+                                        <SeatIcon class="seat"></SeatIcon>
+                                    </span>
+                                    {t("Trống")}
+                                </label>
+                                <label style={{margin:"10px"}}>
+                                    <span className="label" style={{backgroundColor: "gray", color: "gray"}}>
+                                        <span className="label-so-ghe"></span>
+                                        <SeatIcon class="seat"></SeatIcon>
+                                    </span>
+                                    {t("Đã đặt")}
+                                </label>
+                                <label style={{margin:"10px"}}>
+                                    <span className="label" style={{color: "blue"}}>
+                                        <span className="label-so-ghe"></span>
+                                        <SeatIcon class="seat"></SeatIcon>
+                                    </span>
+                                    {t("Đang chọn")}
+                                </label>
+                            </div>
+
+                            <div style={{marginTop: "10px", marginBottom: "20px"}}>
+                                <div>{veDaChon.length} {t("vé")}: 
+                                    {veDaChon.map((v,index)=>{
+                                        if(index==0){
+                                            return(
+                                                <span>{' '+v}</span>
+                                            )
+                                        }
+                                        else{
+                                            return(
+                                                <span>{', '+v}</span>
+                                            )
+                                        }
+                                    })}
+                                </div>
+                                <h4 style={{color: "red"}}>{t("Tổng tiền")}: {formatCash(tongTien.toString())} đ</h4>
+                            </div>
                             
                             {/*
                                 new Array(sucChua).fill(0).map((_,index)=>{

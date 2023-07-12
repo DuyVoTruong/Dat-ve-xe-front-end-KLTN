@@ -41,7 +41,7 @@ const LichSuDatVe=()=>{
     }
 
     const deleteVeXe =(id)=>{
-        if(window.confirm(t("banmuonhuyvexenay"))===true){
+        if(window.confirm(t("Bạn muốn hủy vé xe này?"))===true){
             fetch("http://localhost:8081/api/vexe/"+id,{
             method: "DELETE",
             headers: {
@@ -50,10 +50,10 @@ const LichSuDatVe=()=>{
             },
             }).then(res=>res.json()).then(data=>{
                 if(data.status==200){
-                    SuccessMessage(t("huyvexethanhcong"));
+                    SuccessMessage(t("Hủy vé xe thành công"));
                     setLoad(true);
                 }else{
-                    window.alert(t("daxayraloi"));
+                    window.alert(t("Đã xảy ra lỗi"));
                 }
             })
         }

@@ -289,11 +289,11 @@ const ThongKeAdmin =()=>{
               if(show==="DoanhThu"){
                 return(
                   <>
-                  <div style={{display: "flex", overflow: "auto"}}>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                  <div style={{display: "flex", overflow: "auto", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw"}}>
                       <BarChart data={dataBar} options={optionsBar}></BarChart>
                     </div>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw"}}>
                       <PieChart data={dataPie} options={optionsPie}></PieChart>
                     </div>
                   </div>
@@ -303,19 +303,19 @@ const ThongKeAdmin =()=>{
               else if(show==="TanSuat"){
                 return(
                   <>
-                  <div style={{display: "flex", overflow: "auto"}}>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                  <div style={{display: "flex", overflow: "auto", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <BarChart data={dataBar} options={optionsBar}></BarChart>
                     </div>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <PieChart data={dataPie} options={optionsPie}></PieChart>
                     </div>
                   </div>
-                  <div style={{display: "flex"}}>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                  <div style={{display: "flex", overflow: "auto", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <BarChart data={dataBar1} options={optionsBar1}></BarChart>
                     </div>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <PieChart data={dataPie1} options={optionsPie1}></PieChart>
                     </div>
                   </div>

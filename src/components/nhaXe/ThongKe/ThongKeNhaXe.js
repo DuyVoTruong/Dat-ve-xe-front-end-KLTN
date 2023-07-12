@@ -44,7 +44,7 @@ const ThongKeNhaXe =()=>{
 
     useEffect(()=>{
       if(Number(month)&&Number(year)){
-        fetch("http://localhost:8080/api/thongke/nhaxe/loai-xe",{
+        fetch("http://localhost:8081/api/thongke/nhaxe/loai-xe",{
           method: "POST",
           headers: {
               'Authorization': 'Bearer ' + token,
@@ -57,7 +57,7 @@ const ThongKeNhaXe =()=>{
           }
         })
 
-        fetch("http://localhost:8080/api/thongke/nhaxe/tuyenxe",{
+        fetch("http://localhost:8081/api/thongke/nhaxe/tuyenxe",{
           method: "POST",
           headers: {
               'Authorization': 'Bearer ' + token,
@@ -222,9 +222,9 @@ const ThongKeNhaXe =()=>{
         <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h1>{t("Thống kê")}</h1></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display:"flex"}}>
-          <Form.Label style={{margin:"15px"}}>{t("thang")}:</Form.Label>
+          <Form.Label style={{margin:"15px"}}>{t("Tháng")}:</Form.Label>
           <Form.Control onChange={e=>setMonth(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("Nhập tháng cần thống kê")}></Form.Control>
-          <Form.Label style={{margin:"15px"}}>{t("nam")}:</Form.Label>
+          <Form.Label style={{margin:"15px"}}>{t("Năm")}:</Form.Label>
           <Form.Control onChange={e=>setYear(e.target.value)} type="text" style={{margin: "10px", width:"20%"}} placeholder={t("Nhập năm cần thống kê")}></Form.Control>
         </div>
         <div style={{display:"flex"}}>
@@ -236,11 +236,11 @@ const ThongKeNhaXe =()=>{
               if(show==="LoaiXe"){
                 return(
                   <>
-                  <div style={{display: "flex"}}>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                  <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <BarChart data={dataBar} options={optionsBar}></BarChart>
                     </div>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <PieChart data={dataPie} options={optionsPie}></PieChart>
                     </div>
                   </div>
@@ -249,11 +249,11 @@ const ThongKeNhaXe =()=>{
               }else if(show==="TuyenXe"){
                 return(
                   <>
-                  <div style={{display: "flex"}}>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                  <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <BarChart data={dataBar} options={optionsBar}></BarChart>
                     </div>
-                    <div style={{margin: "20px", border: "1px solid black", height:"500px", width:"550px"}}>
+                    <div style={{margin: "20px", border: "1px solid black", height:"40vh", width:"30vw", padding: "1%"}}>
                       <PieChart data={dataPie} options={optionsPie}></PieChart>
                     </div>
                   </div>

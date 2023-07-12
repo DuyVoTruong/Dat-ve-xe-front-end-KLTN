@@ -9,6 +9,9 @@ import DataTable, { defaultThemes } from "react-data-table-component";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import SuccessMessage from "../../alert message/SuccessMessage";
+import InfoMessage from "../../alert message/InfoMessage";
+import swal from "sweetalert";
 
 
 
@@ -32,32 +35,32 @@ function HangHoaForm({show, setShow, h, update}){
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>{t("capnhathanghoa")}</Modal.Title>
+            <Modal.Title>{t("Cập nhật hàng hóa")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="CanNang">
                     <Form.Label className="text-center">
-                    {t("cannang")}
+                    {t("Cân nặng")}
                     </Form.Label>
-                    <Form.Control type="number" placeholder="Nhập cân nặng" defaultValue={h.canNang}/>
+                    <Form.Control type="number" placeholder={t("Nhập cân nặng")} defaultValue={h.canNang}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="Gia">
                     <Form.Label className="text-center">
-                    {t("gia")} {t("donvi")}
+                    {t("Giá (đơn vị: đồng)")}
                     </Form.Label>
-                    <Form.Control type="number" placeholder="Nhập giá" defaultValue={h.gia}/>
+                    <Form.Control type="number" placeholder={t("Nhập giá")} defaultValue={h.gia}/>
                 </Form.Group>
 
             </Form>
             </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-                {t("dong")}
+                {t("Đóng")}
             </Button>
             <Button variant="primary" onClick={updateHangHoa}>
-                {t("capnhat")}
+                {t("Cập nhật")}
             </Button>
             </Modal.Footer>
         </Modal>
@@ -81,7 +84,7 @@ const QuanLyHangHoa =()=>{
 
 
     const updateHangHoa =(id, data)=>{
-        fetch("http://localhost:8080/api/hanghoa/"+id, {
+        fetch("http://localhost:8081/api/hanghoa/"+id, {
             method: "PUT",
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -96,20 +99,34 @@ const QuanLyHangHoa =()=>{
     }
 
     const huyDon =(id)=>{
-        if(window.confirm("Bạn muốn xóa đơn giao hàng này")==true){
-            fetch(`http://localhost:8080/api/hanghoa/${id}`,{
-                method: "DELETE",
-                headers: {
-                    'Authorization': 'Bearer ' + token,
-                    "Content-Type": "application/json",
-                }
-            }).then(res=>res.json()).then(data=>{
-                    if(data.status==200){
-                        window.alert("Success");
-                        setLoad(true);
+
+        swal({
+            title: t("Bạn muốn hủy đơn giao hàng này"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                fetch(`http://localhost:8081/api/hanghoa/${id}`,{
+                    method: "DELETE",
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        "Content-Type": "application/json",
                     }
+                }).then(res=>res.json()).then(data=>{
+                        if(data.status==200){
+                            SuccessMessage();
+                            setLoad(true);
+                        }
                 })
-        }
+
+            } else {
+
+            }
+        });
+
     }
 
     useEffect(()=>{
@@ -134,7 +151,7 @@ const QuanLyHangHoa =()=>{
         console.log(data)
 
         if(!Number(canNang)||!Number(gia)||!trangThai){
-            window.alert("Đã xảy ra lỗi!!! Vui lòng xác nhận lại!!!")
+            InfoMessage("Đã xảy ra lỗi!!! Vui lòng xác nhận lại!!!");
         } else{
             let data = {
                 canNang,gia,trangThai

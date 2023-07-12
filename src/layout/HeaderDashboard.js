@@ -1,22 +1,26 @@
-import { memo, useContext } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { memo, useContext, useEffect, useState } from "react";
+import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { MyContext } from "../App";
 import flagEN from "../assets/img/flagEN.jpg";
 import flagVN from "../assets/img/flagVN.png";
 import { useTranslation } from "react-i18next";
+import { httpGetNhaXeById } from "../components/hooks/Request";
 
 function HeaderDashboard(){
 
 
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
+    const setAccount = useContext(MyContext).setAccount;
+    const [thongTinTaiKhoan, setThongTinTaiKhoan] = useState([]);
+
     const nav = useNavigate();
     const {t} = useTranslation();
     const logout =()=>{
         localStorage.clear();
-        let loc = window.location.href.split('?')[0];
-        window.location.replace(loc);
+        setAccount();
+        window.location.replace(window.location.origin + window.location.pathname);
     }
 
     function handleChangeLanguage(lg) {
@@ -29,6 +33,18 @@ function HeaderDashboard(){
             window.location.reload();
         }
     }
+
+    useEffect(()=>{
+        if(account){
+            if(account.role==="NHAXE"){
+                httpGetNhaXeById(account.id, token).then(data=>{
+                    if(data.object){
+                        setThongTinTaiKhoan(data.object);
+                    }
+                })
+            }
+        }
+    },[])
 
     return(
         <>
@@ -46,19 +62,27 @@ function HeaderDashboard(){
                             if(token&&account){
                                 return(
                                     <>
-                                    <div style={{marginRight:"10px"}}>
-                                        <a class="text-white pl-2" href="">
-                                            <i class="fa fa-user"></i>
+                                    <div style={{marginRight:"10px", marginLeft:"10px"}}>
+                                        <a class="text-white pl-2">
+                                            {
+                                                (()=>{
+                                                    if(thongTinTaiKhoan.length!=0){
+                                                        return <Image style={{objectFit: "cover"}} height={30} width={30} src={thongTinTaiKhoan.picture} roundedCircle />
+                                                    }else{
+                                                        return <Image style={{objectFit: "cover"}} height={30} width={30} src="https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fdefault_avatar.png989f063f-864d-497f-aaee-0ad210b3b5e2?alt=media&token=2d270ccf-7dec-4403-973d-6a2109557688" roundedCircle />
+                                                    }
+                                                })()
+                                            }
                                         </a>
                                     </div>
                                     <Link to={"thong-tin-tai-khoan"}>{account.username}</Link>
 
                                     <div style={{marginRight:"10px", marginLeft:"20px"}}>
-                                        <a class="text-white pl-2" href="">
+                                        <a class="text-white pl-2">
                                             <i class="fas fa-sign-out-alt"></i>
                                         </a>
                                     </div>
-                                        <a style={{marginRight:"10px"}} onClick={logout} href="/Dat-ve-xe-front-end">{t("Đăng xuất")}</a>
+                                        <a onClick={logout} className="text-blue pl-2" style={{marginRight: "10px", cursor: "pointer"}} >{t('Đăng xuất')}</a>
                                     </>
                                 )
                             }else{

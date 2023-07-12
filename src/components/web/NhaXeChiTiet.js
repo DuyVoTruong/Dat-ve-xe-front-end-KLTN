@@ -8,6 +8,7 @@ import {getTuyenXeById} from "../hooks/useFunction"
 import useTuyenXe from "../hooks/useTuyenXe";
 import imageDetail from '../../assets/img/view-details.png'
 import { t } from "i18next";
+import swal from "sweetalert";
 
 const NhaXeChiTiet =()=>{
 
@@ -62,6 +63,7 @@ const NhaXeChiTiet =()=>{
                 if(data.status==200){
                     window.alert(t("Xóa đánh giá thành công"));
                     setLoad(true);
+                    window.location.reload();
                 }else{
                     window.alert(t("Đã xảy ra lỗi"));
                 }
@@ -292,7 +294,19 @@ const NhaXeChiTiet =()=>{
                         }
                     </div>
                 </div>
-                <Button onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đánh giá"))}else{themDanhGia(nhaXeId)}}}>{t("Thêm đánh giá")}</Button>
+                <Button 
+                    onClick={()=>{
+                        if(!account){
+                            swal({
+                                title: t("Bạn phải đăng nhập để đánh giá"),
+                                text: "",
+                                icon: "info",
+                                button: "Ok",
+                            });
+                        }else{
+                            themDanhGia(nhaXeId)
+                    }}}>{t("Thêm đánh giá")}
+                </Button>
                 </Card.Body>
                 </Card>
                 </Col>

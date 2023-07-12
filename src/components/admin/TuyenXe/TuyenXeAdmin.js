@@ -12,6 +12,7 @@ import { convert_vi_to_en } from "../../hooks/useFunction";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 function TuyenXeAdmin(){
 
@@ -24,45 +25,68 @@ function TuyenXeAdmin(){
     const { t } = useTranslation();
     
     const DeleteTuyenXe = (id) => {
-        if(window.confirm("Delete") === true){
-            deleteTuyenXe(id)
-        }
+
+        swal({
+            title: t("Bạn chắc chắn muốn xóa?"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                deleteTuyenXe(id);
+            } else {
+
+            }
+        });
+
     }
 
 
     const handleShowFormAdd = () => setShowFormAdd(true);
 
     const UpdateTrangThaiTuyenXe =(id, item)=>{
-        if(window.confirm("Thay đổi trạng thái")===true){
-            let tenBenXeDi = item.benXeDi.tenBenXe;
-            let tenBenXeDen = item.benXeDen.tenBenXe;
-            let ngayDi = item.ngayDi;
-            let gioDi = item.gioDi;
-            let thoiGianHanhTrinh = item.thoiGianHanhTrinh;
-            let giaVe = item.giaVe;
-            let bienSoXe = item.xe.bienSoXe;
-            let trangThai="ACTIVE";
-            let switchSelect = document.getElementById(`switch${item.id}`).checked;
-            if(switchSelect === true){
-                trangThai = "ACTIVE";
-                document.getElementById(`switch${item.id}`).checked=false
-            }else{
-                trangThai = "INACTIVE";
-                document.getElementById(`switch${item.id}`).checked=true
+
+        swal({
+            title: t("Thay đổi trạng thái"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                let tenBenXeDi = item.benXeDi.tenBenXe;
+                let tenBenXeDen = item.benXeDen.tenBenXe;
+                let ngayDi = item.ngayDi;
+                let gioDi = item.gioDi;
+                let thoiGianHanhTrinh = item.thoiGianHanhTrinh;
+                let giaVe = item.giaVe;
+                let bienSoXe = item.xe.bienSoXe;
+                let trangThai="ACTIVE";
+                let switchSelect = document.getElementById(`switch${item.id}`).checked;
+                if(switchSelect === true){
+                    trangThai = "ACTIVE";
+                    document.getElementById(`switch${item.id}`).checked=false
+                }else{
+                    trangThai = "INACTIVE";
+                    document.getElementById(`switch${item.id}`).checked=true
+                }
+                let data = {
+                    ngayDi, gioDi, thoiGianHanhTrinh, giaVe, trangThai, bienSoXe, tenBenXeDi, tenBenXeDen
+                }
+                updateTuyenXe(id, data);
+            } else {
+                let switchSelect = document.getElementById(`switch${item.id}`).checked;
+                if(switchSelect === true){
+                    document.getElementById(`switch${item.id}`).checked = false;
+                }else{
+                    document.getElementById(`switch${item.id}`).checked = true;
+                }
             }
-            let data = {
-                ngayDi, gioDi, thoiGianHanhTrinh, giaVe, trangThai, bienSoXe, tenBenXeDi, tenBenXeDen
-            }
-            updateTuyenXe(id, data);
-        }
-        else{
-            let switchSelect = document.getElementById(`switch${item.id}`).checked;
-            if(switchSelect === true){
-                document.getElementById(`switch${item.id}`).checked = false;
-            }else{
-                document.getElementById(`switch${item.id}`).checked = true;
-            }
-        }
+        });
+
     }
 
     const HandleShowUpdateForm =(tuyenXe)=>{

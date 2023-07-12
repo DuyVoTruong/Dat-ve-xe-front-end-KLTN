@@ -48,13 +48,13 @@ function LichTrinh(){
     const columns = [
         {
             name: <div>{t("Điểm đi")}</div>,
-            selector: row => row.benXeDi.tenBenXe,
+            selector: row => row.benXeDi.tinhThanh,
             sortable: true,
             wrap: true,
         },
         {
             name: <div>{t("Điểm đến")}</div>,
-            selector: row => row.benXeDen.tenBenXe,
+            selector: row => row.benXeDen.tinhThanh,
             sortable: true,
             wrap: true,
         },

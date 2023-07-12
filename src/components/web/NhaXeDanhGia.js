@@ -7,6 +7,7 @@ import useDanhGia from "../hooks/useDanhGia";
 import {getNhaXeById, getNhaXeUserById} from "../hooks/useFunction"
 import useUser from "../hooks/useUser";
 import { useTranslation } from "react-i18next";
+import swal from "sweetalert";
 
 const NhaXeDanhGia =()=>{
 
@@ -75,11 +76,26 @@ const NhaXeDanhGia =()=>{
         let noiDung = document.getElementById("comment").value;
         
         if(soSao===0){
-            window.alert(t("banphaichonsosao"))
+            swal({
+                title: t("Bạn phải chọn số sao"),
+                text: "",
+                icon: "info",
+                button: "Ok",
+            });
         } else if(!gioDang||!ngayDang||!noiDung||!soSao){
-            window.alert(t("banphaidiendayduthongtin"))
+            swal({
+                title: t("Bạn phải điền đầy đủ thông tin"),
+                text: "",
+                icon: "info",
+                button: "Ok",
+            });
         }else if(!account.id){
-            window.alert(t("banphaidangnhapdedanhgianhaxe"))
+            swal({
+                title: t("Bạn phải đăng nhập để đánh giá"),
+                text: "",
+                icon: "info",
+                button: "Ok",
+            });
         }
         else {
             let data = { 

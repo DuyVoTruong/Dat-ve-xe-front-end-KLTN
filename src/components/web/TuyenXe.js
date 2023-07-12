@@ -9,6 +9,7 @@ import {VscArrowSwap} from "react-icons/vsc"
 import imageDiemDen from '../../assets/img/diemDen.png';
 import { useTranslation } from 'react-i18next';
 import { FiCircle } from 'react-icons/fi';
+import swal from 'sweetalert';
 
 function TuyenXe(){
 
@@ -26,7 +27,7 @@ function TuyenXe(){
       return str.split('').reverse().reduce((prev, next, index) => {
         return ((index % 3) ? next : (next + '.')) + prev
       })
-   }
+    }
 
     const convertNgay=(d)=>{
       let ngay;
@@ -220,11 +221,38 @@ function TuyenXe(){
                         <label className='gia-tuyen-xe-span'>{formatCash(tx.giaVe.toString())}đ</label>
                       </Row>
                       <Row style={{ margin: "20px 10px 10px 10px", textAlign: "right"}}>
-                        <label className='so-ghe-trong-tuyen-xe-span'>Còn 2 ghế</label>
+                        {/*<label className='so-ghe-trong-tuyen-xe-span'>Còn 2 ghế</label>*/}
                       </Row>
                       <Row>
-                        <Button onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đặt vé!!!"))}else{datVe(tx)}}} style={{backgroundColor: "green", margin: "10px 0", border: "none", width: "90%"}}>{t("Đặt vé")}</Button>  
-                        <Button onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để nhờ giao hàng!!!"))}else{giaoHang(tx)}}} style={{backgroundColor: "blue", margin: "10px 0", border: "none", width: "90%"}}>{t("Giao hàng")}</Button>
+                        <Button 
+                          onClick={()=>{
+                            if(!account){
+                                swal({
+                                  title: t("Bạn phải đăng nhập để đặt vé!!!"),
+                                  text: "",
+                                  icon: "info",
+                                  button: "Ok",
+                                });
+                              }else{
+                                datVe(tx)
+                          }}} 
+                          style={{backgroundColor: "green", margin: "10px 0", border: "none", width: "90%"}}>{t("Đặt vé")}
+                        </Button>
+
+                        <Button 
+                          onClick={()=>{
+                            if(!account){
+                              swal({
+                                title: t("Bạn phải đăng nhập để nhờ giao hàng!!!"),
+                                text: "",
+                                icon: "info",
+                                button: "Ok",
+                              });
+                            }else{
+                              giaoHang(tx)
+                          }}}
+                          style={{backgroundColor: "blue", margin: "10px 0", border: "none", width: "90%"}}>{t("Giao hàng")}
+                        </Button>
                       </Row>
                     </Col>
                   </Row>

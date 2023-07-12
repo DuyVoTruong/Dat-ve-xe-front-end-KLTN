@@ -21,12 +21,14 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             let sdt = document.getElementById("formSDT").value;
             let email = document.getElementById("formEmail").value;
             let diaChi = document.getElementById("formDiaChi").value;
+            let picture = "https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fdefault_avatar.png989f063f-864d-497f-aaee-0ad210b3b5e2?alt=media&token=2d270ccf-7dec-4403-973d-6a2109557688";
+            
             if(!role||!username||!password||!hoTen||!cmnd||!sdt||!email||!diaChi){
                 InfoMessage();
             }
             else{
                 let data = {
-                    role,username,password,hoTen,cmnd,sdt,email,diaChi
+                    role,username,password,hoTen,cmnd,sdt,email,diaChi,picture
                 }
                 try{
                     add(data);
@@ -48,12 +50,14 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
             let sdt = document.getElementById("formSDT").value;
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
-            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
+            let email = document.getElementById("formEmail").value;
+            let picture = "https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fxe.png6d58e73d-c4b6-4721-9609-1ab8cfe28540?alt=media&token=1b2a2ef3-d287-4d72-8a7e-d4245271b437";
+            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")||!email){
                 InfoMessage();
             }
             else{
                 let data = {
-                    role,username,password,tenNhaXe,sdt,moTaNgan,diaChi
+                    role,username,password,tenNhaXe,sdt,moTaNgan,diaChi,picture,email
                 }
                 try{
                     add(data);
@@ -294,6 +298,13 @@ function TaiKhoanAddAdmin({showForm, setShowForm, add, role}){
                         {t("Tên nhà xe")}
                         </Form.Label>
                         <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label className="text-center">
+                        Email
+                        </Form.Label>
+                        <Form.Control type="email" placeholder={t("Nhập Email")} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSDT">

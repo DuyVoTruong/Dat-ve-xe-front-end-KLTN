@@ -139,7 +139,7 @@ const GiaoHang =()=>{
 
                                                 <Form.Group className="mb-3" controlId="formTenNguoiNhan">
                                                 <Form.Label className="text-center">
-                                                    {t("tên người nhận")}
+                                                    {t("Tên người nhận")}
                                                 </Form.Label>
                                                 <Form.Control type="text"/>
                                                 </Form.Group>

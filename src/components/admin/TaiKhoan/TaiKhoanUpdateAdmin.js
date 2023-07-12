@@ -21,12 +21,13 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             let email = document.getElementById("formEmail").value;
             let diaChi = document.getElementById("formDiaChi").value;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
+            let picture = tk.picture;
             if(!role||!username||!hoTen||!cmnd||!sdt||!email||!diaChi){
                 InfoMessage();
             }
             else{
                 let data = {
-                    role,username,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong
+                    role,username,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong,picture
                 }
                 try{
                     update(tk.id, data);
@@ -48,12 +49,14 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
             let trangThaiHoatDong = tk.taiKhoan.trangThaiHoatDong;
-            if(!role||!username||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
+            let email = document.getElementById("formEmail").value;
+            let picture = tk.picture;
+            if(!role||!username||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")||!email||!picture){
                 InfoMessage();
             }
             else{
                 let data = {
-                    role,username,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong
+                    role,username,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong,picture,email
                 }
                 try{
                     update(tk.id, data);
@@ -169,6 +172,13 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                         <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} defaultValue={tk.tenNhaXe}/>
                     </Form.Group>
 
+                    <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label className="text-center">
+                        Email
+                        </Form.Label>
+                        <Form.Control type="email" placeholder={t("Nhập Email")} defaultValue={tk.email}/>
+                    </Form.Group>
+
                     <Form.Group className="mb-3" controlId="formSDT">
                         <Form.Label className="text-center">
                         {t("Số điện thoại")}
@@ -184,7 +194,7 @@ function TaiKhoanUpdateAdmin({showForm, setShowForm, update, role, tk}){
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formDiaChi">
-                        <Form.Label>{t("diachi")}</Form.Label>
+                        <Form.Label>{t("Địa chỉ")}</Form.Label>
                         <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
                             <option>{t("Chọn tỉnh thành")}</option>
                         </Form.Select>

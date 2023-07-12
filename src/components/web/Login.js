@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import backgroundLogin from "../../assets/img/background-login2.jpg";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 function Login() {
 
@@ -19,7 +20,7 @@ function Login() {
   const nav = useNavigate();
 
   const loginGoogle =()=>{
-    window.location.replace("https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:8081/api/login-google&response_type=code&client_id=632584279277-6ov8je5ek4p0p67ad1892832k4naihk3.apps.googleusercontent.com&approval_prompt=force");
+    window.open("https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8081/api/login-google&response_type=code&client_id=632584279277-6ov8je5ek4p0p67ad1892832k4naihk3.apps.googleusercontent.com&approval_prompt=force", '_self');
   }
 
   const login = async(e)=>{
@@ -41,7 +42,7 @@ function Login() {
           }
         }
         setToken(userToken);//lưu token
-        window.alert(t("Đăng nhập thành công!!!"))
+        //window.alert(t("Đăng nhập thành công!!!"))
         if(data.object.role==="USER"){
           nav("/home")
         }else if(data.object.role==="ADMIN"){
@@ -51,10 +52,27 @@ function Login() {
         }
       }
       else if(data.status==401){
-        window.alert(t("Username hoặc password không chính xác!!!"))
+        swal({
+          title: t("Username hoặc password không chính xác!!!"),
+          text: "",
+          icon: "warning",
+          button: "Ok",
+        });
       }
-      else{
-        window.alert(data.message)
+      else if(data.status==400){
+        swal({
+          title: t("Tài khoản chưa được kích hoạt"),
+          text: "",
+          icon: "warning",
+          button: "Ok",
+        });
+      } else{
+        swal({
+          title: t("Đã xảy ra lỗi, vui lòng thực hiện lại"),
+          text: "",
+          icon: "error",
+          button: "Ok",
+        });
       }
     })
   }

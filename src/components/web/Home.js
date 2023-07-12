@@ -12,6 +12,8 @@ import imageXe from '../../assets/img/xe.png';
 import imageDiemDen from '../../assets/img/diemDen.png';
 import { useTranslation } from 'react-i18next';
 import {VscArrowSwap} from "react-icons/vsc"
+import swal from 'sweetalert';
+import { ToastContainer } from 'react-toastify';
 
 
 function Home(){
@@ -136,6 +138,7 @@ function Home(){
 
     return(
         <>
+        <ToastContainer/>
         <img src={image} style={{height: "400px",width:"100%", display: "inline-block", objectFit: "cover"}}/>
         
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", position: 'relative', top:"-375px", width:"100%", height: "350px",}}>
@@ -279,7 +282,21 @@ function Home(){
                           <Button style={{marginBottom:"8px", backgroundColor: "#0000CD", border: "none"}} onClick={()=>xemThongTinNhaXe(nx.id)} variant="primary">{t("Chi tiết")}</Button>
                         </Col>
                         <Col xs={6} sm={12} md={6}>
-                          <Button style={{marginBottom:"8px", backgroundColor: "#20B2AA", border: "none"}} onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đánh giá"))}else{danhGiaNhaXe(nx.id)}}} variant="primary">{t("Đánh giá")}</Button>
+                          <Button 
+                            style={{marginBottom:"8px", backgroundColor: "#20B2AA", border: "none"}} 
+                            onClick={()=>{
+                              if(!account){
+                                swal({
+                                  title: t("Bạn phải đăng nhập để đánh giá"),
+                                  text: "",
+                                  icon: "info",
+                                  button: "Ok",
+                                });
+                              }else{
+                                danhGiaNhaXe(nx.id)
+                            }}} 
+                            variant="primary">{t("Đánh giá")}
+                          </Button>
                         </Col>
                       </Row>
                   </Card.Body>

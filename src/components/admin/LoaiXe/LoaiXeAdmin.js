@@ -11,6 +11,7 @@ import DataTable, { defaultThemes } from "react-data-table-component";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 function LoaiXeAdmin(){
 
@@ -26,9 +27,22 @@ function LoaiXeAdmin(){
     const handleShowFormAdd = () => setShowFormAdd(true);
 
     const DeleteLoaiXe = (id) => {
-        if(window.confirm("Delete") === true){
-            deleteLoaiXe(id)
-        }
+
+        swal({
+            title: t("Bạn chắc chắn muốn xóa?"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                deleteLoaiXe(id)
+            } else {
+
+            }
+        });
+        
     }
 
     const handleShowFormUpdate =(lx)=>{

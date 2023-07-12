@@ -23,7 +23,7 @@ input[type=checkbox] {
 }
 
 input[type=checkbox]:checked + .label {
-    color: red;
+    color: blue;
 }
 
 input[type=checkbox]:checked + .seat {

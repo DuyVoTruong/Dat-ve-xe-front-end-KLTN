@@ -14,6 +14,7 @@ import { convert_vi_to_en } from "../../hooks/useFunction";
 import { GrSearch } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 function TaiKhoanNhaXe(){
 
@@ -32,36 +33,48 @@ function TaiKhoanNhaXe(){
         }
     }*/
     const UpdateTrangThai =(id, tk)=>{
-        if(window.confirm("Thay đổi trạng thái")===true){
-            let role = "NHAXE";
-            let username = tk.taiKhoan.username;
-            let password = tk.taiKhoan.password;
-            let tenNhaXe = tk.tenNhaXe;
-            let sdt = tk.sdt;
-            let moTaNgan = tk.moTaNgan;
-            let diaChi = tk.diaChi;
-            let trangThaiHoatDong;
-            let switchSelect = document.getElementById(`switch${tk.id}`).checked;
-            if(switchSelect === true){
-                trangThaiHoatDong = "ACTIVE";
-                document.getElementById(`switch${tk.id}`).checked=false
-            }else{
-                trangThaiHoatDong = "INACTIVE";
-                document.getElementById(`switch${tk.id}`).checked=true
+
+        swal({
+            title: t("Thay đổi trạng thái"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                let role = "NHAXE";
+                let username = tk.taiKhoan.username;
+                let password = tk.taiKhoan.password;
+                let tenNhaXe = tk.tenNhaXe;
+                let sdt = tk.sdt;
+                let moTaNgan = tk.moTaNgan;
+                let diaChi = tk.diaChi;
+                let trangThaiHoatDong;
+                let picture = tk.picture;
+                let email = tk.email
+                let switchSelect = document.getElementById(`switch${tk.id}`).checked;
+                if(switchSelect === true){
+                    trangThaiHoatDong = "ACTIVE";
+                    document.getElementById(`switch${tk.id}`).checked=false
+                }else{
+                    trangThaiHoatDong = "INACTIVE";
+                    document.getElementById(`switch${tk.id}`).checked=true
+                }
+                let data = {
+                    id, role,username,password,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong,picture,email
+                }
+                updateNhaXe(id, data);
+            } else {
+                let switchSelect = document.getElementById(`switch${tk.id}`).checked;
+                if(switchSelect === true){
+                    document.getElementById(`switch${tk.id}`).checked = false;
+                }else{
+                    document.getElementById(`switch${tk.id}`).checked = true;
+                }
             }
-            let data = {
-                id, role,username,password,tenNhaXe,sdt,moTaNgan,diaChi,trangThaiHoatDong
-            }
-            updateNhaXe(id, data);           
-        }
-        else{
-            let switchSelect = document.getElementById(`switch${tk.id}`).checked;
-            if(switchSelect === true){
-                document.getElementById(`switch${tk.id}`).checked = false;
-            }else{
-                document.getElementById(`switch${tk.id}`).checked = true;
-            }
-        }
+        });
+
     }
 
     const HandleShowUpdateForm =(taiKhoan)=>{
@@ -231,7 +244,7 @@ function TaiKhoanNhaXe(){
                 }
             })()
         }
-        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("quanlytaikhoannhaxe")}</h2></div>
+        <div style={{textAlign: "center", marginBottom:"30px", marginTop:"20px"}}><h2>{t("Quản lý tài khoản nhà xe")}</h2></div>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
             <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo username")}></input>

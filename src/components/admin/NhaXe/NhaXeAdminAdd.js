@@ -24,13 +24,14 @@ function NhaXeAdminAdd(){
         let tenNhaXe = document.getElementById("formTenNhaXe").value;
         let sdt = document.getElementById("formSDT").value;
         let moTaNgan = document.getElementById("formMoTaNgan").value;
+        let picture = "https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fxe.png6d58e73d-c4b6-4721-9609-1ab8cfe28540?alt=media&token=1b2a2ef3-d287-4d72-8a7e-d4245271b437";
         let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
-        if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"){
+        if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh==="Chọn tỉnh thành"||huyen==="Chọn quận huyện"||xa==="Chọn phường xã"||!picture){
             InfoMessage();
         }
         else{
             let data = {
-                role,username,password,tenNhaXe,sdt,moTaNgan,diaChi
+                role,username,password,tenNhaXe,sdt,moTaNgan,diaChi,picture
             }
             try{
                 signUp(data);

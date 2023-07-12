@@ -7,6 +7,7 @@ import { httpPostSignUp } from "../hooks/Request";
 import { MyContext } from "../../App";
 import { t } from "i18next";
 import InfoMessage from "../alert message/InfoMessage";
+import swal from "sweetalert";
 
 function Signup(){
 
@@ -29,12 +30,18 @@ function Signup(){
             let sdt = document.getElementById("formSDT").value;
             let email = document.getElementById("formEmail").value;
             let diaChi = document.getElementById("formDiaChi").value;
+            let picture = "https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fdefault_avatar.png989f063f-864d-497f-aaee-0ad210b3b5e2?alt=media&token=2d270ccf-7dec-4403-973d-6a2109557688";
             if(!role||!username||!password||!hoTen||!cmnd||!sdt||!email||!diaChi){
-                window.alert(t("vuilongdiendayduthongtin"))
+                swal({
+                    title: t("Bạn phải điền đầy đủ thông tin"),
+                    text: "",
+                    icon: "info",
+                    button: "Ok",
+                });
             }
             else{
                 let data = {
-                    role,username,password,hoTen,cmnd,sdt,email,diaChi
+                    role,username,password,hoTen,cmnd,sdt,email,diaChi,picture
                 }
                 try {
                     signUp(data);
@@ -49,27 +56,44 @@ function Signup(){
             let tinh = document.getElementById("city")[document.getElementById('city').selectedIndex].innerHTML;
             let huyen = document.getElementById("district")[document.getElementById('district').selectedIndex].innerHTML;
             let xa = document.getElementById("ward")[document.getElementById('ward').selectedIndex].innerHTML;
-
+            
             let username = document.getElementById("formUsername").value;
             let password = document.getElementById("formPassword").value;
             let tenNhaXe = document.getElementById("formTenNhaXe").value;
+            let email = document.getElementById("formEmail").value;
             let sdt = document.getElementById("formSDT").value;
             let moTaNgan = document.getElementById("formMoTaNgan").value;
             let diaChi = soNha+", "+xa+", "+huyen+", "+tinh;
-            if(!role||!username||!password||!tenNhaXe||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
-                InfoMessage();
+            let picture = "https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fxe.png6d58e73d-c4b6-4721-9609-1ab8cfe28540?alt=media&token=1b2a2ef3-d287-4d72-8a7e-d4245271b437";
+            if(!role||!username||!password||!tenNhaXe||!email||!sdt||!moTaNgan||!diaChi||!soNha||tinh===t("Chọn tỉnh thành")||huyen===t("Chọn quận huyện")||xa===t("Chọn phường xã")){
+                swal({
+                    title: t("Bạn phải điền đầy đủ thông tin"),
+                    text: "",
+                    icon: "info",
+                    button: "Ok",
+                });
             }
             else{
                 let data = {
-                    role,username,password,tenNhaXe,sdt,moTaNgan,diaChi
+                    role,username,password,tenNhaXe,email,sdt,moTaNgan,diaChi,picture
                 }
                 try {
                     httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                         if (data.status == 200){
-                            alert(t("Thành công!!! Vui lòng liên hệ quản trị viên để được kích hoạt tài khoản qua số điện thoại: 0366441943!!!"));
+                            swal({
+                                title: t("Thành công!!! Vui lòng liên hệ quản trị viên để được kích hoạt tài khoản qua số điện thoại: 0366441943!!!"),
+                                text: "",
+                                icon: "success",
+                                button: "Ok",
+                            });
                         }
                         else {
-                            alert(data.message);
+                            swal({
+                                title: t("Đã xảy ra lỗi, vui lòng thực hiện lại"),
+                                text: "",
+                                icon: "error",
+                                button: "Ok",
+                            });
                         }
                     });
                     redirectLogin();
@@ -238,27 +262,34 @@ function Signup(){
     
                             <Form.Group className="mb-3" controlId="formTenNhaXe">
                                 <Form.Label className="text-center">
-                                {t("tennhaxe")}
+                                {t("Tên nhà xe")}
                                 </Form.Label>
                                 <Form.Control type="text" placeholder={t("Nhập tên nhà xe")} />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEmail">
+                                <Form.Label className="text-center">
+                                Email
+                                </Form.Label>
+                                <Form.Control type="email" placeholder={t("Nhập Email")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formSDT">
                                 <Form.Label className="text-center">
-                                {t("sodienthoai")}
+                                {t("Số điện thoại")}
                                 </Form.Label>
                                 <Form.Control type="text" placeholder={t("Nhập số điện thoại của nhà xe")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formMoTaNgan">
                                 <Form.Label className="text-center">
-                                {t("motangan")}
+                                {t("Mô tả ngắn")}
                                 </Form.Label>
                                 <Form.Control  as="textarea" rows={3} placeholder={t("Nhập nội dung mô tả ngắn")} />
                             </Form.Group>
     
                             <Form.Group className="mb-3" controlId="formDiaChi">
-                                <Form.Label>Địa chỉ</Form.Label>
+                                <Form.Label>{t("Địa chỉ")}</Form.Label>
                                 <Form.Select className="mb-3" id="city" aria-label="Chọn tỉnh thành">
                                     <option>{t("Chọn tỉnh thành")}</option>
                                 </Form.Select>

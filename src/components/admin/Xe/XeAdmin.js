@@ -11,6 +11,7 @@ import { GrSearch } from "react-icons/gr";
 import { convert_vi_to_en } from "../../hooks/useFunction";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 function XeAdmin(){
 
@@ -23,9 +24,22 @@ function XeAdmin(){
     const {t} = useTranslation();
 
     const DeleteBenXe = (id) => {
-        if(window.confirm("Delete") === true){
-            deleteXe(id)
-        }
+
+        swal({
+            title: t("Bạn chắc chắn muốn xóa?"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                deleteXe(id);
+            } else {
+
+            }
+        });
+        
     }
 
     const handleShowFormAdd = () => setShowFormAdd(true);
@@ -61,7 +75,7 @@ function XeAdmin(){
                     <>
                     <div style={{margin: "10px"}}>
                         <BiEdit className="edit-btn" onClick={()=>handleShowFormUpdate(row.id)}></BiEdit>
-                        <ImBin className="delete-btn" onClick={(0)}></ImBin>
+                        <ImBin className="delete-btn" onClick={()=>DeleteBenXe(row.id)}></ImBin>
                     </div>
                     </>
                 );

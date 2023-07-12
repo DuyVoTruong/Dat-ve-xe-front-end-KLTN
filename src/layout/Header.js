@@ -1,17 +1,19 @@
-import { memo, useContext, useState } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { memo, useContext, useEffect, useState } from "react";
+import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import useToken from "../components/hooks/useToken";
 import {MyContext} from "../App"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import flagEN from "../assets/img/flagEN.jpg";
 import flagVN from "../assets/img/flagVN.png";
+import { httpGetUserById } from "../components/hooks/Request";
 
 function Header(){
 
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
     const setAccount = useContext(MyContext).setAccount;
+    const [thongTinTaiKhoan, setThongTinTaiKhoan] = useState([]);
     const nav = useNavigate();
     const location = useLocation();
     const logout =()=>{
@@ -19,6 +21,16 @@ function Header(){
         setAccount();
         window.location.replace(window.location.origin + window.location.pathname);
     }
+
+    useEffect(()=>{
+        if(account){
+            httpGetUserById(account.id, token).then(data=>{
+                if(data.object){
+                    setThongTinTaiKhoan(data.object);
+                }
+            })
+        }
+    },[])
 
     const { t } = useTranslation();
 
@@ -103,9 +115,7 @@ function Header(){
                                             <img src={flagEN} height={30} width={60} style={{margin: "10px", cursor: "pointer"}} onClick={()=>handleChangeLanguage("en")}></img>
                                         </div>
                                         <div style={{margin:"10px"}}>
-                                            <a className="text-white pl-2">
-                                                <i className="fa fa-user"></i>
-                                            </a>
+                                            <Image style={{objectFit: "cover"}} height={30} width={30} src={thongTinTaiKhoan.picture} roundedCircle />
                                             <a href="#/thong-tin-tai-khoan" style={{marginLeft: "10px"}}>{account.username}</a>
                                         </div>
 

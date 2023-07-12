@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
 import SuccessMessage from "../../alert message/SuccessMessage";
 import ErrorMessage from "../../alert message/ErrorMessage";
+import swal from "sweetalert";
 
 const QuanLyVeXe =()=>{
     const account = useContext(MyContext).account;
@@ -37,7 +38,7 @@ const QuanLyVeXe =()=>{
             body: JSON.stringify(data),
         }).then(res=>res.json()).then(data=>{
             if(data.status==200){
-                window.alert("Success");
+                SuccessMessage();
                 setLoad(true);
             }
         })
@@ -100,22 +101,34 @@ const QuanLyVeXe =()=>{
     }
 
     const deleteVeXe =(id)=>{
-        if(window.confirm(t("Bạn muốn hủy vé xe này?"))===true){
-            fetch("http://localhost:8081/api/vexe/"+id,{
-            method: "DELETE",
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                "Content-Type": "application/json",
-            },
-            }).then(res=>res.json()).then(data=>{
-                if(data.status==200){
-                    SuccessMessage(t("Hủy vé xe thành công!!!"));
-                    setLoad(true);
-                }else{
-                    window.alert(t("Đã xảy ra lỗi!!!"));
-                }
-            })
-        }
+
+        swal({
+            title: t("Bạn muốn hủy vé xe này?"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                fetch("http://localhost:8081/api/vexe/"+id,{
+                method: "DELETE",
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    "Content-Type": "application/json",
+                },
+                }).then(res=>res.json()).then(data=>{
+                    if(data.status==200){
+                        SuccessMessage(t("Hủy vé xe thành công!!!"));
+                        setLoad(true);
+                    }else{
+                        window.alert(t("Đã xảy ra lỗi!!!"));
+                    }
+                })
+            } else {
+
+            }
+        });
     }
 
     const columns = [
@@ -251,8 +264,8 @@ const QuanLyVeXe =()=>{
         <ToastContainer/>
         <div style={{margin: "20px", backgroundColor:"white", borderRadius: "5px"}} className="shadow">
         <div style={{display: "flex"}}>
-        <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("timkiemtheotennguoidat")}></input>
-            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("timkiem")}</Button></div>
+        <input id="searchText" onKeyDown={(evt)=>handleKeyDown(evt)} className="form-control" style={{marginTop: "20px", marginBottom: "20px", marginLeft: "25px", width: "30%"}} type={"search"} placeholder={t("Tìm kiếm theo tên của người đặt")}></input>
+            <div style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px"}}><Button onClick={handleSearch} variant="outline-success"><GrSearch></GrSearch>{t("Tìm kiếm")}</Button></div>
             <BsPlusSquareFill style={{marginTop: "25px"}} onClick={0} className="add-btn"></BsPlusSquareFill>
         </div>
         <div style={{padding:"20px", overflow: "auto"}}>

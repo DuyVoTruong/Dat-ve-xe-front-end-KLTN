@@ -8,7 +8,7 @@ function AdminHome(){
     const {t} = useTranslation();
 
     return(
-        <div className="d-flex justify-content-center align-items-center" style={{height:"90vh"}}>
+        <div className="d-flex justify-content-center align-items-center" style={{height:"90vh", textAlign: "center"}}>
             <h1>{t("chaomung", {account: account.username})}</h1>
         </div>
     );

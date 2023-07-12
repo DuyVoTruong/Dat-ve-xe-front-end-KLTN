@@ -14,6 +14,7 @@ import { GrSearch } from "react-icons/gr";
 import { convert_vi_to_en } from "../../hooks/useFunction";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 function TaiKhoanUser(){
 
@@ -34,36 +35,47 @@ function TaiKhoanUser(){
     }*/
 
     const HandleUpdateTrangThai =(id, tk)=>{
-        if(window.confirm("Thay đổi trạng thái")===true){
-            let role = "USER";
-            let username = tk.taiKhoan.username;
-            let hoTen = tk.hoTen;
-            let cmnd = tk.cmnd;
-            let sdt = tk.sdt;
-            let email = tk.email;
-            let diaChi = tk.diaChi;
-            let trangThaiHoatDong;
-            let switchSelect = document.getElementById(`switch${tk.id}`).checked;
-            if(switchSelect === true){
-                trangThaiHoatDong = "ACTIVE";
-                document.getElementById(`switch${tk.id}`).checked=false
-            }else{
-                trangThaiHoatDong = "INACTIVE";
-                document.getElementById(`switch${tk.id}`).checked=true
+
+        swal({
+            title: t("Thay đổi trạng thái"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                let role = "USER";
+                let username = tk.taiKhoan.username;
+                let hoTen = tk.hoTen;
+                let cmnd = tk.cmnd;
+                let sdt = tk.sdt;
+                let email = tk.email;
+                let diaChi = tk.diaChi;
+                let trangThaiHoatDong;
+                let picture = tk.picture;
+                let switchSelect = document.getElementById(`switch${tk.id}`).checked;
+                if(switchSelect === true){
+                    trangThaiHoatDong = "ACTIVE";
+                    document.getElementById(`switch${tk.id}`).checked=false
+                }else{
+                    trangThaiHoatDong = "INACTIVE";
+                    document.getElementById(`switch${tk.id}`).checked=true
+                }
+                let data = {
+                    id,role,username,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong,picture
+                }
+                updateUser(id, data);
+            } else {
+                let switchSelect = document.getElementById(`switch${tk.id}`).checked;
+                if(switchSelect === true){
+                    document.getElementById(`switch${tk.id}`).checked = false;
+                }else{
+                    document.getElementById(`switch${tk.id}`).checked = true;
+                }
             }
-            let data = {
-                 id,role,username,hoTen,cmnd,sdt,email,diaChi,trangThaiHoatDong
-            }
-            updateUser(id, data);
-        }
-        else{
-            let switchSelect = document.getElementById(`switch${tk.id}`).checked;
-            if(switchSelect === true){
-                document.getElementById(`switch${tk.id}`).checked = false;
-            }else{
-                document.getElementById(`switch${tk.id}`).checked = true;
-            }
-        }
+        });
+
     }
 
     const HandleShowUpdateForm =(taiKhoan)=>{

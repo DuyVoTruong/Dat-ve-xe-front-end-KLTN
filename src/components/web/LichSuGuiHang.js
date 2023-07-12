@@ -6,6 +6,8 @@ import { getHangHoaByUserId } from "../hooks/useFunction";
 import { useTranslation } from "react-i18next";
 import { tableCustomStyles } from "../../css/data-table-style";
 import DataTable from "react-data-table-component";
+import SuccessMessage from "../alert message/SuccessMessage";
+import { ToastContainer } from "react-toastify";
 
 const LichSuGuiHang=()=>{
 
@@ -29,7 +31,7 @@ const LichSuGuiHang=()=>{
     },[])
 
     const huyDon =(id)=>{
-        if(window.confirm(t("banmuonxoadongiaohangnay"))==true){
+        if(window.confirm(t("Bạn muốn hủy đơn giao hàng này?"))==true){
             fetch(`http://localhost:8081/api/hanghoa/${id}`,{
                 method: "DELETE",
                 headers: {
@@ -38,7 +40,7 @@ const LichSuGuiHang=()=>{
                 }
             }).then(res=>res.json()).then(data=>{
                     if(data.status==200){
-                        window.alert(t("xoadongiaohangthanhcong"));
+                        SuccessMessage(t("Xóa đơn giao hàng thành công"));
                         setLoad(true);
                     }
                 })
@@ -114,7 +116,7 @@ const LichSuGuiHang=()=>{
 
     return (
         <>
-        
+        <ToastContainer/>
         <Container>
         <div style={{margin: "20px 0px", backgroundColor:"white", borderRadius: "5px", minHeight: "80vh"}} className="shadow">
         <div style={{padding: "20px"}}>
