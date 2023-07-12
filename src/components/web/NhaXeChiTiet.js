@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Card, Col, Form, ProgressBar, Row, Table } from "react-bootstrap";
+import { Button, Card, Col, Form, ProgressBar, Row, Table, ToastContainer } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAllDanhGiaByIdNhaXe, getNhaXeUserById } from "../hooks/useFunction"
 import "../../css/comment.css"
@@ -9,6 +9,8 @@ import useTuyenXe from "../hooks/useTuyenXe";
 import imageDetail from '../../assets/img/view-details.png'
 import { t } from "i18next";
 import swal from "sweetalert";
+import SuccessMessage from "../alert message/SuccessMessage";
+import ErrorMessage from "../alert message/ErrorMessage";
 
 const NhaXeChiTiet =()=>{
 
@@ -52,23 +54,35 @@ const NhaXeChiTiet =()=>{
     }
 
     const deleteDanhGia =(id)=>{
-        if(window.confirm(t("banmuonxoadanhgianay"))===true){
-            fetch("http://localhost:8081/api/danhgia/"+id,{
-            method: "DELETE",
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                "Content-Type": "application/json",
-            },
-            }).then(res=>res.json()).then(data=>{
-                if(data.status==200){
-                    window.alert(t("Xóa đánh giá thành công"));
-                    setLoad(true);
-                    window.location.reload();
-                }else{
-                    window.alert(t("Đã xảy ra lỗi"));
-                }
-            })
-        }
+
+        swal({
+            title: t("Bạn muốn xóa đánh giá này?"),
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                fetch("http://localhost:8081/api/danhgia/"+id,{
+                method: "DELETE",
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    "Content-Type": "application/json",
+                },
+                }).then(res=>res.json()).then(data=>{
+                    if(data.status==200){
+                        SuccessMessage(t("Xóa đánh giá thành công"));
+                        setLoad(true);
+                        window.location.reload();
+                    }else{
+                        ErrorMessage(t("Đã xảy ra lỗi"));
+                    }
+                })
+            } else {
+
+            }
+        });
     }
 
     useEffect(()=>{
@@ -121,6 +135,7 @@ const NhaXeChiTiet =()=>{
 
     return(
         <>
+            <ToastContainer/>
             <div style={{margin: "20px", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "50px"}}>
                 <Col md="8">
 

@@ -94,6 +94,7 @@ const QuanLyHangHoa =()=>{
         }).then(res=>res.json()).then(data=>{
             if(data.status==200){
                 setLoad(true);
+                SuccessMessage();
             }
         })
     }
