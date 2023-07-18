@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { MyContext } from "../../App";
-import { httpPostVeXe } from "../hooks/Request";
+import { httpGetUserById, httpPostVeXe } from "../hooks/Request";
 import { getAllVeXeByTuyenXeId, getTuyenXeById } from "../hooks/useFunction";
 import { ToastContainer, toast } from 'react-toastify';
 import {ReactComponent as SeatIcon} from "../../assets/svg/seat-frame.svg"
@@ -19,6 +19,7 @@ function DatVe(){
     const account = useContext(MyContext).account;
     const tuyenXeId = useParams("id").id;
     const [tuyenXeById, setTuyenXeById] = useState([]);
+    const [thongTinTaiKhoan, setThongTinTaiKhoan] = useState([]);
     
     const [veXeDaDat, setVeXeDaDat] = useState([]);
     let sucChua = 20;
@@ -90,7 +91,7 @@ function DatVe(){
          // Lặp qua từng checkbox để lấy giá trị
          for (var i = 0; i < checkbox.length; i++){
             if (checkbox[i].checked === true){
-                soGhe.push(checkbox[i].value);
+                soGhe.push(Number(checkbox[i].value));
             }
          }
 
@@ -111,16 +112,31 @@ function DatVe(){
 
             console.log(data)
 
-            httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
-                if(data.status==200){
-                    nav("/lich-su-dat-ve");
-                    setTimeout(()=>{SuccessMessage(t("Bạn đã đặt vé thành công"))}, 1000);
-                }
-                else{
-                    ErrorMessage(data.message);
-                }
-            });
+            if(hinhThucThanhToan=="ONLINE"){
 
+                httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
+                    if(data.status==200){
+                        localStorage.setItem("soGheList", JSON.stringify(soGhe));
+                        localStorage.setItem("tuyenXeId", tuyenXeId);
+                        localStorage.setItem("tongSoTien", tongTien);
+                        nav("/trang-thanh-toan");
+                    }
+                    else{
+                        ErrorMessage(data.message);
+                    }
+                });
+
+            } else if(hinhThucThanhToan=="OFFLINE"){
+                httpPostVeXe(data, token).then(res=>res.json()).then(data=>{
+                    if(data.status==200){
+                        nav("/lich-su-dat-ve");
+                        setTimeout(()=>{SuccessMessage(t("Bạn đã đặt vé thành công"))}, 1000);
+                    }
+                    else{
+                        ErrorMessage(data.message);
+                    }
+                });
+            }
         }
     }
 
@@ -155,6 +171,16 @@ function DatVe(){
           })
     },[])
 
+    useEffect(()=>{
+        if(account){
+            httpGetUserById(account.id, token).then(data=>{
+                if(data.object){
+                    setThongTinTaiKhoan(data.object);
+                }
+            })
+        }
+    },[account])
+
     return(
         <>
         <ToastContainer/>
@@ -171,9 +197,9 @@ function DatVe(){
                         <Form>
                             <Form.Group className="mb-3" controlId="formUsername">
                             <Form.Label className="text-center">
-                                {t("Tên tài khoản")}
+                                {t("Họ tên")}
                             </Form.Label>
-                            <Form.Control type="text" value={account.username} readOnly/>
+                            <Form.Control type="text" value={thongTinTaiKhoan.hoTen} readOnly/>
                             </Form.Group>
 
                             {

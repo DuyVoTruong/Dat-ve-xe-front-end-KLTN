@@ -53,7 +53,7 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
         let cmnd = document.getElementById("CMNDForm").value;
         let sdt = document.getElementById("SDTForm").value;
         let diaChi = document.getElementById("DiaChiForm").value;
-        let email = document.getElementById("EmailForm").value;
+        let email = thongTinTaiKhoan.email;
         let trangThaiHoatDong = thongTinTaiKhoan.taiKhoan.trangThaiHoatDong;
         let picture = urlImageUpload;
         let role = "USER";
@@ -104,7 +104,7 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
     }else if(account.role==="NHAXE"){
         let tenNhaXe = document.getElementById("TenNhaXeForm").value;
         let sdt = document.getElementById("SDTForm").value;
-        let email = document.getElementById("EmailForm").value;
+        let email = thongTinTaiKhoan.email;
         let diaChi = document.getElementById("DiaChiForm").value;
         let moTaNgan = document.getElementById("MoTaNganForm").value;
         let trangThaiHoatDong = thongTinTaiKhoan.taiKhoan.trangThaiHoatDong;
@@ -250,13 +250,6 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
                     <Form.Control type="text" placeholder={t("Nhập địa chỉ")} defaultValue={thongTinTaiKhoan.diaChi}/>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="EmailForm">
-                    <Form.Label className="text-center">
-                    Email
-                    </Form.Label>
-                    <Form.Control type="email" placeholder={t("Nhập Email")} defaultValue={thongTinTaiKhoan.email}/>
-                </Form.Group>
-
                 <Form.Group className="mb-3" controlId="ImageForm">
                     <Form.Label className="text-center">
                    {t("Hình ảnh")}
@@ -313,13 +306,6 @@ function UpdateInForForm({thongTinTaiKhoan, setLoad}){
                     {t("Số điện thoại")}
                     </Form.Label>
                     <Form.Control type="text" placeholder={t("Nhập số điện thoại của nhà xe")} defaultValue={thongTinTaiKhoan.sdt}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="EmailForm">
-                    <Form.Label className="text-center">
-                    Email
-                    </Form.Label>
-                    <Form.Control type="email" placeholder={t("Nhập Email")} defaultValue={thongTinTaiKhoan.email}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="DiaChiForm">
@@ -581,18 +567,26 @@ const ThongTinTaiKhoan =()=> {
                     <Row className="d-flex justify-content-center align-items-center">
                         <Col md="10" sm="10" >
                             <Card className="shadow">
-                            <Row className="d-flex justify-content-center align-items-center">
-                                <Col md="6">
-                                <FloatingLabel label="Username" className="m-3">
-                                    <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.taiKhoan.username}/>
-                                </FloatingLabel>
-                                </Col>
-                                <Col md="6">
-                                <FloatingLabel label="Password" className="m-3">
-                                    <Form.Control disabled type="password" placeholder="name@example.com" value={"*******"}/>
-                                </FloatingLabel>
-                                </Col>
-                            </Row>
+                          {
+                            (()=>{
+                                if(!thongTinTaiKhoan.taiKhoan.provider == "GOOGLE"){
+                                    return(
+                                        <Row className="d-flex justify-content-center align-items-center">
+                                            <Col md="6">
+                                            <FloatingLabel label="Username" className="m-3">
+                                                <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.taiKhoan.username}/>
+                                            </FloatingLabel>
+                                            </Col>
+                                            <Col md="6">
+                                            <FloatingLabel label="Password" className="m-3">
+                                                <Form.Control disabled type="password" placeholder="name@example.com" value={"*******"}/>
+                                            </FloatingLabel>
+                                            </Col>
+                                        </Row>
+                                    );
+                                }
+                            })()
+                          }      
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col md="6">
                                 <FloatingLabel label={t("Họ tên")} className="m-3">
@@ -612,7 +606,7 @@ const ThongTinTaiKhoan =()=> {
                                 </FloatingLabel>
                                 </Col>
                                 <Col md="6">
-                                <FloatingLabel label="email" className="m-3">
+                                <FloatingLabel label="Email" className="m-3">
                                     <Form.Control disabled type="text" placeholder="name@example.com" value={thongTinTaiKhoan.email}/>
                                 </FloatingLabel>
                                 </Col>

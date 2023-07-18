@@ -30,7 +30,7 @@ function Header(){
                 }
             })
         }
-    },[])
+    },[account])
 
     const { t } = useTranslation();
 
@@ -116,7 +116,7 @@ function Header(){
                                         </div>
                                         <div style={{margin:"10px"}}>
                                             <Image style={{objectFit: "cover"}} height={30} width={30} src={thongTinTaiKhoan.picture} roundedCircle />
-                                            <a href="#/thong-tin-tai-khoan" style={{marginLeft: "10px"}}>{account.username}</a>
+                                            <a href="#/thong-tin-tai-khoan" style={{marginLeft: "10px"}}>{thongTinTaiKhoan.hoTen}</a>
                                         </div>
 
                                         <div style={{margin:"10px"}}>

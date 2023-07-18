@@ -5,11 +5,13 @@ import { httpDeleteDanhGia, httpGetDanhGia, httpPostDanhGia, httpPutDanhGia } fr
 import FailMessage from "../alert message/FailMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import SuccessMessage from "../alert message/SuccessMessage";
+import { useTranslation } from "react-i18next";
 
 function useDanhGia(){
     const [danhGia, setDanhGia] = useState([]);
     const nav = useNavigate();
     const token = useContext(MyContext).token;
+    const {t} = useTranslation();
 
     const getDanhGia = useCallback(async() => {
         const fetchedDanhGia = await httpGetDanhGia(token);
@@ -35,15 +37,15 @@ function useDanhGia(){
             try {
                 await httpPostDanhGia(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                         nav("/nha-xe-chi-tiet/"+nhaXeId)
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         //}
         getDanhGia();
@@ -57,14 +59,14 @@ function useDanhGia(){
             try {
                 await httpPutDanhGia(idDanhGia, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage("Thất bại");
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         //}
         getDanhGia();
@@ -74,14 +76,14 @@ function useDanhGia(){
         try {
             await httpDeleteDanhGia(idDanhGia, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("Thất bại"));
         }
         getDanhGia();
     },[getDanhGia])

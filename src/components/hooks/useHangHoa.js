@@ -5,11 +5,13 @@ import { httpDeleteHangHoa, httpGetHangHoa, httpPostHangHoa, httpPutHangHoa } fr
 import SuccessMessage from "../alert message/SuccessMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import FailMessage from "../alert message/FailMessage";
+import { useTranslation } from "react-i18next";
 
 function useHangHoa(){
     const [hangHoa, setHangHoa] = useState([]);
     const nav = useNavigate();
     const token = useContext(MyContext).token;
+    const {t} = useTranslation();
 
     const getHangHoa = useCallback(async() => {
         const fetchedHangHoa = await httpGetHangHoa(token);
@@ -35,15 +37,15 @@ function useHangHoa(){
             try {
                 await httpPostHangHoa(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                         nav("/lich-su-gui-hang/")
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         //}
         getHangHoa();
@@ -57,14 +59,14 @@ function useHangHoa(){
             try {
                 await httpPutHangHoa(idHangHoa, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         //}
         getHangHoa();
@@ -74,14 +76,14 @@ function useHangHoa(){
         try {
             await httpDeleteHangHoa(idHangHoa, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("Thất bại"));
         }
         getHangHoa();
     },[getHangHoa])

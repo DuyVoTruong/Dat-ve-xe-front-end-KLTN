@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import useTuyenXe from '../hooks/useTuyenXe';
 import {getAllBenXeUser, getNhaXeUserAll, getSaoTrungBinhNhaXe} from '../hooks/useFunction'
 import "../../css/rating.css"
@@ -18,10 +18,10 @@ import { ToastContainer } from 'react-toastify';
 
 function Home(){
   
-
-
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
+    const location = useLocation()
+    const queryParameters = new URLSearchParams(location.search)
 
     const [benXe, setBenXe] = useState([]);
     const {tuyenXe} = useTuyenXe();
@@ -114,6 +114,27 @@ function Home(){
       })
     },[])
 
+
+    useEffect(()=>{
+      const status = queryParameters.get('trang-thai');
+      const code = queryParameters.get("ma-thanh-toan");
+      if(status=="success"){
+        swal({
+          title: t("Thanh toán thành công"),
+          text: "",
+          icon: "success",
+          button: "Ok",
+        });
+      } else if(status=="failed"||status=="invalid signature"){
+        swal({
+          title: t("Thanh toán thất bại"),
+          text: "",
+          icon: "error",
+          button: "Ok",
+        });
+      }
+    },[])
+
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -204,16 +225,28 @@ function Home(){
             {tuyenXe.map(tx =>{
               if(tx.ngayDi.indexOf(toDay)>=0){
                 return(
-                  <Card onClick={()=>{if(!account){window.alert(t("Bạn phải đăng nhập để đặt vé"))}else{datVe(tx)}}} style={{ margin: "2rem" }} className="shadow card-transform">
+                  <Card onClick={()=>{
+                    if(!account){
+                      swal({
+                        title: t("Bạn phải đăng nhập để đặt vé"),
+                        text: "",
+                        icon: "info",
+                        button: "Ok",
+                      });
+                    }else{
+                      datVe(tx)
+                    }}} 
+                    style={{ margin: "2rem" }} 
+                    className="shadow card-transform">
                     <Card.Body>
                       {
                         (()=>{
                           let title="";
                           if(tx.benXeDi){
-                              title = title + tx.benXeDi.tenBenXe + " ("+ tx.benXeDi.tinhThanh+") => ";
+                              title = title + tx.benXeDi.tenBenXe + " => ";
                           }
                           if(tx.benXeDen){
-                              title = title + tx.benXeDen.tenBenXe + " ("+ tx.benXeDen.tinhThanh+")";
+                              title = title + tx.benXeDen.tenBenXe;
                           }
                           return(
                             <Card.Title key={tx.id}>{title}</Card.Title>
@@ -258,7 +291,7 @@ function Home(){
           {nhaXe.map(nx =>{
             return(
                 <Card style={{ margin: "1rem" }} className="shadow card-transform">
-                  <Card.Img height={"100vh"} variant="top" src={imageXe} />
+                  <Card.Img height={"100vh"} variant="top" src={nx.picture} />
                   <Card.Body>
                       <Card.Title>{nx.tenNhaXe}</Card.Title>
                       <span style={{fontSize: "14px"}}>

@@ -5,11 +5,13 @@ import InfoMessage from "../alert message/InfoMessage";
 import SuccessMessage from "../alert message/SuccessMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import FailMessage from "../alert message/FailMessage";
+import { useTranslation } from "react-i18next";
 
 function useNhaXe(){
     const [nhaXe, setNhaXe] = useState([]);
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
+    const {t} = useTranslation();
 
     const getNhaXeAdmin = useCallback(async() => {
         const fetchedNhaXe = await httpGetNhaXe(token);
@@ -50,14 +52,14 @@ function useNhaXe(){
             try {
                 await httpPostNhaXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getNhaXeAdmin();
@@ -71,16 +73,16 @@ function useNhaXe(){
             try {
                 await httpPutNhaXe(idNhaXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else if(!data.message){
                         alert("Bạn phải đăng nhập lại!!!");
                     }else{
-                        ErrorMessage(data.message)
+                        ErrorMessage(t("Thắt bại"))
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getNhaXeAdmin();
@@ -90,14 +92,14 @@ function useNhaXe(){
         try {
             await httpDeleteNhaXe(idNhaXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("Thất bại"));
         }
         getNhaXeAdmin();
     },[getNhaXeAdmin])
@@ -107,14 +109,14 @@ function useNhaXe(){
             try {
                 await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         
         getNhaXeAdmin();
@@ -128,14 +130,14 @@ function useNhaXe(){
             try {
                 await httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getNhaXeAdmin();

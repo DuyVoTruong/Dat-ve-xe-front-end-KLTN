@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../App";
-import { httpGetVeXe } from "../hooks/Request";
+import { httpGetVeXe, httpThanhToanDatVe } from "../hooks/Request";
 import { getVeXeUserById } from "../hooks/useFunction";
 import useUser from "../hooks/useUser";
 import useVeXe from "../hooks/useVeXe";
@@ -59,6 +59,25 @@ const LichSuDatVe=()=>{
         }
     }
 
+    const thanhToan =(row)=>{
+
+
+        const soGheList = [];
+        soGheList.push(row.soGhe);
+
+        let data={
+            soGheList: soGheList,
+            tongSoTien: row.tuyenXe.giaVe,
+            tuyenXeId: row.tuyenXe.id
+        }
+
+        httpThanhToanDatVe(data, token).then(res=>res.json()).then(data=>{
+            if(data.result && data.data!=null){
+                window.open(data.data, '_self');
+            }
+        })
+    }
+
     const { t } = useTranslation();
 
     const columns = [
@@ -112,6 +131,7 @@ const LichSuDatVe=()=>{
                                 if(row.trangThai==="INACTIVE"){
                                     return(
                                         <>
+                                            <button style={{padding: "15px" ,margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}} onClick={()=>thanhToan(row)}>{t("Thanh toán")}</button>
                                             <button onClick={()=>deleteVeXe(row.id)} style={{margin: "10px", border:"1px solid #c0c6cc", borderRadius:"15px"}}><FiDelete size={30} style={{margin:"10px", color: "red"}}></FiDelete><span style={{marginRight: "10px"}}>{t("Hủy")}</span></button>
                                         </>
                                     );

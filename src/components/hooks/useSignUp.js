@@ -22,14 +22,18 @@ function useSignUp(){
             try {
                 await httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
+                        localStorage.setItem('idHash', data.message);
+                        nav("/verify-email");
                         swal({
                             title: t("Bạn đã thực hiện thành công"),
-                            text: "",
+                            text: t("Vui lòng kiểm tra email để lấy mã otp"),
                             icon: "success",
                             button: "Ok",
                         });
                     }
-                    else {
+                    else if(data.status==201){
+                        nav("/verify-email");
+                    } else {
                         swal({
                             title: t("Đã xảy ra lỗi vui lòng thực hiện lại"),
                             text: "",

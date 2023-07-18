@@ -8,6 +8,8 @@ import backgroundLogin from "../../assets/img/background-login2.jpg";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
 import swal from "sweetalert";
+import { GoogleLogin, googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 function Login() {
 
@@ -19,10 +21,6 @@ function Login() {
 
   const nav = useNavigate();
 
-  const loginGoogle =()=>{
-    window.open("https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8081/api/login-google&response_type=code&client_id=632584279277-6ov8je5ek4p0p67ad1892832k4naihk3.apps.googleusercontent.com&approval_prompt=force", '_self');
-  }
-
   const login = async(e)=>{
     e.preventDefault();
     let accountLogin ={
@@ -31,7 +29,7 @@ function Login() {
 
     httpLogin(accountLogin).then(res=>res.json()).then(data=>{
       console.log(data);
-      if(data.object!=null){
+      if(data.object!=null&&data.status==200){
         const userToken = {
           jwtToken: data.object.jwtToken,
           account: {
@@ -66,7 +64,27 @@ function Login() {
           icon: "warning",
           button: "Ok",
         });
-      } else{
+      } else if(data.status==201){
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+        nav("/verify-email");
+        swal({
+          title: t("Vui lòng kiểm tra email để lấy mã otp"),
+          text: "",
+          icon: "info",
+          button: "Ok",
+        });
+      } else if(data.status==204){
+        localStorage.setItem("accountTemp", JSON.stringify({
+          id: data.object.id,
+          username: data.object.username,
+          role: data.object.role,
+          email: data.object.email
+        }));
+        localStorage.setItem("tokenTemp", data.object.jwtToken);
+        nav("/gia-han-dich-vu");
+      }
+      else {
         swal({
           title: t("Đã xảy ra lỗi, vui lòng thực hiện lại"),
           text: "",
@@ -76,6 +94,87 @@ function Login() {
       }
     })
   }
+
+
+    const [ user, setUser ] = useState([]);
+    const [ profile, setProfile ] = useState([]);
+
+    const loginGoogleHandle = useGoogleLogin({
+        onSuccess: (codeResponse) => {setUser(codeResponse); console.log(codeResponse);},
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
+    useEffect(
+        () => {
+            if (user) {
+                fetch(`http://localhost:8081/api/login-google?accessToken=${user.access_token}`, {
+
+                    }).then(res=>res.json())
+                    .then((data) => {
+                      if(data.status==200){
+                        console.log(1);
+                        if(data.object!=null){
+                          const userToken = {
+                            jwtToken: data.object.jwtToken,
+                            account: {
+                              id: data.object.id,
+                              username: data.object.username,
+                              role: data.object.role,
+                              email: data.object.email
+                            }
+                          }
+                          setToken(userToken);//lưu token
+                          //window.alert(t("Đăng nhập thành công!!!"))
+                          if(data.object.role==="USER"){
+                            nav("/home")
+                          }else if(data.object.role==="ADMIN"){
+                            nav("/admin/home")
+                          }else if(data.object.role==="NHAXE"){
+                            nav("/nha-xe/home")
+                          }
+                          setProfile(data);
+                        }
+                      } else if(data.status==201){
+                        console.log(2);
+                        const userToken = {
+                          jwtToken: data.object.jwtToken,
+                          account: {
+                            id: data.object.id,
+                            username: data.object.username,
+                            role: data.object.role,
+                            email: data.object.email
+                          }
+                        }
+                        nav("/cap-nhat-login-google");
+                        setToken(userToken);
+                      }
+                      else if(data.status==400){
+                        if(data.message == "Email has existed.")
+                        swal({
+                          title: t("Email đã tồn tại"),
+                          text: "",
+                          icon: "info",
+                          button: "Ok",
+                        });
+                      }
+                      else{
+                        setProfile(null);
+                      }
+                      console.log(data)
+                    })
+                    .catch((err) => console.log(err));
+            }
+        },
+        [ user ]
+    );
+
+    // log out function to log the user out of google and set the profile array to null
+    const logOut = () => {
+        googleLogout();
+        setProfile(null);
+    };
+
+    console.log(user);
 
   return (
     <>
@@ -127,7 +226,7 @@ function Login() {
                       >
                         <p className="small">
                           <a className="text-primary" href="#/request-forget-password">
-                            Forgot password?
+                          {t("Quên mật khẩu?")}
                           </a>
                         </p>
                       </Form.Group>
@@ -149,7 +248,10 @@ function Login() {
                         {t("Hoặc")}
                       </p>
                       <p className="mb-0  text-center">
-                        <Button onClick={loginGoogle} style={{backgroundColor: "white", borderColor: "red"}}><FcGoogle size={35}></FcGoogle><span style={{color:"black", marginLeft: "10px"}}>Login with google</span></Button>
+                        { profile
+                            ?(<button style={{padding: "8px", backgroundColor: "white", color: "black"}} onClick={logOut}>Log out</button>)
+                            :(<Button onClick={loginGoogleHandle} style={{backgroundColor: "white", borderColor: "red"}}><FcGoogle size={35}></FcGoogle><span style={{color:"black", marginLeft: "10px"}}>{t("Đăng nhập bằng Google")}</span></Button>)
+                        }
                       </p>
                     </div>
                     <div className="mt-3">
@@ -166,6 +268,7 @@ function Login() {
           </Col>
         </Row>
       </Container>
+      
       </div>
     </>
   );

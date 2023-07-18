@@ -164,6 +164,17 @@ async function httpGetTuyenXe(token){
     return await res.json();
 }
 
+async function httpGetTuyenXeAdmin(token){
+    const res = await fetch(`${API_URL}/tuyenxe/admin/all`,{
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+    });
+    return await res.json();
+}
+
 async function httpGetTuyenXeById(id, token){
     const res = await fetch(`${API_URL}/tuyenxe/${id}`,{
         method: "GET",
@@ -810,6 +821,49 @@ function httpForgetPassword(data){
     });
 }
 
+function httpVerifyEmail(data){
+    return fetch(`${API_URL}/signup/verify-email`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+function httpLoginGoogleUpdate(data, token){
+    return fetch(`${API_URL}/login-google/update`, {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+function httpRequestGiaHan(data, token){
+    return fetch(`${API_URL}/thanh-toan/le-phi`, {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+function httpThanhToanDatVe(data, token){
+    return fetch(`${API_URL}/thanh-toan/dat-ve`, {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+}
+
 export {
     //BenXe
     httpGetBenXeAdmin,
@@ -837,6 +891,7 @@ export {
     httpPostTuyenXe,
     httpPutTuyenXe,
     httpDeleteTuyenXe,
+    httpGetTuyenXeAdmin,
 
     //Loai Xe
     httpGetLoaiXe,
@@ -913,8 +968,14 @@ export {
 
     //Login
     httpLogin,
+    httpLoginGoogleUpdate,
 
     //Forget Password
     httpRequestForgetPassword,
     httpForgetPassword,
+    httpVerifyEmail,
+
+    //Payment
+    httpRequestGiaHan,
+    httpThanhToanDatVe,
 }

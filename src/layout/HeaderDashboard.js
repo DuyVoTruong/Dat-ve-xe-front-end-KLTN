@@ -5,7 +5,7 @@ import { MyContext } from "../App";
 import flagEN from "../assets/img/flagEN.jpg";
 import flagVN from "../assets/img/flagVN.png";
 import { useTranslation } from "react-i18next";
-import { httpGetNhaXeById } from "../components/hooks/Request";
+import { httpGetAdminById, httpGetNhaXeById } from "../components/hooks/Request";
 
 function HeaderDashboard(){
 
@@ -42,9 +42,17 @@ function HeaderDashboard(){
                         setThongTinTaiKhoan(data.object);
                     }
                 })
+            } else {
+                httpGetAdminById(account.id, token).then(data=>{
+                    if(data.object){
+                        setThongTinTaiKhoan(data.object);
+                    }
+                })
             }
         }
     },[])
+
+    console.log(thongTinTaiKhoan);
 
     return(
         <>
@@ -66,7 +74,7 @@ function HeaderDashboard(){
                                         <a class="text-white pl-2">
                                             {
                                                 (()=>{
-                                                    if(thongTinTaiKhoan.length!=0){
+                                                    if(thongTinTaiKhoan.tenNhaXe!=null){
                                                         return <Image style={{objectFit: "cover"}} height={30} width={30} src={thongTinTaiKhoan.picture} roundedCircle />
                                                     }else{
                                                         return <Image style={{objectFit: "cover"}} height={30} width={30} src="https://firebasestorage.googleapis.com/v0/b/uploadimage-83b65.appspot.com/o/images%2Fdefault_avatar.png989f063f-864d-497f-aaee-0ad210b3b5e2?alt=media&token=2d270ccf-7dec-4403-973d-6a2109557688" roundedCircle />
@@ -75,7 +83,20 @@ function HeaderDashboard(){
                                             }
                                         </a>
                                     </div>
-                                    <Link to={"thong-tin-tai-khoan"}>{account.username}</Link>
+
+                                    {
+                                        (()=>{
+                                            if(thongTinTaiKhoan.tenNhaXe!=null){
+                                                return(
+                                                    <Link to={"thong-tin-tai-khoan"}>{thongTinTaiKhoan.tenNhaXe}</Link>
+                                                );
+                                            }else{
+                                                return(
+                                                    <Link to={"thong-tin-tai-khoan"}>{thongTinTaiKhoan.name}</Link>
+                                                );
+                                            }
+                                        })()
+                                    }
 
                                     <div style={{marginRight:"10px", marginLeft:"20px"}}>
                                         <a class="text-white pl-2">

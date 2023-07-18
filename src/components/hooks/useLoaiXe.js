@@ -6,10 +6,12 @@ import InfoMessage from "../alert message/InfoMessage";
 import SuccessMessage from "../alert message/SuccessMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import FailMessage from "../alert message/FailMessage";
+import { useTranslation } from "react-i18next";
 
 function useLoaiXe(){
     const [loaiXe, setLoaiXe] = useState([]);
     const token = useContext(MyContext).token;
+    const {t} = useTranslation();
 
     const getLoaiXe = useCallback(async() => {
         const fetchedLoaiXe = await httpGetLoaiXe(token);
@@ -33,14 +35,14 @@ function useLoaiXe(){
             try {
                 await httpPostLoaiXe(data,token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getLoaiXe();
@@ -54,14 +56,14 @@ function useLoaiXe(){
             try {
                 await httpPutLoaiXe(idLoaiXe, data,token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getLoaiXe();
@@ -71,14 +73,14 @@ function useLoaiXe(){
         try {
             await httpDeleteLoaiXe(idLoaiXe,token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("Thất bại"));
         }
         getLoaiXe();
     },[getLoaiXe])

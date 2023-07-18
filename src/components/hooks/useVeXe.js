@@ -6,11 +6,13 @@ import InfoMessage from "../alert message/InfoMessage";
 import SuccessMessage from "../alert message/SuccessMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import FailMessage from "../alert message/FailMessage";
+import { useTranslation } from "react-i18next";
 
 function useVeXe(){
     const [veXe, setVeXe] = useState([]);
     const nav = useNavigate();
     const token = useContext(MyContext).token;
+    const {t} = useTranslation();
 
     const getVeXe = useCallback(async(id) => {
         const fetchedVeXe = await httpGetVeXe(id, token);
@@ -34,14 +36,14 @@ function useVeXe(){
             try {
                 await httpPostVeXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
     }, [getVeXe]);
@@ -50,14 +52,14 @@ function useVeXe(){
             try {
                 await httpPutVeXe(idVeXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage(0);
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
     },[getVeXe])
 
@@ -65,14 +67,14 @@ function useVeXe(){
         try {
             await httpDeleteVeXe(idVeXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("Thất bại"));
         }
         getVeXe();
     },[getVeXe])

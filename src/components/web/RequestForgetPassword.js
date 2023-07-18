@@ -39,7 +39,7 @@ const RequestForgetPassword =()=>{
               <Card.Body>
                 <div className="mb-3 mt-md-4">
                   <div className="mb-3">
-                    <Form onSubmit={requestForgetPassword}>
+                    <Form>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-center">
                           Email
@@ -48,7 +48,7 @@ const RequestForgetPassword =()=>{
                       </Form.Group>
 
                       <div style={{marginTop: "30px"}} className="d-grid">
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="button" onClick={requestForgetPassword}>
                           {t("Gửi")}
                         </Button>
                       </div>

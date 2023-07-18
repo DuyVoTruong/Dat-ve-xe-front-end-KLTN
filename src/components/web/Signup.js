@@ -6,7 +6,6 @@ import {getTinhThanhPho} from "../hooks/useFunction"
 import { httpPostSignUp } from "../hooks/Request";
 import { MyContext } from "../../App";
 import { t } from "i18next";
-import InfoMessage from "../alert message/InfoMessage";
 import swal from "sweetalert";
 
 function Signup(){
@@ -14,11 +13,6 @@ function Signup(){
     const [role, setRole] = useState("USER");
     const {signUp} = useSignUp();
     const token = useContext(MyContext).token;
-
-    const nav = useNavigate();
-    const redirectLogin =()=> {
-        nav("/login");
-    }
 
     const signUpHandler = (e) =>{
         e.preventDefault();
@@ -44,8 +38,9 @@ function Signup(){
                     role,username,password,hoTen,cmnd,sdt,email,diaChi,picture
                 }
                 try {
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("password", password);
                     signUp(data);
-                    redirectLogin();
                 } catch {
 
                 }
@@ -96,7 +91,6 @@ function Signup(){
                             });
                         }
                     });
-                    redirectLogin();
                 } catch {
 
                 }

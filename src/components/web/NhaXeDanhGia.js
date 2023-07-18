@@ -123,7 +123,7 @@ const NhaXeDanhGia =()=>{
             <div style={{margin: "20px", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "50px"}}>
             <Col md="8">
             <Card style={{ borderRadius: "5px", backgroundColor: "#FFFAFA"}}>
-            <Card.Img style={{ width: "80%", height:"80%", maxHeight: "250px", maxWidth: "500px", marginLeft: "auto", marginRight:"auto", marginTop: "10px"}} variant="top" src={"https://nld.mediacdn.vn/k:2016/ben-xe-mt-1466755631165/thong-qua-dia-diem-xay-dung-ben-xe-mien-tay-moi.jpg"} />
+            <Card.Img style={{ width: "80%", height:"80%", maxHeight: "250px", maxWidth: "500px", marginLeft: "auto", marginRight:"auto", marginTop: "10px"}} variant="top" src={nhaXe.picture} />
             <Card.Body>
             <Card.Title>{nhaXe.tenNhaXe}</Card.Title>
             <Card.Text>{t("Số điện thoại")}: {nhaXe.sdt}</Card.Text>

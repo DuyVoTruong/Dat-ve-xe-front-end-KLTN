@@ -6,11 +6,13 @@ import SuccessMessage from "../alert message/SuccessMessage";
 import FailMessage from "../alert message/FailMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import InfoMessage from "../alert message/InfoMessage";
+import { useTranslation } from "react-i18next";
 
 function useBenXe(){
     const [benXe, setBenXe] = useState([]);
     const token = useContext(MyContext).token;
     const account = useContext(MyContext).account;
+    const {t} = useTranslation();
 
     const getBenXe = useCallback(async() => {
         const fetchedBenXe = await httpGetBenXeUser();
@@ -50,14 +52,14 @@ function useBenXe(){
             try {
                 await httpPostBenXe(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getAllBenXeAdmin();
@@ -71,10 +73,10 @@ function useBenXe(){
             try {
                 await httpPutBenXe(idBenXe, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
@@ -88,14 +90,14 @@ function useBenXe(){
         try {
             await httpDeleteBenXe(idBenXe, token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("Thất bại"));
         }
         getAllBenXeAdmin();
     },[getAllBenXeAdmin])

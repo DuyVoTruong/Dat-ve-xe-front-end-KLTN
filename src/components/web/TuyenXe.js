@@ -183,7 +183,7 @@ function TuyenXe(){
                   <Row>
                     <Col xs={12} md={3} lg={3} style={{display: "flex", justifyContent: "center", }}>
                       <div style={{margin: "10px"}}>
-                        <Image src={imageDiemDen} style={{ height: "100%", width: "100%", objectFit: "cover"}}></Image>
+                        <Image src={tx.xe.nhaXe.picture} style={{ height: "100%", width: "100%", objectFit: "cover"}}></Image>
                       </div>
                     </Col>
                     <Col xs={6} md={5} lg={5}>

@@ -1,36 +1,58 @@
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { httpForgetPassword } from "../hooks/Request";
-import { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import SuccessMessage from "../alert message/SuccessMessage";
+import { httpVerifyEmail } from "../hooks/Request";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import ErrorMessage from "../alert message/ErrorMessage";
-import InfoMessage from "../alert message/InfoMessage";
 import WarnMessage from "../alert message/WarnMessage";
+import InfoMessage from "../alert message/InfoMessage";
+import SuccessMessage from "../alert message/SuccessMessage";
+import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
+import { MyContext } from "../../App";
 
-const ForgetPassword =()=>{
+const VerifyEmail =()=>{
 
+    const setToken = useContext(MyContext).setToken;
     const {t} = useTranslation();
-    const [state, setState] = useState(useLocation().state);
     const [otp, setOtp] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
     const nav = useNavigate();
 
-    const forgetPassword =()=>{
+    const verifyEmail =()=>{
 
         const data = {
             otp: otp,
-            idHash: state.idHash,
-            newPassword: newPassword,
+            idHash: localStorage.getItem('idHash').toString(),
+            username: username,
+            password: password
         }
-
-        if(confirmPassword==newPassword){
-            httpForgetPassword(data).then(res => res.json()).then((data)=>{
-                if(data.result == true){
-                   setTimeout(()=> {SuccessMessage(t("Bạn đã thay đổi mật khẩu thành công"))}, 1000);
-                   nav("/login");
+        console.log(data);
+        if(otp!=null){
+            httpVerifyEmail(data).then(res => res.json()).then((data)=>{
+                if(data.object != null){
+                   setTimeout(()=> {SuccessMessage(t("Bạn đã xác thực email thành công"))}, 1000);
+                   localStorage.removeItem('idHash');
+                   localStorage.removeItem('username');
+                   localStorage.removeItem('password');
+                   const userToken = {
+                    jwtToken: data.object.jwtToken,
+                    account: {
+                      id: data.object.id,
+                      username: data.object.username,
+                      role: data.object.role,
+                      email: data.object.email
+                    }
+                  }
+                  setToken(userToken);//lưu token
+                  //window.alert(t("Đăng nhập thành công!!!"))
+                  if(data.object.role==="USER"){
+                    nav("/home")
+                  }else if(data.object.role==="ADMIN"){
+                    nav("/admin/home")
+                  }else if(data.object.role==="NHAXE"){
+                    nav("/nha-xe/home")
+                  }
                 } else if(data.status == 400) {
                     if(data.message == "Account locked"){
                         InfoMessage(t("Tài khoản của bạn đã bị khóa"));
@@ -40,13 +62,15 @@ const ForgetPassword =()=>{
                         InfoMessage(t("Mã hash sai"));
                     }
                 } else {
+                  console.log(data);
                     ErrorMessage(t("Đã xảy ra lỗi vui lòng thực hiện lại"));
                 }
             })
         } else {
-            ErrorMessage(t("Mật khẩu mới và mật khẩu xác nhận không trùng nhau"));
+            ErrorMessage(t("Bạn phải điền đầy đủ thông tin"));
         }
     }
+
 
     return(
         <>
@@ -66,23 +90,8 @@ const ForgetPassword =()=>{
                         </Form.Label>
                         <Form.Control onChange={(event)=>setOtp(event.target.value)} type="text" placeholder={t("Nhập mã otp")}/>
                       </Form.Group>
-
-                      <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label className="text-center">
-                          New password
-                        </Form.Label>
-                        <Form.Control onChange={(event)=>setNewPassword(event.target.value)} type="text" placeholder={t("Nhập new password")}/>
-                      </Form.Group>
-
-                      <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label className="text-center">
-                          Confirm password
-                        </Form.Label>
-                        <Form.Control onChange={(event)=>setConfirmPassword(event.target.value)} type="text" placeholder={t("Nhập confirm password")}/>
-                      </Form.Group>
-
                       <div style={{marginTop: "30px"}} className="d-grid">
-                        <Button variant="primary" type="button" onClick={forgetPassword}>
+                        <Button variant="primary" type="button" onClick={verifyEmail}>
                           {t("Gửi")}
                         </Button>
                       </div>
@@ -98,4 +107,4 @@ const ForgetPassword =()=>{
     );
 }
 
-export default ForgetPassword;
+export default VerifyEmail;

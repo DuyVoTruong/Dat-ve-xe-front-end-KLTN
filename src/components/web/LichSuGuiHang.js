@@ -12,13 +12,14 @@ import { ToastContainer } from "react-toastify";
 const LichSuGuiHang=()=>{
 
     const token = useContext(MyContext).token;
+    const account = useContext(MyContext).account;
 
     const [hangHoa, setHangHoa]=useState([]);
     const [load,setLoad] = useState(false);
     let stt = 0;
 
     useEffect(()=>{
-        getHangHoaByUserId(1,token).then(data=>{
+        getHangHoaByUserId(account.id, token).then(data=>{
             if(data){
                 setHangHoa(data);
             }

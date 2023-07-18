@@ -5,10 +5,12 @@ import InfoMessage from "../alert message/InfoMessage";
 import SuccessMessage from "../alert message/SuccessMessage";
 import ErrorMessage from "../alert message/ErrorMessage";
 import FailMessage from "../alert message/FailMessage";
+import { useTranslation } from "react-i18next";
 
 function useUser(){
     const [user, setUser] = useState([]);
     const token = useContext(MyContext).token;
+    const {t} = useTranslation();
 
     const getUser = useCallback(async() => {
         const fetchedUser = await httpGetUser(token);
@@ -33,14 +35,14 @@ function useUser(){
             try {
                 await httpPostUser(data, token).then(res => res.json()).then(data => {
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else{
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             } catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getUser();
@@ -54,14 +56,14 @@ function useUser(){
             try {
                 await httpPutUser(id, data,token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getUser();
@@ -71,14 +73,14 @@ function useUser(){
         try {
             await httpDeleteUser(idUser,token).then(res => res.json()).then(data => {
                 if(data.status == 200){
-                    SuccessMessage();
+                    SuccessMessage(t("Thành công"));
                 }
                 else{
-                    ErrorMessage(data.message);
+                    ErrorMessage(t("Thất bại"));
                 }
             })
         }catch(err) {
-            FailMessage();
+            FailMessage(t("thất bại"));
         }
         getUser();
     },[getUser])
@@ -88,14 +90,14 @@ function useUser(){
             try {
                 await httpPutTaiKhoan(id, data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         
         getUser();
@@ -109,14 +111,14 @@ function useUser(){
             try {
                 await httpPostSignUp(data, token).then(res => res.json()).then(data =>{
                     if (data.status == 200){
-                        SuccessMessage();
+                        SuccessMessage(t("Thành công"));
                     }
                     else {
-                        ErrorMessage(data.message);
+                        ErrorMessage(t("Thất bại"));
                     }
                 })
             }catch(err) {
-                FailMessage();
+                FailMessage(t("Thất bại"));
             }
         }
         getUser();

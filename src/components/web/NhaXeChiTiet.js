@@ -277,7 +277,7 @@ const NhaXeChiTiet =()=>{
                                 return(
                                     <>
                                     <div style={{marginLeft: "20px", marginRight: "20px", marginTop: "20px", marginBottom: "30px"}}>
-                                        <div><label style={{margin: "3px"}}>{dg.user.taiKhoan.username} - {t("Ngày đăng")}: {ngayDang+" "+gioDang}</label></div>
+                                        <div><label style={{margin: "3px"}}>{dg.user.hoTen} - {t("Ngày đăng")}: {ngayDang+" "+gioDang}</label></div>
                                         <div><label style={{margin: "3px"}}>
                                         {
                                             [1,2,3,4,5].map(t=>{

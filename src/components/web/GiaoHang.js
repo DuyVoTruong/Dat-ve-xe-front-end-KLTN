@@ -10,7 +10,7 @@ import SuccessMessage from "../alert message/SuccessMessage";
 import { ToastContainer } from "react-toastify";
 import ErrorMessage from "../alert message/ErrorMessage";
 import FailMessage from "../alert message/FailMessage";
-import { httpPostHangHoa } from "../hooks/Request";
+import { httpGetUserById, httpPostHangHoa } from "../hooks/Request";
 
 const GiaoHang =()=>{
 
@@ -18,6 +18,7 @@ const GiaoHang =()=>{
     const token = useContext(MyContext).token;
     const tuyenXeId = useParams().id;
     const [tuyenXe, setTuyenXe] = useState([]);
+    const [thongTinTaiKhoan, setThongTinTaiKhoan] = useState([]);
     const nav = useNavigate();
     const {addHangHoa} = useHangHoa();
     var today = new Date();
@@ -50,12 +51,22 @@ const GiaoHang =()=>{
         })
     },[])
 
+    useEffect(()=>{
+        if(account){
+            httpGetUserById(account.id, token).then(data=>{
+                if(data.object){
+                    setThongTinTaiKhoan(data.object);
+                }
+            })
+        }
+    },[account])
+
     const giaoHang =()=>{
         let canNang = document.getElementById("formCanNang").value;
         let tenNguoiNhan = document.getElementById("formTenNguoiNhan").value;
         let sdtNguoiNhan = document.getElementById("formSDTNguoiNhan").value;
         let email = document.getElementById("formEmail").value;
-        let userId = 1;
+        let userId = account.id;
         let ngayDat = convertNgay(today);
         
 
@@ -66,6 +77,8 @@ const GiaoHang =()=>{
             let data = {
                 canNang,tenNguoiNhan,sdtNguoiNhan,email,userId,tuyenXeId,ngayDat
             }
+
+            console.log(data)
 
             try {
                 httpPostHangHoa(data,token).then(res => res.json()).then(data => {
@@ -101,7 +114,7 @@ const GiaoHang =()=>{
                             <Form.Label className="text-center">
                                 {t("Tên tài khoản")}
                             </Form.Label>
-                            <Form.Control type="text" value={account.username} readOnly/>
+                            <Form.Control type="text" value={thongTinTaiKhoan.hoTen} readOnly/>
                             </Form.Group>
 
                             {

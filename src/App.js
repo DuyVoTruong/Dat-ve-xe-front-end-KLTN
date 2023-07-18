@@ -3,11 +3,15 @@ import './css/searchForm.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import useToken from './components/hooks/useToken';
 import React, { Suspense, createContext } from 'react';
-import GoiGiaHan from './components/nhaXe/GoiGiaHan/GoiGiaHan';
+import GoiGiaHanHetHan from './components/nhaXe/GoiGiaHan/GoiGiaHanHetHan';
 import Loading from './components/web/Loading';
 import UploadFile from './components/UploadFile';
 import RequestForgetPassword from './components/web/RequestForgetPassword';
 import ForgetPassword from './components/web/ForgetPassword';
+import VerifyEmail from './components/web/VerifyEmail';
+import CapNhatLoginGoogle from './components/web/CapNhatLoginGoogle'
+import GoiGiaHanConHan from './components/nhaXe/GoiGiaHan/GoiGiaHanConHan';
+import TrangThanhToan from './components/web/TrangThanhToan';
 const LayoutAdmin = React.lazy(() => import ('./layout/LayoutAdmin'));
 const AdminHome = React.lazy(() => import ('./components/admin/AdminHome'));
 const NhaXeAdmin = React.lazy(() => import ('./components/admin/NhaXe/NhaXeAdmin'));
@@ -63,6 +67,9 @@ function App() {
         <Suspense fallback={<Loading></Loading>}>
         <Routes>
           <Route path='/*' element={<LayoutWeb></LayoutWeb>}>
+            <Route path="gia-han-dich-vu" element={<GoiGiaHanHetHan></GoiGiaHanHetHan>} />
+            <Route path='cap-nhat-login-google' element={<CapNhatLoginGoogle></CapNhatLoginGoogle>}></Route>
+            <Route path='verify-email' element={<VerifyEmail></VerifyEmail>}></Route>
             <Route path='forget-password' element={<ForgetPassword></ForgetPassword>}></Route>
             <Route path='request-forget-password' element={<RequestForgetPassword></RequestForgetPassword>}></Route>
             <Route path='upload' element={<UploadFile></UploadFile>}></Route>
@@ -132,7 +139,7 @@ function App() {
                 <Route path="hang-hoa" element={<HangHoa></HangHoa>} />
                 <Route path="hang-hoa/quan-ly/:id" element={<QuanLyHangHoa></QuanLyHangHoa>} />
                 <Route path="thong-ke" element={<ThongKeNhaXe></ThongKeNhaXe>} />
-                <Route path="gia-han-dich-vu" element={<GoiGiaHan></GoiGiaHan>} />
+                <Route path="gia-han-dich-vu" element={<GoiGiaHanConHan></GoiGiaHanConHan>} />
                 <Route path="*" element={<Navigate to="home" replace />}></Route>
             </Route>
           </Routes>
@@ -147,6 +154,7 @@ function App() {
           <Suspense fallback={<Loading></Loading>}>
           <Routes>
             <Route path='/*' element={<LayoutWeb account={account}></LayoutWeb>}>
+              <Route path='cap-nhat-login-google' element={<CapNhatLoginGoogle></CapNhatLoginGoogle>}></Route>
               <Route path='' element={<Home></Home>}></Route>
               {/*<Route path='login' element={<Login></Login>}></Route>*/}
               <Route path='sign-up' element={<Signup></Signup>}></Route>
@@ -160,6 +168,7 @@ function App() {
               <Route path='lich-su-gui-hang' element={<LichSuGuiHang></LichSuGuiHang>}></Route>
               <Route path='ve-xe-chi-tiet' element={<VeXeChiTiet></VeXeChiTiet>}></Route>
               <Route path='giao-hang/:id' element={<GiaoHang></GiaoHang>}></Route>
+              <Route path="trang-thanh-toan" element={<TrangThanhToan></TrangThanhToan>}></Route>
               <Route path="*" element={<Navigate to="/" replace />}></Route>
             </Route>
             <Route path='/login' element={<Login></Login>}></Route>
